@@ -1,0 +1,34 @@
+<h1>Login stranica</h1>
+<hr>
+<table>
+  <tr>
+    <td>Unesite korisnicko ime:</td>
+    <td>
+      <input type="text" [(ngModel)]="kor_ime">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite lozinku:</td>
+    <td>
+      <input type="password" [(ngModel)]="lozinka">
+    </td>
+  </tr>
+  <tr>
+    <td>Izaberite tip:</td>
+    <td>
+      <label for="ucenik">Ucenik</label>
+      <input type="radio" name="login" id="ucenik" value="Ucenik" [(ngModel)]="tip">
+      <label for="nastavnik">Nastavnik</label>
+      <input type="radio" name="login" id="nastavnik" value="Nastavnik" [(ngModel)]="tip">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <input type="button" value="Prijava" (click)="login()">
+    </td>
+  </tr>
+</table>
+<hr>
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>

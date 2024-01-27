@@ -19,5 +19,13 @@ export class ZController {
             .catch(err => console.log(err));
     };
 
-    
+    loginAdmin = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const lozinka = req.body.lozinka;
+
+        Korisnik
+            .findOne({kor_ime: kor_ime, lozinka: lozinka, tip: "Admin"})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
 }

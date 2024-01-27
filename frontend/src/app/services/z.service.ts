@@ -25,4 +25,12 @@ export class ZService {
     };
     return this.http.post<Korisnik>(this.uri + "/login", data);
   }
+
+  loginAdmin(kor_ime: string, lozinka: string) {
+    const data = {
+      kor_ime: kor_ime,
+      lozinka: lozinka
+    };
+    return this.http.post<Korisnik>(this.uri + "/loginAdmin", data);
+  }
 }
