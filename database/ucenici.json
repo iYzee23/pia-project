@@ -1,0 +1,23 @@
+[
+    {
+        "kor_ime": "mirko123",
+        "tip_skole": "Srednja [strucna]",
+        "tr_razred": 4,
+        "ocena": 0.00,
+        "br_ocena": 0
+    },
+    {
+        "kor_ime": "milos123",
+        "tip_skole": "Srednja [strucna]",
+        "tr_razred": 4,
+        "ocena": 0.00,
+        "br_ocena": 0
+    },
+    {
+        "kor_ime": "glisa123",
+        "tip_skole": "Srednja [gimnazija]",
+        "tr_razred": 3,
+        "ocena": 0.00,
+        "br_ocena": 0
+    }
+]

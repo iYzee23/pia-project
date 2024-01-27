@@ -1,4 +1,5 @@
 import express from "express";
+import { hashPassword, verifyPassword } from "./cryption";
 import Korisnik from "./models/korisnik";
 import Ucenik from "./models/ucenik";
 import Nastavnik from "./models/nastavnik";
@@ -14,9 +15,17 @@ export class ZController {
         const tip = req.body.tip;
 
         Korisnik
-            .findOne({kor_ime: kor_ime, lozinka: lozinka, tip: tip})
-            .then(data => res.json(data))
-            .catch(err => console.log(err));
+            .findOne({kor_ime: kor_ime, tip: tip})
+            .then(data1 => {
+                if (!data1) return res.json(null);
+                verifyPassword(lozinka, data1.lozinka!)
+                    .then(data2 => {
+                        if (data2) return res.json(data1);
+                        else return res.json(null);
+                    })
+                    .catch(err2 => console.log(err2));
+            })
+            .catch(err1 => console.log(err1));
     };
 
     loginAdmin = (req: express.Request, res: express.Response) => {
@@ -24,8 +33,16 @@ export class ZController {
         const lozinka = req.body.lozinka;
 
         Korisnik
-            .findOne({kor_ime: kor_ime, lozinka: lozinka, tip: "Admin"})
-            .then(data => res.json(data))
-            .catch(err => console.log(err));
+            .findOne({kor_ime: kor_ime, tip: "Admin"})
+            .then(data1 => {
+                if (!data1) return res.json(null);
+                verifyPassword(lozinka, data1.lozinka!)
+                    .then(data2 => {
+                        if (data2) return res.json(data1);
+                        else return res.json(null);
+                    })
+                    .catch(err2 => console.log(err2));
+            })
+            .catch(err1 => console.log(err1));
     };
 }

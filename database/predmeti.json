@@ -1,0 +1,66 @@
+[
+    {
+        "naziv": "Matematika",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Fizika",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Hemija",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Informatika",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Programiranje",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Srpski",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Engleski",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Nemacki",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Italijanski",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Francuski",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Spanski",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Latinski",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Biologija",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Istorija",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Geografija",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "Svet oko nas",
+        "status": "Prihvacen"
+    }
+]
