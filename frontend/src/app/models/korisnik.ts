@@ -12,4 +12,13 @@ export class Korisnik {
   email: string = "";
   prof_slika: string = "";
   zahtev_status: string = "";
+  tip_skole: string = "";
+  tr_razred: number = 0;
+  cv_pdf: string = "";
+  predmeti: string[] = [];
+  uzrast: string[] = [];
+  culi_sajt: string = "";
+  dostupnost: string[] = [];
+  ocena: number = 0;
+  br_ocena: number = 0;
 }

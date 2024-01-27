@@ -6,7 +6,7 @@ const Nastavnik = new Schema({
     kor_ime: {type: String},
     cv_pdf: {type: String},
     predmeti: {type: [String]},
-    uzrast: {type: String},
+    uzrast: {type: [String]},
     culi_sajt: {type: String},
     dostupnost: {type: [String]},
     ocena: {type: Number},

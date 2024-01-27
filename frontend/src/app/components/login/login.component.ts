@@ -11,7 +11,7 @@ export class LoginComponent {
 
   kor_ime: string = "";
   lozinka: string = "";
-  tip: string = "";
+  tip: string = "Ucenik";
   poruka: string = "";
 
   constructor(private service: ZService, private router: Router) {}

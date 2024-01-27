@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const Ucenik = new Schema({
     kor_ime: {type: String},
     tip_skole: {type: String},
-    tr_razred: {type: String},
+    tr_razred: {type: Number},
     ocena: {type: Number},
     br_ocena: {type: Number}
 });
