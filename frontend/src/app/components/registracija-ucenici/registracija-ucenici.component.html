@@ -1,1 +1,98 @@
-<p>registracija-ucenici works!</p>
+<h1>Registracija ucenika</h1>
+<hr>
+<table>
+  <tr>
+    <td>Unesite korisnicko ime:</td>
+    <td>
+      <input type="text" [(ngModel)]="kor_ime">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite lozinku:</td>
+    <td>
+      <input type="password" [(ngModel)]="lozinka">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite bezbednosno pitanje:</td>
+    <td>
+      <input type="text" [(ngModel)]="bezb_pitanje">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite bezbednosni odgovor:</td>
+    <td>
+      <input type="text" [(ngModel)]="bezb_odgovor">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite ime:</td>
+    <td>
+      <input type="text" [(ngModel)]="ime">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite prezime:</td>
+    <td>
+      <input type="text" [(ngModel)]="prezime">
+    </td>
+  </tr>
+  <tr>
+    <td>Izaberite pol:</td>
+    <td>
+      <input type="radio" name="ucenikPol" id="ucenikPolM" value="M" [(ngModel)]="pol">
+      <label for="ucenikPolM">Muski</label>
+      <input type="radio" name="ucenikPol" id="ucenikPolZ" value="Z" [(ngModel)]="pol">
+      <label for="ucenikPolZ">Zenski</label>
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite adresu stanovanja:</td>
+    <td>
+      <input type="text" [(ngModel)]="adresa">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite kontakt telefon:</td>
+    <td>
+      <input type="text" [(ngModel)]="telefon">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite mejl adresu:</td>
+    <td>
+      <input type="text" [(ngModel)]="email">
+    </td>
+  </tr>
+  <tr>
+    <td>Izaberite profilnu sliku:</td>
+    <td>
+      <app-image-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handleSlika($event)"></app-image-upload>
+    </td>
+  </tr>
+  <tr>
+    <td>Izaberite tip skole:</td>
+    <td>
+      <select [(ngModel)]="tip_skole" (change)="handlePromenaTipaSkole()">
+        <option *ngFor="let sk of skole" [value]="sk">{{sk}}</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td>Izaberite trenutni razred:</td>
+    <td>
+      <select [(ngModel)]="tr_razred">
+        <option *ngFor="let tr of razr_izabrani" [value]="tr">{{tr}}</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <input type="button" value="Registruj se" (click)="registracija()">
+    </td>
+  </tr>
+</table>
+<hr>
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>

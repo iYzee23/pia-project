@@ -17,6 +17,8 @@ import { UcenikComponent } from './components/ucenik/ucenik.component';
 import { NastavnikComponent } from './components/nastavnik/nastavnik.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { RegistracijaNastavniciComponent } from './components/registracija-nastavnici/registracija-nastavnici.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { PdfUploadComponent } from './components/pdf-upload/pdf-upload.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { RegistracijaNastavniciComponent } from './components/registracija-nasta
     NeregistrovaniComponent,
     UcenikComponent,
     NastavnikComponent,
-    AdminComponent
+    AdminComponent,
+    ImageUploadComponent,
+    PdfUploadComponent
   ],
   imports: [
     BrowserModule,
