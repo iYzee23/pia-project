@@ -78,4 +78,5 @@ export class RegistracijaUceniciComponent {
     else this.razr_izabrani = this.razr_srednja;
     this.tr_razred = 1;
   }
+
 }

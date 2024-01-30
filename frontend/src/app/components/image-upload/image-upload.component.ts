@@ -32,8 +32,10 @@ export class ImageUploadComponent {
           this.porukaEvent.emit("Slika je premala. Minimalna velicina slike je 100x100px.");
         else if (img.width > 300 || img.height > 300)
           this.porukaEvent.emit("Slika je prevelika. Maksimalna velicina slike je 300x300px.");
-        else
+        else {
+          this.porukaEvent.emit("");
           this.fileEvent.emit(e.target.result);
+        }
       };
       img.src = e.target.result;
     };
@@ -42,6 +44,7 @@ export class ImageUploadComponent {
   }
 
   handlePonisti() {
+    this.porukaEvent.emit("");
     this.fileEvent.emit("");
     if (this.fileInput && this.fileInput.nativeElement)
       this.fileInput.nativeElement.value = '';

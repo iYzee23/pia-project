@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZController = void 0;
+const fs_1 = __importDefault(require("fs"));
 const cryption_1 = require("./cryption");
 const korisnik_1 = __importDefault(require("./models/korisnik"));
 const ucenik_1 = __importDefault(require("./models/ucenik"));
@@ -87,6 +88,15 @@ class ZController {
                     const lozinka = req.body.lozinka;
                     (0, cryption_1.hashPassword)(lozinka)
                         .then(data3 => {
+                        const prof_slika = req.body.prof_slika;
+                        let prof_path = "../images/default-profile-picture.jpg";
+                        if (prof_slika !== "") {
+                            const prof_data = prof_slika.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+                            const prof_image = Buffer.from(prof_data[2], 'base64');
+                            const prof_mime = prof_data[1] === "image/png" ? "png" : "jpg";
+                            prof_path = `../images/image_${Date.now()}.${prof_mime}`;
+                            fs_1.default.writeFileSync(prof_path, prof_image);
+                        }
                         const nKorisnik = new korisnik_1.default({
                             kor_ime: kor_ime,
                             lozinka: data3,
@@ -99,7 +109,7 @@ class ZController {
                             adresa: req.body.adresa,
                             telefon: req.body.telefon,
                             email: email,
-                            prof_slika: req.body.prof_slika,
+                            prof_slika: prof_path,
                             zahtev_status: "Prihvacen"
                         });
                         nKorisnik
@@ -141,6 +151,15 @@ class ZController {
                     const lozinka = req.body.lozinka;
                     (0, cryption_1.hashPassword)(lozinka)
                         .then(data3 => {
+                        const prof_slika = req.body.prof_slika;
+                        let prof_path = "../images/default-profile-picture.jpg";
+                        if (prof_slika !== "") {
+                            const prof_data = prof_slika.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+                            const prof_image = Buffer.from(prof_data[2], 'base64');
+                            const prof_mime = prof_data[1] === "image/png" ? "png" : "jpg";
+                            prof_path = `../images/image_${Date.now()}.${prof_mime}`;
+                            fs_1.default.writeFileSync(prof_path, prof_image);
+                        }
                         const nKorisnik = new korisnik_1.default({
                             kor_ime: kor_ime,
                             lozinka: data3,
@@ -153,15 +172,20 @@ class ZController {
                             adresa: req.body.adresa,
                             telefon: req.body.telefon,
                             email: email,
-                            prof_slika: req.body.prof_slika,
+                            prof_slika: prof_path,
                             zahtev_status: "U obradi"
                         });
                         nKorisnik
                             .save()
                             .then(data4 => {
+                            const cv_pdf = req.body.cv_pdf;
+                            const cv_data = cv_pdf.match(/^data:application\/pdf;base64,(.+)$/);
+                            const cv_content = Buffer.from(cv_data[1], 'base64');
+                            const cv_path = `../pdfs/pdf_${Date.now()}.pdf`;
+                            fs_1.default.writeFileSync(cv_path, cv_content);
                             const nNastavnik = new nastavnik_1.default({
                                 kor_ime: kor_ime,
-                                cv_pdf: req.body.cv_pdf,
+                                cv_pdf: cv_path,
                                 // ovo ce morati da se filtrira po adminovom neodobravanju
                                 // slobodna forma: clanovi niza su razdvojeni zarezom
                                 predmeti: req.body.predmeti,

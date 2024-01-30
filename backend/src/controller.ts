@@ -1,4 +1,6 @@
 import express from "express";
+import fs from 'fs';
+import path from 'path';
 import { hashPassword, verifyPassword } from "./cryption";
 import Korisnik from "./models/korisnik";
 import Ucenik from "./models/ucenik";
@@ -81,15 +83,25 @@ export class ZController {
             .then(data1 => {
                 if (data1) return res.json({msg: "Niste uneli jedinstveno korisnicko ime."});
                 const email = req.body.email;
-
+                
                 Korisnik
                     .findOne({email: email})
                     .then(data2 => {
                         if (data2) return res.json({msg: "Niste uneli jedinstven mejl."})
                         const lozinka = req.body.lozinka;
-
+                        
                         hashPassword(lozinka)
                             .then(data3 => {
+                                const prof_slika = req.body.prof_slika;
+                                let prof_path = "../images/default-profile-picture.jpg";
+                                if (prof_slika !== "") {
+                                    const prof_data = prof_slika.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+                                    const prof_image = Buffer.from(prof_data[2], 'base64');
+                                    const prof_mime = prof_data[1] === "image/png" ? "png" : "jpg";
+                                    prof_path = `../images/image_${Date.now()}.${prof_mime}`;
+                                    fs.writeFileSync(prof_path, prof_image);
+                                }
+                                
                                 const nKorisnik = new Korisnik({
                                     kor_ime: kor_ime,
                                     lozinka: data3,
@@ -102,7 +114,7 @@ export class ZController {
                                     adresa: req.body.adresa,
                                     telefon: req.body.telefon,
                                     email: email,
-                                    prof_slika: req.body.prof_slika,
+                                    prof_slika: prof_path,
                                     zahtev_status: "Prihvacen"
                                 });
 
@@ -148,6 +160,16 @@ export class ZController {
 
                         hashPassword(lozinka)
                             .then(data3 => {
+                                const prof_slika = req.body.prof_slika;
+                                let prof_path = "../images/default-profile-picture.jpg";
+                                if (prof_slika !== "") {
+                                    const prof_data = prof_slika.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+                                    const prof_image = Buffer.from(prof_data[2], 'base64');
+                                    const prof_mime = prof_data[1] === "image/png" ? "png" : "jpg";
+                                    prof_path = `../images/image_${Date.now()}.${prof_mime}`;
+                                    fs.writeFileSync(prof_path, prof_image);
+                                }
+
                                 const nKorisnik = new Korisnik({
                                     kor_ime: kor_ime,
                                     lozinka: data3,
@@ -160,16 +182,22 @@ export class ZController {
                                     adresa: req.body.adresa,
                                     telefon: req.body.telefon,
                                     email: email,
-                                    prof_slika: req.body.prof_slika,
+                                    prof_slika: prof_path,
                                     zahtev_status: "U obradi"
                                 });
 
                                 nKorisnik
                                     .save()
                                     .then(data4 => {
+                                        const cv_pdf = req.body.cv_pdf;
+                                        const cv_data = cv_pdf.match(/^data:application\/pdf;base64,(.+)$/);
+                                        const cv_content = Buffer.from(cv_data[1], 'base64');
+                                        const cv_path = `../pdfs/pdf_${Date.now()}.pdf`;
+                                        fs.writeFileSync(cv_path, cv_content);
+
                                         const nNastavnik = new Nastavnik({
                                             kor_ime: kor_ime,
-                                            cv_pdf: req.body.cv_pdf,
+                                            cv_pdf: cv_path,
                                             // ovo ce morati da se filtrira po adminovom neodobravanju
                                             // slobodna forma: clanovi niza su razdvojeni zarezom
                                             predmeti: req.body.predmeti,

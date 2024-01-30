@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-pdf-upload',
@@ -8,6 +8,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class PdfUploadComponent {
   @Output() porukaEvent = new EventEmitter<string>();
   @Output() fileEvent = new EventEmitter<string>();
+  @ViewChild('tFileInput') tFileInput!: ElementRef;
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -29,8 +30,16 @@ export class PdfUploadComponent {
 
     const reader = new FileReader();
     reader.onload = (e: any) => {
+      this.porukaEvent.emit("");
       this.fileEvent.emit(e.target.result);
     };
     reader.readAsDataURL(file);
+  }
+
+  handlePonisti() {
+    this.porukaEvent.emit("");
+    this.fileEvent.emit("");
+    if (this.tFileInput && this.tFileInput.nativeElement)
+      this.tFileInput.nativeElement.value = '';
   }
 }
