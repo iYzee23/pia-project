@@ -1,1 +1,22 @@
-<p>promena-lozinke-ne-znam1 works!</p>
+
+<h1>Promena lozinke [nepoznata lozinka, prvi korak]</h1>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Unesite korisnicko ime:</td>
+      <td>
+        <input type="text" [(ngModel)]="kor_ime">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="button" value="Dalje" (click)="idiDalje()">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>

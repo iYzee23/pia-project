@@ -1,1 +1,25 @@
-<p>promena-lozinke-ne-znam3 works!</p>
+<h1>Promena lozinke [nepoznata lozinka, treci korak]</h1>
+<hr>
+<table>
+  <tr>
+    <td>Unesite novu lozinku:</td>
+    <td>
+      <input type="password" [(ngModel)]="nova_lozinka">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite ponovljenu novu lozinku:</td>
+    <td>
+      <input type="password" [(ngModel)]="p_nova_lozinka">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <input type="button" value="Promeni lozinku" (click)="promeniLozinku()">
+    </td>
+  </tr>
+</table>
+<hr>
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>

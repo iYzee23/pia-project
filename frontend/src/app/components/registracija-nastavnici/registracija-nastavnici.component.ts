@@ -69,7 +69,7 @@ export class RegistracijaNastavniciComponent {
     else if (this.culi_sajt === "") this.poruka = "Morate uneti odgovor na pitanje gde ste culi za nas sajt.";
     else {
       const regexEmail = /^[a-zA-Z_][\w.-]*@[a-zA-Z\d-]+\.[a-zA-Z\d-.]+$/;
-      const regexLozinka = /^(?=[a-zA-Z])(?=.*[A-Z])(?=(?:[^a-z]*[a-z]){3})\S{6,10}$/;
+      const regexLozinka = /^(?=[a-zA-Z])(?=.*[A-Z])(?=(?:[^a-z]*[a-z]){3})(?=.*[!@#$%^&*])\S{6,10}$/;
       const regexTelefon = /^06\d{7,8}$/;
       if (!regexEmail.test(this.email)) this.poruka = "Niste uneli mejl adresu u dobrom formatu.";
       else if (!regexLozinka.test(this.lozinka)) this.poruka = "Niste uneli lozinku u dobrom formatu.";

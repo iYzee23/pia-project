@@ -283,7 +283,7 @@ class ZController {
                     (0, cryption_1.hashPassword)(novaLozinka)
                         .then(data3 => {
                         korisnik_1.default
-                            .findByIdAndUpdate({ kor_ime: kor_ime }, { lozinka: data3 })
+                            .findOneAndUpdate({ kor_ime: kor_ime }, { lozinka: data3 })
                             .then(data4 => res.json({ msg: "OK" }))
                             .catch(err4 => console.log(err4));
                     })
@@ -299,7 +299,7 @@ class ZController {
             (0, cryption_1.hashPassword)(novaLozinka)
                 .then(data => {
                 korisnik_1.default
-                    .findByIdAndUpdate({ kor_ime: kor_ime }, { lozinka: data })
+                    .findOneAndUpdate({ kor_ime: kor_ime }, { lozinka: data })
                     .then(tData => res.json({ msg: "OK" }))
                     .catch(tErr => console.log(tErr));
             })

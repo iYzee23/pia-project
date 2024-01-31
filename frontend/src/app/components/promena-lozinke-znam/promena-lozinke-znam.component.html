@@ -1,1 +1,31 @@
-<p>promena-lozinke-znam works!</p>
+<h1>Promena lozinke [poznata lozinka]</h1>
+<hr>
+<table>
+  <tr>
+    <td>Unesite staru lozinku:</td>
+    <td>
+      <input type="password" [(ngModel)]="stara_lozinka">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite novu lozinku:</td>
+    <td>
+      <input type="password" [(ngModel)]="nova_lozinka">
+    </td>
+  </tr>
+  <tr>
+    <td>Unesite ponovljenu novu lozinku:</td>
+    <td>
+      <input type="password" [(ngModel)]="p_nova_lozinka">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <input type="button" value="Promeni lozinku" (click)="promeniLozinku()">
+    </td>
+  </tr>
+</table>
+<hr>
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>
