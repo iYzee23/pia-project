@@ -1,7 +1,5 @@
 import express from "express";
-import fs from 'fs';
-import path from 'path';
-import { hashPassword, verifyPassword } from "./cryption";
+import { default_slika, deleteFile, hashPassword, loadPdf, loadPicture, savePdf, savePicture, verifyPassword } from "./cryption";
 import Korisnik from "./models/korisnik";
 import Ucenik from "./models/ucenik";
 import Nastavnik from "./models/nastavnik";
@@ -22,7 +20,10 @@ export class ZController {
                 if (!data1) return res.json(null);
                 verifyPassword(lozinka, data1.lozinka!)
                     .then(data2 => {
-                        if (data2) return res.json(data1);
+                        if (data2) {
+                            data1.prof_slika = loadPicture(data1.prof_slika!);
+                            return res.json(data1);
+                        }
                         else return res.json(null);
                     })
                     .catch(err2 => console.log(err2));
@@ -40,7 +41,10 @@ export class ZController {
                 if (!data1) return res.json(null);
                 verifyPassword(lozinka, data1.lozinka!)
                     .then(data2 => {
-                        if (data2) return res.json(data1);
+                        if (data2) {
+                            data1.prof_slika = loadPicture(data1.prof_slika!);
+                            return res.json(data1);
+                        }
                         else return res.json(null);
                     })
                     .catch(err2 => console.log(err2));
@@ -53,7 +57,10 @@ export class ZController {
 
         Korisnik
             .findOne({kor_ime: kor_ime})
-            .then(data => res.json(data))
+            .then(data => {
+                if (data) data.prof_slika = loadPicture(data.prof_slika!);
+                res.json(data)
+            })
             .catch(err => console.log(err));
     };
 
@@ -71,7 +78,10 @@ export class ZController {
 
         Nastavnik
             .findOne({kor_ime: kor_ime})
-            .then(data => res.json(data))
+            .then(data => {
+                if (data) data.cv_pdf = loadPdf(data.cv_pdf!);
+                res.json(data)
+            })
             .catch(err => console.log(err));
     };
 
@@ -92,15 +102,7 @@ export class ZController {
                         
                         hashPassword(lozinka)
                             .then(data3 => {
-                                const prof_slika = req.body.prof_slika;
-                                let prof_path = "../images/default-profile-picture.jpg";
-                                if (prof_slika !== "") {
-                                    const prof_data = prof_slika.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
-                                    const prof_image = Buffer.from(prof_data[2], 'base64');
-                                    const prof_mime = prof_data[1] === "image/png" ? "png" : "jpg";
-                                    prof_path = `../images/image_${Date.now()}.${prof_mime}`;
-                                    fs.writeFileSync(prof_path, prof_image);
-                                }
+                                const prof_path = savePicture(req.body.prof_slika);
                                 
                                 const nKorisnik = new Korisnik({
                                     kor_ime: kor_ime,
@@ -160,15 +162,7 @@ export class ZController {
 
                         hashPassword(lozinka)
                             .then(data3 => {
-                                const prof_slika = req.body.prof_slika;
-                                let prof_path = "../images/default-profile-picture.jpg";
-                                if (prof_slika !== "") {
-                                    const prof_data = prof_slika.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
-                                    const prof_image = Buffer.from(prof_data[2], 'base64');
-                                    const prof_mime = prof_data[1] === "image/png" ? "png" : "jpg";
-                                    prof_path = `../images/image_${Date.now()}.${prof_mime}`;
-                                    fs.writeFileSync(prof_path, prof_image);
-                                }
+                                const prof_path = savePicture(req.body.prof_slika);
 
                                 const nKorisnik = new Korisnik({
                                     kor_ime: kor_ime,
@@ -189,11 +183,7 @@ export class ZController {
                                 nKorisnik
                                     .save()
                                     .then(data4 => {
-                                        const cv_pdf = req.body.cv_pdf;
-                                        const cv_data = cv_pdf.match(/^data:application\/pdf;base64,(.+)$/);
-                                        const cv_content = Buffer.from(cv_data[1], 'base64');
-                                        const cv_path = `../pdfs/pdf_${Date.now()}.pdf`;
-                                        fs.writeFileSync(cv_path, cv_content);
+                                        const cv_path = savePdf(req.body.cv_pdf);
 
                                         const nNastavnik = new Nastavnik({
                                             kor_ime: kor_ime,
@@ -347,6 +337,198 @@ export class ZController {
         Korisnik
             .findOne({kor_ime: kor_ime, bezb_odgovor: bezb_odgovor})
             .then(data => res.json(data != null))
+            .catch(err => console.log(err));
+    };
+
+    dohvUkupanBrojUcenika = (req: express.Request, res: express.Response) => {
+        Ucenik
+            .countDocuments({})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    dohvUkupanBrojAktivnihNastavnika = (req: express.Request, res: express.Response) => {
+        Korisnik
+            .countDocuments({tip: "Nastavnik", zahtev_status: "Prihvacen"})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    dohvBrojOdrzanihCasovaPrethNedelja = (req: express.Request, res: express.Response) => {
+        const today = new Date();
+        const lastWeek = new Date();
+        lastWeek.setDate(today.getDate() - 7);
+
+        Cas
+            .countDocuments({datum_vreme: {$gte: lastWeek.toISOString()}})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    dohvBrojOdrzanihCasovaPrethMesec = (req: express.Request, res: express.Response) => {
+        const today = new Date();
+        const lastWeek = new Date();
+        lastWeek.setDate(today.getDate() - 30);
+
+        Cas
+            .countDocuments({datum_vreme: {$gte: lastWeek.toISOString()}})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    /*
+        na frontu cemo da imamo niz struktura
+        --> {predmet, imeNast, prezimeNast}[]
+        
+        sortiranje je onda lagano
+        --> sortiramo po nekom od ovih polja unutar strukture
+        
+        pretraga je takodje lagana
+        --> filtriramo po nekom od ovih polja unutar strukture
+        
+        mozemo ubaciti i sortiranje i pretragu
+        --> kombinacija sortiranja i filteringa
+
+        pretragu cemo takodje raditi na klik
+        --> dakle, nece biti nikakvog ajaxa
+
+        kod ucenika, dajemo dodadan parametar u dohvatanju angazovanih nastavnika
+        --> ako se za neki predmet vrati null, samo ga necemo dodati u niz struktura
+        --> potencijalno ce biti potrebno prosiriti ovu strukturu tako da imamo i prosek
+    */
+
+    dohvPredmete = (req: express.Request, res: express.Response) => {
+        Predmet
+            .find({status: "Prihvacen"})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    dohvAngazovaneNastavnike = (req: express.Request, res: express.Response) => {
+        const predmet = req.body.predmet;
+
+        Nastavnik
+            .find({predmeti: {$in: [predmet]}})
+            .then(data => {
+                for (let nast of data)
+                    nast.cv_pdf = loadPdf(nast.cv_pdf!);
+                res.json(data)
+            })
+            .catch(err => console.log(err));
+    };
+
+    dohvAngazovaneNastavnikeExt = (req: express.Request, res: express.Response) => {
+        const predmet = req.body.predmet;
+        const uzrast = req.body.predmet;
+
+        Nastavnik
+            .find({predmeti: {$in: [predmet]}, uzrast: {$in: [uzrast]}})
+            .then(data => {
+                for (let nast of data)
+                    nast.cv_pdf = loadPdf(nast.cv_pdf!);
+                res.json(data)
+            })
+            .catch(err => console.log(err));
+    };
+
+    azurirajIme = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const ime = req.body.ime;
+
+        Korisnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {ime: ime})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    azurirajPrezime = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const prezime = req.body.prezime;
+
+        Korisnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {prezime: prezime})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    azurirajAdresu = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const adresa = req.body.adresa;
+
+        Korisnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {adresa: adresa})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    azurirajEmail = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const email = req.body.email;
+
+        Korisnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {email: email})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    azurirajTelefon = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const telefon = req.body.telefon;
+
+        Korisnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {telefon: telefon})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    azurirajTrRazred = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const tip_skole = req.body.tip_skole;
+
+        Ucenik
+            .findOne({kor_ime: kor_ime})
+            .then(data => {
+                const tr_razred = data!.tr_razred!;
+                if (tr_razred === 8 && tip_skole !== "") {
+                    Ucenik
+                        .findOneAndUpdate({kor_ime: kor_ime}, {tr_razred: 1, tip_skole: tip_skole})
+                        .then(data1 => res.json({msg: "OK"}))
+                        .catch(err1 => console.log(err1));
+                }
+                else {
+                    Ucenik
+                        .findOneAndUpdate({kor_ime: kor_ime}, {tr_razred: tr_razred + 1})
+                        .then(data2 => res.json({msg: "OK"}))
+                        .catch(err2 => console.log(err2));
+                }
+            })
+            .catch(err => console.log(err));
+    };
+
+    azurirajProfSliku = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const prof_slika = req.body.prof_slika;
+
+        Korisnik
+            .findOne({kor_ime: kor_ime})
+            .then(data => {
+                if (data!.prof_slika !== default_slika) deleteFile(data!.prof_slika!);
+                const prof_path = prof_slika === "" ? default_slika : savePicture(prof_slika);;
+
+                Korisnik
+                    .findOneAndUpdate({kor_ime: kor_ime}, {prof_slika: prof_path})
+                    .then(tData => res.json({msg: "OK"}))
+                    .catch(tErr => console.log(tErr));
+            })
+            .catch(err => console.log(err));
+    };
+
+    dohvCasoveNastavnika = (req: express.Request, res: express.Response) => {
+        const nastavnik = req.body.nastavnik;
+
+        Cas
+            .find({nastavnik: nastavnik})
+            .then(data => res.json(data))
             .catch(err => console.log(err));
     };
 }

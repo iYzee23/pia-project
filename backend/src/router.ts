@@ -67,4 +67,64 @@ ZRouter
     .route("/proveriBezbOdgovor")
     .post((req, res) => new ZController().proveriBezbOdgovor(req, res));
 
+ZRouter
+    .route("/dohvUkupanBrojUcenika")
+    .get((req, res) => new ZController().dohvUkupanBrojUcenika(req, res));
+
+ZRouter
+    .route("/dohvUkupanBrojAktivnihNastavnika")
+    .get((req, res) => new ZController().dohvUkupanBrojAktivnihNastavnika(req, res));
+
+ZRouter
+    .route("/dohvBrojOdrzanihCasovaPrethNedelja")
+    .get((req, res) => new ZController().dohvBrojOdrzanihCasovaPrethNedelja(req, res));
+
+ZRouter
+    .route("/dohvBrojOdrzanihCasovaPrethMesec")
+    .get((req, res) => new ZController().dohvBrojOdrzanihCasovaPrethMesec(req, res));
+
+ZRouter
+    .route("/dohvPredmete")
+    .get((req, res) => new ZController().dohvPredmete(req, res));
+
+ZRouter
+    .route("/dohvAngazovaneNastavnike")
+    .post((req, res) => new ZController().dohvAngazovaneNastavnike(req, res));
+
+ZRouter
+    .route("/dohvAngazovaneNastavnikeExt")
+    .post((req, res) => new ZController().dohvAngazovaneNastavnikeExt(req, res));
+
+ZRouter
+    .route("/azurirajIme")
+    .post((req, res) => new ZController().azurirajIme(req, res));
+
+ZRouter
+    .route("/azurirajPrezime")
+    .post((req, res) => new ZController().azurirajPrezime(req, res));
+
+ZRouter
+    .route("/azurirajAdresu")
+    .post((req, res) => new ZController().azurirajAdresu(req, res));
+
+ZRouter
+    .route("/azurirajEmail")
+    .post((req, res) => new ZController().azurirajEmail(req, res));
+
+ZRouter
+    .route("/azurirajTelefon")
+    .post((req, res) => new ZController().azurirajTelefon(req, res));
+
+ZRouter
+    .route("/azurirajTrRazred")
+    .post((req, res) => new ZController().azurirajTrRazred(req, res));
+
+ZRouter
+    .route("/azurirajProfSliku")
+    .post((req, res) => new ZController().azurirajProfSliku(req, res));
+
+ZRouter
+    .route("/dohvCasoveNastavnika")
+    .post((req, res) => new ZController().dohvCasoveNastavnika(req, res));
+
 export default ZRouter;

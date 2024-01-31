@@ -160,4 +160,103 @@ export class ZService {
     };
     return this.http.post<boolean>(this.uri + "/proveriBezbOdgovor", data);
   }
+
+  dohvUkupanBrojUcenika() {
+    return this.http.get<number>(this.uri + "/dohvUkupanBrojUcenika");
+  }
+
+  dohvUkupanBrojAktivnihNastavnika() {
+    return this.http.get<number>(this.uri + "/dohvUkupanBrojAktivnihNastavnika");
+  }
+
+  dohvBrojOdrzanihCasovaPrethNedelja() {
+    return this.http.get<number>(this.uri + "/dohvBrojOdrzanihCasovaPrethNedelja");
+  }
+
+  dohvBrojOdrzanihCasovaPrethMesec() {
+    return this.http.get<number>(this.uri + "/dohvBrojOdrzanihCasovaPrethMesec");
+  }
+
+  dohvPredmete() {
+    return this.http.get<Predmet[]>(this.uri + "/dohvPredmete");
+  }
+
+  dohvAngazovaneNastavnike(predmet: string) {
+    const data = {
+      predmet: predmet
+    };
+    return this.http.post<Korisnik[]>(this.uri + "/dohvAngazovaneNastavnike", data);
+  }
+
+  dohvAngazovaneNastavnikeExt(predmet: string, uzrast: string) {
+    const data = {
+      predmet: predmet,
+      uzrast: uzrast
+    };
+    return this.http.post<Korisnik[]>(this.uri + "/dohvAngazovaneNastavnikeExt", data);
+  }
+
+  azurirajIme(kor_ime: string, ime: string) {
+    const data = {
+      kor_ime: kor_ime,
+      ime: ime
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajIme", data);
+  }
+
+  azurirajPrezime(kor_ime: string, prezime: string) {
+    const data = {
+      kor_ime: kor_ime,
+      prezime: prezime
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajPrezime", data);
+  }
+
+  azurirajAdresu(kor_ime: string, adresa: string) {
+    const data = {
+      kor_ime: kor_ime,
+      adresa: adresa
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajAdresu", data);
+  }
+
+  azurirajEmail(kor_ime: string, email: string) {
+    const data = {
+      kor_ime: kor_ime,
+      email: email
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajEmail", data);
+  }
+
+  azurirajTelefon(kor_ime: string, telefon: string) {
+    const data = {
+      kor_ime: kor_ime,
+      telefon: telefon
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajTelefon", data);
+  }
+
+  azurirajTrRazred(kor_ime: string, tip_skole: string) {
+    const data = {
+      kor_ime: kor_ime,
+      tip_skole: tip_skole
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajTrRazred", data);
+  }
+
+  azurirajProfSliku(kor_ime: string, prof_slika: string) {
+    const data = {
+      kor_ime: kor_ime,
+      prof_slika: prof_slika
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajProfSliku", data);
+  }
+
+  dohvCasoveNastavnika(nastavnik: string) {
+    const data = {
+      nastavnik: nastavnik
+    };
+    return this.http.post<Cas[]>(this.uri + "/dohvCasoveNastavnika", data);
+  }
+
 }
