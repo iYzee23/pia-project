@@ -1,5 +1,5 @@
 export class Obavestenje {
-  id: string = "";
+  _id: string = "";
   cas: string = "";
   neprocitano: boolean = false;
 }

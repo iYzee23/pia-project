@@ -18,7 +18,7 @@ export class Korisnik {
   predmeti: string[] = [];
   uzrast: string[] = [];
   culi_sajt: string = "";
-  dostupnost: string[] = [];
+  nedostupnost: string[] = [];
   ocena: number = 0;
   br_ocena: number = 0;
 }

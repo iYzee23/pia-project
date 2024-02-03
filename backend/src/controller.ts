@@ -1,5 +1,5 @@
 import express from "express";
-import { default_slika, deleteFile, hashPassword, loadPdf, loadPicture, savePdf, savePicture, verifyPassword } from "./cryption";
+import * as Util from "./util";
 import Korisnik from "./models/korisnik";
 import Ucenik from "./models/ucenik";
 import Nastavnik from "./models/nastavnik";
@@ -18,10 +18,10 @@ export class ZController {
             .findOne({kor_ime: kor_ime, tip: tip, zahtev_status: "Prihvacen"})
             .then(data1 => {
                 if (!data1) return res.json(null);
-                verifyPassword(lozinka, data1.lozinka!)
+                Util.verifyPassword(lozinka, data1.lozinka!)
                     .then(data2 => {
                         if (data2) {
-                            data1.prof_slika = loadPicture(data1.prof_slika!);
+                            data1.prof_slika = Util.loadPicture(data1.prof_slika!);
                             return res.json(data1);
                         }
                         else return res.json(null);
@@ -39,10 +39,10 @@ export class ZController {
             .findOne({kor_ime: kor_ime, tip: "Admin", zahtev_status: "Prihvacen"})
             .then(data1 => {
                 if (!data1) return res.json(null);
-                verifyPassword(lozinka, data1.lozinka!)
+                Util.verifyPassword(lozinka, data1.lozinka!)
                     .then(data2 => {
                         if (data2) {
-                            data1.prof_slika = loadPicture(data1.prof_slika!);
+                            data1.prof_slika = Util.loadPicture(data1.prof_slika!);
                             return res.json(data1);
                         }
                         else return res.json(null);
@@ -58,7 +58,7 @@ export class ZController {
         Korisnik
             .findOne({kor_ime: kor_ime})
             .then(data => {
-                if (data) data.prof_slika = loadPicture(data.prof_slika!);
+                if (data) data.prof_slika = Util.loadPicture(data.prof_slika!);
                 res.json(data)
             })
             .catch(err => console.log(err));
@@ -79,7 +79,7 @@ export class ZController {
         Nastavnik
             .findOne({kor_ime: kor_ime})
             .then(data => {
-                if (data) data.cv_pdf = loadPdf(data.cv_pdf!);
+                if (data) data.cv_pdf = Util.loadPdf(data.cv_pdf!);
                 res.json(data)
             })
             .catch(err => console.log(err));
@@ -100,9 +100,9 @@ export class ZController {
                         if (data2) return res.json({msg: "Niste uneli jedinstven mejl."})
                         const lozinka = req.body.lozinka;
                         
-                        hashPassword(lozinka)
+                        Util.hashPassword(lozinka)
                             .then(data3 => {
-                                const prof_path = savePicture(req.body.prof_slika);
+                                const prof_path = Util.savePicture(req.body.prof_slika);
                                 
                                 const nKorisnik = new Korisnik({
                                     kor_ime: kor_ime,
@@ -160,9 +160,9 @@ export class ZController {
                         if (data2) return res.json({msg: "Niste uneli jedinstven mejl."})
                         const lozinka = req.body.lozinka;
 
-                        hashPassword(lozinka)
+                        Util.hashPassword(lozinka)
                             .then(data3 => {
-                                const prof_path = savePicture(req.body.prof_slika);
+                                const prof_path = Util.savePicture(req.body.prof_slika);
 
                                 const nKorisnik = new Korisnik({
                                     kor_ime: kor_ime,
@@ -183,7 +183,7 @@ export class ZController {
                                 nKorisnik
                                     .save()
                                     .then(data4 => {
-                                        const cv_path = savePdf(req.body.cv_pdf);
+                                        const cv_path = Util.savePdf(req.body.cv_pdf);
 
                                         const nNastavnik = new Nastavnik({
                                             kor_ime: kor_ime,
@@ -290,10 +290,10 @@ export class ZController {
         Korisnik
             .findOne({kor_ime: kor_ime})
             .then(data1 => {
-                verifyPassword(staraLozinka, data1!.lozinka!)
+                Util.verifyPassword(staraLozinka, data1!.lozinka!)
                     .then(data2 => {
                         if (!data2) return res.json({msg: "Neispravna stara lozinka."});
-                        hashPassword(novaLozinka)
+                        Util.hashPassword(novaLozinka)
                             .then(data3 => {
                                 Korisnik
                                     .findOneAndUpdate({kor_ime: kor_ime}, {lozinka: data3})
@@ -311,7 +311,7 @@ export class ZController {
         const kor_ime = req.body.kor_ime;
         const novaLozinka = req.body.novaLozinka;
 
-        hashPassword(novaLozinka)
+        Util.hashPassword(novaLozinka)
             .then(data => {
                 Korisnik
                     .findOneAndUpdate({kor_ime: kor_ime}, {lozinka: data})
@@ -360,18 +360,18 @@ export class ZController {
         lastWeek.setDate(today.getDate() - 7);
 
         Cas
-            .countDocuments({datum_vreme: {$gte: lastWeek.toISOString()}})
+            .countDocuments({datum_vreme_start: {$gte: lastWeek.toISOString()}, status: "Prihvacen"})
             .then(data => res.json(data))
             .catch(err => console.log(err));
     };
 
     dohvBrojOdrzanihCasovaPrethMesec = (req: express.Request, res: express.Response) => {
         const today = new Date();
-        const lastWeek = new Date();
-        lastWeek.setDate(today.getDate() - 30);
+        const lastMonth = new Date();
+        lastMonth.setDate(today.getDate() - 30);
 
         Cas
-            .countDocuments({datum_vreme: {$gte: lastWeek.toISOString()}})
+            .countDocuments({datum_vreme_start: {$gte: lastMonth.toISOString()}, status: "Prihvacen"})
             .then(data => res.json(data))
             .catch(err => console.log(err));
     };
@@ -411,7 +411,7 @@ export class ZController {
             .find({predmeti: {$in: [predmet]}})
             .then(data => {
                 for (let nast of data)
-                    nast.cv_pdf = loadPdf(nast.cv_pdf!);
+                    nast.cv_pdf = Util.loadPdf(nast.cv_pdf!);
                 res.json(data)
             })
             .catch(err => console.log(err));
@@ -425,7 +425,7 @@ export class ZController {
             .find({predmeti: {$in: [predmet]}, uzrast: {$in: [uzrast]}})
             .then(data => {
                 for (let nast of data)
-                    nast.cv_pdf = loadPdf(nast.cv_pdf!);
+                    nast.cv_pdf = Util.loadPdf(nast.cv_pdf!);
                 res.json(data)
             })
             .catch(err => console.log(err));
@@ -512,8 +512,8 @@ export class ZController {
         Korisnik
             .findOne({kor_ime: kor_ime})
             .then(data => {
-                if (data!.prof_slika !== default_slika) deleteFile(data!.prof_slika!);
-                const prof_path = prof_slika === "" ? default_slika : savePicture(prof_slika);;
+                if (data!.prof_slika !== Util.default_slika) Util.deleteFile(data!.prof_slika!);
+                const prof_path = prof_slika === "" ? Util.default_slika : Util.savePicture(prof_slika);;
 
                 Korisnik
                     .findOneAndUpdate({kor_ime: kor_ime}, {prof_slika: prof_path})
@@ -531,4 +531,74 @@ export class ZController {
             .then(data => res.json(data))
             .catch(err => console.log(err));
     };
+
+    /*
+        1)	zakazivanje casa vikendom
+        2)	pocetak casa pre 10:00 ili kraj casa posle 18:00
+        3)	u toj nedelji, nije dostupan (ponedeljak 10:00 do petka 18:00)
+        4)	taj dan, nije dostupan (taj dan 10:00 do taj dan 18:00)
+        5)	preklapanje
+    */
+
+    zakaziCas = (req: express.Request, res: express.Response) => {
+        const ucenik = req.body.ucenik;
+        const nastavnik = req.body.nastavnik;
+        const predmet = req.body.predmet;
+        const datum_vreme_start = req.body.datum_vreme_start;
+        const kratak_opis = req.body.kratak_opis;
+        const dupli_cas = req.body.dupli_cas;
+        const trajanje = req.body.trajanje;
+
+        const datumVremeStart = new Date(datum_vreme_start);
+        const datumVremeKraj = new Date(datumVremeStart.getTime() + trajanje * 60000 * (dupli_cas ? 2 : 1));
+
+        if (Util.proveraVikend(datumVremeStart)) 
+            return res.json({msg: "Ne mozete zakazati cas vikendom."});
+        if (Util.proveraVreme(datumVremeStart, datumVremeKraj)) 
+            return res.json({msg: "Ne mozete zakazati cas van radnog vremena (10:00-18:00)."});
+
+        Util.nastavnikNedostupanNedelja(nastavnik, datumVremeStart)
+            .then(data1 => {
+                if (data1) return res.json({msg: "Nastavnik je zauzet citave nedelje. Izaberite drugi termin!"});
+                Util.nastavnikNedostupanDan(nastavnik, datumVremeStart)
+                    .then(data2 => {
+                        if (data2) return res.json({msg: "Nastavnik je zauzet citav dan. Izaberite drugi termin!"});
+                        Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "Prihvacen")
+                            .then(data3 => {
+                                if (data3) return res.json({msg: "Vec postoji PRIHVACEN cas koji se poklapa sa Vasim terminom. Izaberite drugi termin!"});
+                                Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
+                                .then(data4 => {
+                                    if (data3) return res.json({msg: "Vec postoji cas U OBRADI koji se poklapa sa Vasim terminom. Izaberite drugi termin!"});
+                                    const nCas = new Cas({
+                                        ucenik: ucenik,
+                                        nastavnik: nastavnik,
+                                        predmet: predmet,
+                                        datum_vreme_start: datumVremeStart.toISOString(),
+                                        datum_vreme_end: datumVremeKraj.toISOString(),
+                                        kratak_opis: kratak_opis,
+                                        dupli_cas: dupli_cas,
+                                        trajanje: trajanje,
+                                        status: "U obradi",
+                                        tekst: null,
+                                        ocena_ucenik: null,
+                                        komentar_ucenik: null,
+                                        ocena_nastavnik: null,
+                                        komentar_nastavnik: null
+                                    });
+                                
+                                    nCas
+                                        .save()
+                                        .then(data5 => res.json({msg: "OK"}))
+                                        .catch(err5 => console.log(err5));
+                                })
+                                .catch(err4 => console.log(err4));
+                            })
+                            .catch(err3 => console.log(err3));
+                    })
+                    .catch(err2 => console.log(err2));
+            })
+            .catch(err1 => console.log(err1));
+    };
+
+
 }

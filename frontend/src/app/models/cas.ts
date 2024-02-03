@@ -1,11 +1,13 @@
 export class Cas {
-  id: string = "";
+  _id: string = "";
   ucenik: string = "";
   nastavnik: string = "";
   predmet: string = "";
-  datum_vreme: string = "";
+  datum_vreme_start: string = "";
+  datum_vreme_kraj: string = "";
   kratak_opis: string = "";
   dupli_cas: boolean = false;
+  trajanje: number = 0;
   status: string = "";
   tekst: string = "";
   ocena_ucenik: number = 0;
