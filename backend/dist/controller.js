@@ -404,7 +404,7 @@ class ZController {
         };
         this.dohvAngazovaneNastavnikeExt = (req, res) => {
             const predmet = req.body.predmet;
-            const uzrast = req.body.predmet;
+            const uzrast = req.body.uzrast;
             nastavnik_1.default
                 .find({ predmeti: { $in: [predmet] }, uzrast: { $in: [uzrast] } })
                 .then(data => {

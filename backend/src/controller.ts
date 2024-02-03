@@ -419,7 +419,7 @@ export class ZController {
 
     dohvAngazovaneNastavnikeExt = (req: express.Request, res: express.Response) => {
         const predmet = req.body.predmet;
-        const uzrast = req.body.predmet;
+        const uzrast = req.body.uzrast;
 
         Nastavnik
             .find({predmeti: {$in: [predmet]}, uzrast: {$in: [uzrast]}})

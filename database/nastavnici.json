@@ -6,8 +6,8 @@
         "uzrast": ["Osnovna skola [5-8]", "Srednja skola"],
         "culi_sajt": "Sin mi je pokazao.",
         "nedostupnost": ["2024-02-07T15:00Z###2024-02-07T16:45Z"],
-        "ocena": 0.00,
-        "br_ocena": 0
+        "ocena": 4.12,
+        "br_ocena": 4
     },
     {
         "kor_ime": "ranko123",
@@ -16,8 +16,8 @@
         "uzrast": ["Srednja skola"],
         "culi_sajt": "Cerka mi je pokazala.",
         "nedostupnost": ["2024-02-07T10:00Z###2024-02-07T18:00Z", "2024-02-12T10:00Z###2024-02-16T18:00Z"],
-        "ocena": 0.00,
-        "br_ocena": 0
+        "ocena": 3.62,
+        "br_ocena": 7
     },
     {
         "kor_ime": "zorka123",
@@ -26,7 +26,7 @@
         "uzrast": ["Osnovna skola [1-4]", "Osnovna skola [5-8]"],
         "culi_sajt": "Videla sam na bilbordu.",
         "nedostupnost": [],
-        "ocena": 0.00,
-        "br_ocena": 0
+        "ocena": 5.00,
+        "br_ocena": 5
     }
 ]

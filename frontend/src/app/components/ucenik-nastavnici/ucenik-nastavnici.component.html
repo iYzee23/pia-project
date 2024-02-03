@@ -1,1 +1,61 @@
-<p>ucenik-nastavnici works!</p>
+<h1>Stranica za ucenika [prikaz nastavnika]</h1>
+<hr>
+<table>
+  <tr>
+    <th>Naziv predmeta</th>
+    <th>Ime nastavnika</th>
+    <th>Prezime nastavnika</th>
+    <th>Prosek nastavnika</th>
+  </tr>
+  <tr *ngFor="let it of fNiz">
+    <td>{{it.predmet}}</td>
+    <td>{{it.nIme}}</td>
+    <td>{{it.nPrezime}}</td>
+    <td>
+      {{it.prosek}}
+      <span [innerHTML]="it.zvezdice"></span>
+    </td>
+  </tr>
+</table>
+<hr>
+<input type="button" value="Sortiraj prema nazivu predmeta rastuce" (click)="sortirajPredmetAsc()">
+<input type="button" value="Sortiraj prema nazivu predmeta opadajuce" (click)="sortirajPredmetDesc()">
+<br>
+<input type="button" value="Sortiraj prema imenu nastavnika rastuce" (click)="sortirajImeAsc()">
+<input type="button" value="Sortiraj prema imenu nastavnika opadajuce" (click)="sortirajImeDesc()">
+<br>
+<input type="button" value="Sortiraj prema prezimenu nastavnika rastuce" (click)="sortirajPrezimeAsc()">
+<input type="button" value="Sortiraj prema prezimenu nastavnika opadajuce" (click)="sortirajPrezimeDesc()">
+<br>
+<input type="button" value="Sortiraj prema proseku nastavnika rastuce" (click)="sortirajProsekAsc()">
+<input type="button" value="Sortiraj prema proseku nastavnika opadajuce" (click)="sortirajProsekDesc()">
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Unesite naziv predmeta za pretragu:</td>
+      <td>
+        <input type="text" [(ngModel)]="pretrPredmet">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite ime nastavnika za pretragu:</td>
+      <td>
+        <input type="text" [(ngModel)]="pretrIme">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite prezime nastavnika za pretragu:</td>
+      <td>
+        <input type="text" [(ngModel)]="pretrPrezime">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="button" value="Pretrazi" (click)="pretrazi()">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<input type="button" value="Odjavi se" (click)="logout()">
