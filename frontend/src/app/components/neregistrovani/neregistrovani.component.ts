@@ -138,4 +138,8 @@ export class NeregistrovaniComponent implements OnInit {
       this.fNiz = this.fNiz.filter(elem => elem.nPrezime.toLowerCase().includes(this.pretrPrezime));
   }
 
+  login() {
+    this.router.navigate(["login"]);
+  }
+
 }

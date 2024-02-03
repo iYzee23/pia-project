@@ -10,11 +10,18 @@ import { RegistracijaUceniciComponent } from './components/registracija-ucenici/
 import { PromenaLozinkeNeZnam1Component } from './components/promena-lozinke-ne-znam1/promena-lozinke-ne-znam1.component';
 import { PromenaLozinkeNeZnam2Component } from './components/promena-lozinke-ne-znam2/promena-lozinke-ne-znam2.component';
 import { NastavnikComponent } from './components/nastavnik/nastavnik.component';
-import { UcenikComponent } from './components/ucenik/ucenik.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { RegistracijaNastavniciComponent } from './components/registracija-nastavnici/registracija-nastavnici.component';
 import { PromenaLozinkeZnamComponent } from './components/promena-lozinke-znam/promena-lozinke-znam.component';
 import { PromenaLozinkeNeZnam3Component } from './components/promena-lozinke-ne-znam3/promena-lozinke-ne-znam3.component';
+import { UcenikProfilComponent } from './components/ucenik-profil/ucenik-profil.component';
+import { UcenikNastavniciComponent } from './components/ucenik-nastavnici/ucenik-nastavnici.component';
+import { UcenikDetaljiComponent } from './components/ucenik-detalji/ucenik-detalji.component';
+import { UcenikPrvaComponent } from './components/ucenik-prva/ucenik-prva.component';
+import { UcenikDrugaComponent } from './components/ucenik-druga/ucenik-druga.component';
+import { UcenikCasoviComponent } from './components/ucenik-casovi/ucenik-casovi.component';
+import { UcenikKomentarComponent } from './components/ucenik-komentar/ucenik-komentar.component';
+import { UcenikObavestenjaComponent } from './components/ucenik-obavestenja/ucenik-obavestenja.component';
 
 const routes: Routes = [
   {path: '', component: NeregistrovaniComponent, canActivate: [noLoginGuard]},
@@ -26,7 +33,14 @@ const routes: Routes = [
   {path: 'promenaLozinkeNeZnam1', component: PromenaLozinkeNeZnam1Component, canActivate: [noLoginGuard]},
   {path: 'promenaLozinkeNeZnam2', component: PromenaLozinkeNeZnam2Component, canActivate: [noLoginGuard]},
   {path: 'promenaLozinkeNeZnam3', component: PromenaLozinkeNeZnam3Component, canActivate: [promenaLozinkeGuard]},
-  {path: 'ucenik', component: UcenikComponent, canActivate: [loginGuard]},
+  {path: 'ucenikProfil', component: UcenikProfilComponent, canActivate: [loginGuard]},
+  {path: 'ucenikNastavnici', component: UcenikNastavniciComponent, canActivate: [loginGuard]},
+  {path: 'ucenikDetalji', component: UcenikDetaljiComponent, canActivate: [loginGuard]},
+  {path: 'ucenikPrva', component: UcenikPrvaComponent, canActivate: [loginGuard]},
+  {path: 'ucenikDruga', component: UcenikDrugaComponent, canActivate: [loginGuard]},
+  {path: 'ucenikCasovi', component: UcenikCasoviComponent, canActivate: [loginGuard]},
+  {path: 'ucenikKomentar', component: UcenikKomentarComponent, canActivate: [loginGuard]},
+  {path: 'ucenikObavestenja', component: UcenikObavestenjaComponent, canActivate: [loginGuard]},
   {path: 'nastavnik', component: NastavnikComponent, canActivate: [loginGuard]},
   {path: 'admin', component: AdminComponent, canActivate: [loginGuard]},
 ];

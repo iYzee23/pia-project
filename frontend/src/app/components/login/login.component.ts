@@ -27,7 +27,7 @@ export class LoginComponent {
             this.poruka = "";
             localStorage.setItem("ulogovani", this.kor_ime);
             localStorage.setItem("tip", data.tip);
-            if (this.tip === "Ucenik") this.router.navigate(["ucenik"]);
+            if (this.tip === "Ucenik") this.router.navigate(["ucenikProfil"]);
             else this.router.navigate(["nastavnik"]);
           }
         }
