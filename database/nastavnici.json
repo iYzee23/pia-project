@@ -1,27 +1,27 @@
 [
     {
         "kor_ime": "slavka123",
-        "cv_pdf": "",
+        "cv_pdf": "../pdfs/slavka.pdf",
         "predmeti": ["Biologija", "Istorija", "Geografija", "Svet oko nas", "Srpski"],
         "uzrast": ["Osnovna skola [5-8]", "Srednja skola"],
         "culi_sajt": "Sin mi je pokazao.",
-        "nedostupnost": [],
+        "nedostupnost": ["2024-02-07T15:00Z###2024-02-07T16:45Z"],
         "ocena": 0.00,
         "br_ocena": 0
     },
     {
         "kor_ime": "ranko123",
-        "cv_pdf": "",
+        "cv_pdf": "../pdfs/ranko.pdf",
         "predmeti": ["Matematika", "Fizika", "Hemija", "Informatika", "Programiranje"],
         "uzrast": ["Srednja skola"],
         "culi_sajt": "Cerka mi je pokazala.",
-        "nedostupnost": [],
+        "nedostupnost": ["2024-02-07T10:00Z###2024-02-07T18:00Z", "2024-02-12T10:00Z###2024-02-16T18:00Z"],
         "ocena": 0.00,
         "br_ocena": 0
     },
     {
         "kor_ime": "zorka123",
-        "cv_pdf": "",
+        "cv_pdf": "../pdfs/zorka.pdf",
         "predmeti": ["Engleski", "Nemacki", "Italijanski", "Francuski", "Spanski", "Latinski"],
         "uzrast": ["Osnovna skola [1-4]", "Osnovna skola [5-8]"],
         "culi_sajt": "Videla sam na bilbordu.",

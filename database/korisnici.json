@@ -11,7 +11,7 @@
         "adresa": "Pastroviceva 49",
         "telefon": "0693305677",
         "email": "pedja123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/pedja.png",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -26,7 +26,7 @@
         "adresa": "Drage Spasic 34",
         "telefon": "0604512314",
         "email": "milica123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/default-profile-picture.jpg",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -41,7 +41,7 @@
         "adresa": "Drage Spasic 34",
         "telefon": "069690304",
         "email": "dragan123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/default-profile-picture.jpg",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -56,7 +56,7 @@
         "adresa": "Pastroviceva 49",
         "telefon": "0691404112",
         "email": "slavka123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/slavka.png",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -71,7 +71,7 @@
         "adresa": "Pastroviceva 49",
         "telefon": "0638659104",
         "email": "ranko123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/default-profile-picture.jpg",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -86,7 +86,7 @@
         "adresa": "Pastroviceva 49",
         "telefon": "0690602114",
         "email": "zorka123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/default-profile-picture.jpg",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -101,7 +101,7 @@
         "adresa": "Veliki Borak BB",
         "telefon": "0669525585",
         "email": "mirko123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/mirko.png",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -116,7 +116,7 @@
         "adresa": "Batajnica 17",
         "telefon": "0603330548",
         "email": "milos123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/default-profile-picture.jpg",
         "zahtev_status": "Prihvacen"
     },
     {
@@ -131,7 +131,7 @@
         "adresa": "Konjarnik 154",
         "telefon": "0654413011",
         "email": "glisa123@gmail.com",
-        "prof_slika": "",
+        "prof_slika": "../images/default-profile-picture.jpg",
         "zahtev_status": "Prihvacen"
     }
 ]
