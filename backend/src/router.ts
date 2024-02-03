@@ -127,4 +127,8 @@ ZRouter
     .route("/dohvCasoveNastavnika")
     .post((req, res) => new ZController().dohvCasoveNastavnika(req, res));
 
+ZRouter
+    .route("/zakaziCas")
+    .post((req, res) => new ZController().zakaziCas(req, res));
+
 export default ZRouter;

@@ -6,13 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Schema = mongoose_1.default.Schema;
 const Cas = new Schema({
-    id: { type: String },
     ucenik: { type: String },
     nastavnik: { type: String },
     predmet: { type: String },
-    datum_vreme: { type: String },
+    datum_vreme_start: { type: String },
+    datum_vreme_kraj: { type: String },
     kratak_opis: { type: String },
     dupli_cas: { type: Boolean },
+    trajanje: { type: Number },
     status: { type: String },
     tekst: { type: String },
     ocena_ucenik: { type: Number },

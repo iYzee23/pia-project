@@ -11,7 +11,7 @@ const Nastavnik = new Schema({
     predmeti: { type: [String] },
     uzrast: { type: [String] },
     culi_sajt: { type: String },
-    dostupnost: { type: [String] },
+    nedostupnost: { type: [String] },
     ocena: { type: Number },
     br_ocena: { type: Number }
 });

@@ -259,4 +259,17 @@ export class ZService {
     return this.http.post<Cas[]>(this.uri + "/dohvCasoveNastavnika", data);
   }
 
+  zakaziCas(ucenik: string, nastavnik: string, predmet: string, datum_vreme_start: string, kratak_opis: string, dupli_cas: boolean, trajanje: number) {
+    const data = {
+      ucenik: ucenik,
+      nastavnik: nastavnik,
+      predmet: predmet,
+      datum_vreme_start: datum_vreme_start,
+      kratak_opis: kratak_opis,
+      dupli_cas: dupli_cas,
+      trajanje: trajanje
+    };
+    return this.http.post<Poruka>(this.uri + "/zakaziCas", data);
+  }
+
 }

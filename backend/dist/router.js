@@ -54,4 +54,52 @@ ZRouter
 ZRouter
     .route("/proveriBezbOdgovor")
     .post((req, res) => new controller_1.ZController().proveriBezbOdgovor(req, res));
+ZRouter
+    .route("/dohvUkupanBrojUcenika")
+    .get((req, res) => new controller_1.ZController().dohvUkupanBrojUcenika(req, res));
+ZRouter
+    .route("/dohvUkupanBrojAktivnihNastavnika")
+    .get((req, res) => new controller_1.ZController().dohvUkupanBrojAktivnihNastavnika(req, res));
+ZRouter
+    .route("/dohvBrojOdrzanihCasovaPrethNedelja")
+    .get((req, res) => new controller_1.ZController().dohvBrojOdrzanihCasovaPrethNedelja(req, res));
+ZRouter
+    .route("/dohvBrojOdrzanihCasovaPrethMesec")
+    .get((req, res) => new controller_1.ZController().dohvBrojOdrzanihCasovaPrethMesec(req, res));
+ZRouter
+    .route("/dohvPredmete")
+    .get((req, res) => new controller_1.ZController().dohvPredmete(req, res));
+ZRouter
+    .route("/dohvAngazovaneNastavnike")
+    .post((req, res) => new controller_1.ZController().dohvAngazovaneNastavnike(req, res));
+ZRouter
+    .route("/dohvAngazovaneNastavnikeExt")
+    .post((req, res) => new controller_1.ZController().dohvAngazovaneNastavnikeExt(req, res));
+ZRouter
+    .route("/azurirajIme")
+    .post((req, res) => new controller_1.ZController().azurirajIme(req, res));
+ZRouter
+    .route("/azurirajPrezime")
+    .post((req, res) => new controller_1.ZController().azurirajPrezime(req, res));
+ZRouter
+    .route("/azurirajAdresu")
+    .post((req, res) => new controller_1.ZController().azurirajAdresu(req, res));
+ZRouter
+    .route("/azurirajEmail")
+    .post((req, res) => new controller_1.ZController().azurirajEmail(req, res));
+ZRouter
+    .route("/azurirajTelefon")
+    .post((req, res) => new controller_1.ZController().azurirajTelefon(req, res));
+ZRouter
+    .route("/azurirajTrRazred")
+    .post((req, res) => new controller_1.ZController().azurirajTrRazred(req, res));
+ZRouter
+    .route("/azurirajProfSliku")
+    .post((req, res) => new controller_1.ZController().azurirajProfSliku(req, res));
+ZRouter
+    .route("/dohvCasoveNastavnika")
+    .post((req, res) => new controller_1.ZController().dohvCasoveNastavnika(req, res));
+ZRouter
+    .route("/zakaziCas")
+    .post((req, res) => new controller_1.ZController().zakaziCas(req, res));
 exports.default = ZRouter;
