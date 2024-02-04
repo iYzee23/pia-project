@@ -10,8 +10,8 @@ import { ZService } from 'src/app/services/z.service';
 export class UcenikNastavniciComponent implements OnInit {
 
   kor_ime: string = "";
-  niz: {predmet: string, nIme: string, nPrezime: string, prosek: number, zvezdice: string}[] = [];
-  fNiz: {predmet: string, nIme: string, nPrezime: string, prosek: number, zvezdice: string}[] = [];
+  niz: {predmet: string, nIme: string, nPrezime: string, nKorIme: string, prosek: number, zvezdice: string}[] = [];
+  fNiz: {predmet: string, nIme: string, nPrezime: string, nKorIme: string, prosek: number, zvezdice: string}[] = [];
   pretrIme: string = "";
   pretrPrezime: string = "";
   pretrPredmet: string = "";
@@ -54,6 +54,7 @@ export class UcenikNastavniciComponent implements OnInit {
                                 predmet: pr.naziv,
                                 nIme: data4.ime,
                                 nPrezime: data4.prezime,
+                                nKorIme: data5.kor_ime,
                                 prosek: data5.ocena,
                                 zvezdice: this.generisiZvezdice(data5.ocena)
                               });

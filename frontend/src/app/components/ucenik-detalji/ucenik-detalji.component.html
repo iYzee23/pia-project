@@ -1,1 +1,42 @@
-<p>ucenik-detalji works!</p>
+<h1>Detalji o nastavniku</h1>
+<hr>
+<table>
+  <tr>
+    <td>Profilna slika</td>
+    <td>
+      <img [src]="prof_slika" alt="Profilna slika">
+    </td>
+  </tr>
+  <tr>
+    <td>Ime i prezime</td>
+    <td>{{ime}} {{prezime}}</td>
+  </tr>
+  <tr>
+    <td>Email adresa</td>
+    <td>{{email}}</td>
+  </tr>
+  <tr>
+    <td>Kontakt telefon</td>
+    <td>{{telefon}}</td>
+  </tr>
+  <tr>
+    <td>Predmeti</td>
+    <td>
+      <span *ngFor="let pr of predmeti">{{pr}}<br></span>
+    </td>
+  </tr>
+  <tr>
+    <td>Komentari i ocene</td>
+    <td style="text-align: left;">
+      <ul>
+        <li *ngFor="let elem of niz" style="margin-bottom: 15px;">
+          Ucenik: {{elem.ucenik}}<br>
+          Ocena: {{elem.ocena}}<br>
+          Komentar: {{elem.komentar}}<br>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<input type="button" value="Vrati se nazad" (click)="back()">

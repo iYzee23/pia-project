@@ -3,14 +3,16 @@
 <table>
   <tr>
     <th>Naziv predmeta</th>
-    <th>Ime nastavnika</th>
-    <th>Prezime nastavnika</th>
+    <th>Ime i prezime nastavnika</th>
     <th>Prosek nastavnika</th>
   </tr>
   <tr *ngFor="let it of fNiz">
     <td>{{it.predmet}}</td>
-    <td>{{it.nIme}}</td>
-    <td>{{it.nPrezime}}</td>
+    <td>
+      <a [routerLink]="['/ucenikDetalji']" [queryParams]="{nastavnik: it.nKorIme}">
+        {{it.nIme}} {{it.nPrezime}}
+      </a>
+    </td>
     <td>
       {{it.prosek}}
       <span [innerHTML]="it.zvezdice"></span>

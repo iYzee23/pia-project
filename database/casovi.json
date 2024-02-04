@@ -10,8 +10,8 @@
         "trajanje": 60,
         "status": "Prihvacen",
         "tekst": null,
-        "ocena_ucenik": null,
-        "komentar_ucenik": null,
+        "ocena_ucenik": 5,
+        "komentar_ucenik": "Slavka stvarno super objasnjava materiju iz biologije!",
         "ocena_nastavnik": null,
         "komentar_nastavnik": null
     },
@@ -26,8 +26,8 @@
         "trajanje": 60,
         "status": "Prihvacen",
         "tekst": null,
-        "ocena_ucenik": null,
-        "komentar_ucenik": null,
+        "ocena_ucenik": 3,
+        "komentar_ucenik": "Rale je kritican na momente... Ali u sustini, moze da se pohvata sve.",
         "ocena_nastavnik": null,
         "komentar_nastavnik": null
     },
@@ -42,8 +42,8 @@
         "trajanje": 60,
         "status": "U obradi",
         "tekst": null,
-        "ocena_ucenik": null,
-        "komentar_ucenik": null,
+        "ocena_ucenik": 3,
+        "komentar_ucenik": "Slavku nimalo ne zanima istorija. Stvarno je gora od Ajkulice!",
         "ocena_nastavnik": null,
         "komentar_nastavnik": null
     },
@@ -58,8 +58,8 @@
         "trajanje": 120,
         "status": "U obradi",
         "tekst": null,
-        "ocena_ucenik": null,
-        "komentar_ucenik": null,
+        "ocena_ucenik": 4,
+        "komentar_ucenik": "Rale je kao bullet train i dopunska u prvoj godini kod Danijele Lazic...",
         "ocena_nastavnik": null,
         "komentar_nastavnik": null
     }
