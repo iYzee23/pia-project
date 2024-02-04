@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postojiPreklapanje = exports.nastavnikNedostupanDan = exports.nastavnikNedostupanNedelja = exports.proveraVreme = exports.proveraVikend = exports.loadPdf = exports.savePdf = exports.loadPicture = exports.savePicture = exports.deleteFile = exports.verifyPassword = exports.hashPassword = exports.default_slika = void 0;
+exports.postojiPreklapanje = exports.nastavnikNedostupanDan = exports.nastavnikNedostupanNedelja = exports.proveraVreme = exports.proveraVikend = exports.proveraBuducnost = exports.loadPdf = exports.savePdf = exports.loadPicture = exports.savePicture = exports.deleteFile = exports.verifyPassword = exports.hashPassword = exports.default_slika = void 0;
 const bcrypt = __importStar(require("bcrypt"));
 const fs_1 = __importDefault(require("fs"));
 const nastavnik_1 = __importDefault(require("./models/nastavnik"));
@@ -97,8 +97,15 @@ function loadPdf(cv_path) {
     return cv_pdf;
 }
 exports.loadPdf = loadPdf;
+function proveraBuducnost(datumVreme) {
+    const sad = new Date();
+    return datumVreme.getTime() > sad.getTime();
+}
+exports.proveraBuducnost = proveraBuducnost;
 function proveraVikend(datumVreme) {
-    const danUNedelji = datumVreme.getDay();
+    const noviDatumVreme = new Date(datumVreme);
+    noviDatumVreme.setTime(noviDatumVreme.getTime() - 3600000);
+    const danUNedelji = noviDatumVreme.getDay();
     return danUNedelji === 0 || danUNedelji === 6;
 }
 exports.proveraVikend = proveraVikend;
@@ -106,9 +113,9 @@ function proveraVreme(datumVremeStart, datumVremeEnd) {
     const pocetnoVremeSati = datumVremeStart.getHours();
     const krajnjeVremeSati = datumVremeEnd.getHours();
     const krajnjeVremeMinuti = datumVremeEnd.getMinutes();
-    if (pocetnoVremeSati < 10 || krajnjeVremeSati > 18)
+    if (pocetnoVremeSati < 11 || krajnjeVremeSati > 19)
         return true;
-    else if (krajnjeVremeSati === 18 && krajnjeVremeMinuti > 0)
+    else if (krajnjeVremeSati === 19 && krajnjeVremeMinuti > 0)
         return true;
     return false;
 }
@@ -117,14 +124,14 @@ function nastavnikNedostupanNedelja(nastavnik, datumVreme) {
     return __awaiter(this, void 0, void 0, function* () {
         const nedeljaStart = new Date(datumVreme);
         nedeljaStart.setDate(nedeljaStart.getDate() - nedeljaStart.getDay() + (nedeljaStart.getDay() === 0 ? -6 : 1));
-        nedeljaStart.setHours(10, 0, 0, 0);
+        nedeljaStart.setHours(11, 0, 0, 0);
         const nedeljaEnd = new Date(nedeljaStart);
         nedeljaEnd.setDate(nedeljaEnd.getDate() + 4);
-        nedeljaEnd.setHours(18, 0, 0, 0);
+        nedeljaEnd.setHours(19, 0, 0, 0);
         const nast = yield nastavnik_1.default.findOne({ kor_ime: nastavnik });
         return nast.nedostupnost.some(data => {
             const [start, end] = data.split('###').map(d => new Date(d));
-            return start == nedeljaStart && end == nedeljaEnd;
+            return start.getTime() === nedeljaStart.getTime() && end.getTime() === nedeljaEnd.getTime();
         });
     });
 }
@@ -132,13 +139,13 @@ exports.nastavnikNedostupanNedelja = nastavnikNedostupanNedelja;
 function nastavnikNedostupanDan(nastavnik, datumVreme) {
     return __awaiter(this, void 0, void 0, function* () {
         const danStart = new Date(datumVreme);
-        danStart.setHours(10, 0, 0, 0);
+        danStart.setHours(11, 0, 0, 0);
         const danEnd = new Date(datumVreme);
-        danEnd.setHours(18, 0, 0, 0);
+        danEnd.setHours(19, 0, 0, 0);
         const nast = yield nastavnik_1.default.findOne({ kor_ime: nastavnik });
         return nast.nedostupnost.some(data => {
             const [start, end] = data.split('###').map(d => new Date(d));
-            return start == danStart && end == danEnd;
+            return start.getTime() === danStart.getTime() && end.getTime() === danEnd.getTime();
         });
     });
 }
@@ -148,8 +155,8 @@ function postojiPreklapanje(nastavnik, datumVremeStart, datumVremeEnd, status) {
         const preklapajuciCas = yield cas_1.default.findOne({
             nastavnik: nastavnik,
             status: status,
-            datum_vreme_start: { $lt: datumVremeEnd.toISOString() },
-            datum_vreme_end: { $gt: datumVremeStart.toISOString() }
+            datum_vreme_start: { $lt: datumVremeEnd.toISOString().slice(0, 16) + "Z" },
+            datum_vreme_kraj: { $gt: datumVremeStart.toISOString().slice(0, 16) + "Z" }
         });
         return !!preklapajuciCas;
     });

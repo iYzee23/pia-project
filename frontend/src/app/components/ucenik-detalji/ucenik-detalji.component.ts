@@ -63,4 +63,14 @@ export class UcenikDetaljiComponent implements OnInit {
     this.location.back();
   }
 
+  zakaziPrvi() {
+    localStorage.setItem("nastavnik", this.kor_ime);
+    this.router.navigate(["ucenikPrva"]);
+  }
+
+  zakaziDrugi() {
+    localStorage.setItem("nastavnik", this.kor_ime);
+    this.router.navigate(["ucenikDruga"]);
+  }
+
 }

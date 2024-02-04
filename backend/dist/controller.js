@@ -511,12 +511,14 @@ class ZController {
             const ucenik = req.body.ucenik;
             const nastavnik = req.body.nastavnik;
             const predmet = req.body.predmet;
-            const datum_vreme_start = req.body.datum_vreme_start;
+            const datum_vreme_start = req.body.datum_vreme_start + "Z";
             const kratak_opis = req.body.kratak_opis;
             const dupli_cas = req.body.dupli_cas;
             const trajanje = req.body.trajanje;
             const datumVremeStart = new Date(datum_vreme_start);
             const datumVremeKraj = new Date(datumVremeStart.getTime() + trajanje * 60000 * (dupli_cas ? 2 : 1));
+            if (!Util.proveraBuducnost(datumVremeStart))
+                return res.json({ msg: "Zakazani cas mora biti u buducnosti." });
             if (Util.proveraVikend(datumVremeStart))
                 return res.json({ msg: "Ne mozete zakazati cas vikendom." });
             if (Util.proveraVreme(datumVremeStart, datumVremeKraj))
@@ -535,14 +537,14 @@ class ZController {
                             return res.json({ msg: "Vec postoji PRIHVACEN cas koji se poklapa sa Vasim terminom. Izaberite drugi termin!" });
                         Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
                             .then(data4 => {
-                            if (data3)
+                            if (data4)
                                 return res.json({ msg: "Vec postoji cas U OBRADI koji se poklapa sa Vasim terminom. Izaberite drugi termin!" });
                             const nCas = new cas_1.default({
                                 ucenik: ucenik,
                                 nastavnik: nastavnik,
                                 predmet: predmet,
-                                datum_vreme_start: datumVremeStart.toISOString(),
-                                datum_vreme_end: datumVremeKraj.toISOString(),
+                                datum_vreme_start: datumVremeStart.toISOString().slice(0, 16) + "Z",
+                                datum_vreme_kraj: datumVremeKraj.toISOString().slice(0, 16) + "Z",
                                 kratak_opis: kratak_opis,
                                 dupli_cas: dupli_cas,
                                 trajanje: trajanje,

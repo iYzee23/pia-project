@@ -57,8 +57,15 @@ export function loadPdf(cv_path: string): string {
     return cv_pdf;
 }
 
+export function proveraBuducnost(datumVreme: Date): boolean {
+    const sad = new Date();
+    return datumVreme.getTime() > sad.getTime();
+}
+
 export function proveraVikend(datumVreme: Date): boolean {
-    const danUNedelji = datumVreme.getDay();
+    const noviDatumVreme = new Date(datumVreme);
+    noviDatumVreme.setTime(noviDatumVreme.getTime() - 3600000);
+    const danUNedelji = noviDatumVreme.getDay();
     return danUNedelji === 0 || danUNedelji === 6;
 }
 
@@ -67,49 +74,49 @@ export function proveraVreme(datumVremeStart: Date, datumVremeEnd: Date): boolea
     const krajnjeVremeSati = datumVremeEnd.getHours();
     const krajnjeVremeMinuti = datumVremeEnd.getMinutes();
 
-    if (pocetnoVremeSati < 10 || krajnjeVremeSati > 18) return true;
-    else if (krajnjeVremeSati === 18 && krajnjeVremeMinuti > 0) return true;
+    if (pocetnoVremeSati < 11 || krajnjeVremeSati > 19) return true;
+    else if (krajnjeVremeSati === 19 && krajnjeVremeMinuti > 0) return true;
     return false;
 }
 
 export async function nastavnikNedostupanNedelja(nastavnik: string, datumVreme: Date): Promise<boolean> {
     const nedeljaStart = new Date(datumVreme);
     nedeljaStart.setDate(nedeljaStart.getDate() - nedeljaStart.getDay() + (nedeljaStart.getDay() === 0 ? -6 : 1));
-    nedeljaStart.setHours(10, 0, 0, 0);
+    nedeljaStart.setHours(11, 0, 0, 0);
 
     const nedeljaEnd = new Date(nedeljaStart);
     nedeljaEnd.setDate(nedeljaEnd.getDate() + 4);
-    nedeljaEnd.setHours(18, 0, 0, 0);
+    nedeljaEnd.setHours(19, 0, 0, 0);
 
     const nast = await Nastavnik.findOne({kor_ime: nastavnik});
 
     return nast!.nedostupnost.some(data => {
         const [start, end] = data.split('###').map(d => new Date(d));
-        return start == nedeljaStart && end == nedeljaEnd;
+        return start.getTime() === nedeljaStart.getTime() && end.getTime() === nedeljaEnd.getTime();
     });
 }
 
 export async function nastavnikNedostupanDan(nastavnik: string, datumVreme: Date): Promise<boolean> {
 	const danStart = new Date(datumVreme);
-    danStart.setHours(10, 0, 0, 0);
+    danStart.setHours(11, 0, 0, 0);
 
     const danEnd = new Date(datumVreme);
-    danEnd.setHours(18, 0, 0, 0);
+    danEnd.setHours(19, 0, 0, 0);
 
     const nast = await Nastavnik.findOne({kor_ime: nastavnik});
 
     return nast!.nedostupnost.some(data => {
         const [start, end] = data.split('###').map(d => new Date(d));
-        return start == danStart && end == danEnd;
+        return start.getTime() === danStart.getTime() && end.getTime() === danEnd.getTime();
     });
 }
 
-export async function postojiPreklapanje(nastavnik: string, datumVremeStart: Date, datumVremeEnd: Date, status: string): Promise<boolean> {
+export async function postojiPreklapanje(nastavnik: string, datumVremeStart: Date, datumVremeEnd: Date, status: string): Promise<boolean> {    
     const preklapajuciCas = await Cas.findOne({
         nastavnik: nastavnik,
         status: status,
-        datum_vreme_start: { $lt: datumVremeEnd.toISOString() },
-        datum_vreme_end: { $gt: datumVremeStart.toISOString() }
+        datum_vreme_start: { $lt: datumVremeEnd.toISOString().slice(0, 16) + "Z" },
+        datum_vreme_kraj: { $gt: datumVremeStart.toISOString().slice(0, 16) + "Z" }
     });
 
     return !!preklapajuciCas;
