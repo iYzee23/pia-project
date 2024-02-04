@@ -131,4 +131,8 @@ ZRouter
     .route("/zakaziCas")
     .post((req, res) => new ZController().zakaziCas(req, res));
 
+ZRouter
+    .route("/zakaziCasExt")
+    .post((req, res) => new ZController().zakaziCasExt(req, res));
+
 export default ZRouter;

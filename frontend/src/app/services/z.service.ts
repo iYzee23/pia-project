@@ -272,4 +272,16 @@ export class ZService {
     return this.http.post<Poruka>(this.uri + "/zakaziCas", data);
   }
 
+  zakaziCasExt(ucenik: string, nastavnik: string, predmet: string, datum_vreme_start: string, datum_vreme_kraj: string, kratak_opis: string) {
+    const data = {
+      ucenik: ucenik,
+      nastavnik: nastavnik,
+      predmet: predmet,
+      datum_vreme_start: datum_vreme_start,
+      datum_vreme_kraj: datum_vreme_kraj,
+      kratak_opis: kratak_opis
+    };
+    return this.http.post<Poruka>(this.uri + "/zakaziCasExt", data);
+  }
+
 }

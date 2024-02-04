@@ -111,6 +111,15 @@ export async function nastavnikNedostupanDan(nastavnik: string, datumVreme: Date
     });
 }
 
+export async function nastavnikNedostupan(nastavnik: string, datumVremeStart: Date, datumVremeEnd: Date): Promise<boolean> {
+    const nast = await Nastavnik.findOne({kor_ime: nastavnik});
+
+    return nast!.nedostupnost.some(data => {
+        const [start, end] = data.split('###').map(d => new Date(d));
+        return start.getTime() < datumVremeEnd.getTime() && end.getTime() > datumVremeStart.getTime();
+    });
+}
+
 export async function postojiPreklapanje(nastavnik: string, datumVremeStart: Date, datumVremeEnd: Date, status: string): Promise<boolean> {    
     const preklapajuciCas = await Cas.findOne({
         nastavnik: nastavnik,

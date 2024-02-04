@@ -26,6 +26,7 @@ import { UcenikDrugaComponent } from './components/ucenik-druga/ucenik-druga.com
 import { UcenikCasoviComponent } from './components/ucenik-casovi/ucenik-casovi.component';
 import { UcenikKomentarComponent } from './components/ucenik-komentar/ucenik-komentar.component';
 import { UcenikObavestenjaComponent } from './components/ucenik-obavestenja/ucenik-obavestenja.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { UcenikObavestenjaComponent } from './components/ucenik-obavestenja/ucen
   ],
   imports: [
     BrowserModule,
+    FullCalendarModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule

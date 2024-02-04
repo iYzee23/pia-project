@@ -1,1 +1,44 @@
-<p>ucenik-druga works!</p>
+<h1>Zakazivanje casa [drugi nacin]</h1>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Izaberite predmet:</td>
+      <td>
+        <select [(ngModel)]="izabr_predmet" [disabled]="predmeti.length === 1">
+          <option *ngFor="let pr of predmeti" [value]="pr">{{pr}}</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite kratak opis casa (sta zelite da radite na casu):</td>
+      <td>
+        <input type="text" [(ngModel)]="kratak_opis">
+      </td>
+    </tr>
+    <tr>
+      <td>Izaberite da li zelite dupli cas:</td>
+      <td>
+        <input type="checkbox" id="dupli_cas" disabled>
+        <label for="dupli_cas">Zelim</label>
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class='demo-app'>
+  <div class='demo-app-main'>
+    <full-calendar #calendar [options]='calendarOptions'>
+      <ng-template #eventContent let-arg>
+        <b>{{ arg.timeText }}</b>
+        <i>{{ arg.event.title }}</i>
+      </ng-template>
+    </full-calendar>
+  </div>
+</div>
+<hr>
+<p *ngIf="poruka !== ''" [class]="poruka.includes('Uspesno') ? 'green' : 'red'">
+  {{poruka}}
+</p>
+<input type="button" value="Zakazi cas" (click)="zakaziCas()">&nbsp;
+<input type="button" value="Vrati se nazad" (click)="back()">

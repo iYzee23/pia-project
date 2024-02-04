@@ -571,26 +571,31 @@ export class ZController {
                                 Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
                                     .then(data4 => {
                                         if (data4) return res.json({msg: "Vec postoji cas U OBRADI koji se poklapa sa Vasim terminom. Izaberite drugi termin!"});
-                                        const nCas = new Cas({
-                                            ucenik: ucenik,
-                                            nastavnik: nastavnik,
-                                            predmet: predmet,
-                                            datum_vreme_start: datumVremeStart.toISOString().slice(0, 16) + "Z",
-                                            datum_vreme_kraj: datumVremeKraj.toISOString().slice(0, 16) + "Z",
-                                            kratak_opis: kratak_opis,
-                                            dupli_cas: dupli_cas,
-                                            trajanje: trajanje,
-                                            status: "U obradi",
-                                            tekst: null,
-                                            ocena_ucenik: null,
-                                            komentar_ucenik: null,
-                                            ocena_nastavnik: null,
-                                            komentar_nastavnik: null
-                                        });
-                                    
-                                        nCas
-                                            .save()
-                                            .then(data5 => res.json({msg: "OK"}))
+                                        Util.nastavnikNedostupan(nastavnik, datumVremeStart, datumVremeKraj)
+                                            .then(data5 => {
+                                                if (data5) return res.json({msg: "Nastavnik je nedostupan u ovom terminu. Izaberite drugi termin!"});
+                                                const nCas = new Cas({
+                                                    ucenik: ucenik,
+                                                    nastavnik: nastavnik,
+                                                    predmet: predmet,
+                                                    datum_vreme_start: datumVremeStart.toISOString().slice(0, 16) + "Z",
+                                                    datum_vreme_kraj: datumVremeKraj.toISOString().slice(0, 16) + "Z",
+                                                    kratak_opis: kratak_opis,
+                                                    dupli_cas: dupli_cas,
+                                                    trajanje: trajanje,
+                                                    status: "U obradi",
+                                                    tekst: null,
+                                                    ocena_ucenik: null,
+                                                    komentar_ucenik: null,
+                                                    ocena_nastavnik: null,
+                                                    komentar_nastavnik: null
+                                                });
+                                            
+                                                nCas
+                                                    .save()
+                                                    .then(data6 => res.json({msg: "OK"}))
+                                                    .catch(err6 => console.log(err6));
+                                            })
                                             .catch(err5 => console.log(err5));
                                     })
                                     .catch(err4 => console.log(err4));
@@ -602,5 +607,71 @@ export class ZController {
             .catch(err1 => console.log(err1));
     };
 
+    zakaziCasExt = (req: express.Request, res: express.Response) => {
+        const ucenik = req.body.ucenik;
+        const nastavnik = req.body.nastavnik;
+        const predmet = req.body.predmet;
+        const datum_vreme_start = req.body.datum_vreme_start;
+        const datum_vreme_kraj = req.body.datum_vreme_kraj;
+        const kratak_opis = req.body.kratak_opis;
 
+        const datumVremeStart = new Date(datum_vreme_start);
+        const datumVremeKraj = new Date(datum_vreme_kraj);
+        const dupli_cas = false;
+        const trajanje = (datumVremeKraj.getTime() - datumVremeStart.getTime()) / 60000;
+
+        if (!Util.proveraBuducnost(datumVremeStart))
+            return res.json({msg: "Zakazani cas mora biti u buducnosti."});
+        if (Util.proveraVikend(datumVremeStart)) 
+            return res.json({msg: "Ne mozete zakazati cas vikendom."});
+        if (Util.proveraVreme(datumVremeStart, datumVremeKraj)) 
+            return res.json({msg: "Ne mozete zakazati cas van radnog vremena (10:00-18:00)."});
+
+        Util.nastavnikNedostupanNedelja(nastavnik, datumVremeStart)
+            .then(data1 => {
+                if (data1) return res.json({msg: "Nastavnik je zauzet citave nedelje. Izaberite drugi termin!"});
+                Util.nastavnikNedostupanDan(nastavnik, datumVremeStart)
+                    .then(data2 => {
+                        if (data2) return res.json({msg: "Nastavnik je zauzet citav dan. Izaberite drugi termin!"});
+                        Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "Prihvacen")
+                            .then(data3 => {
+                                if (data3) return res.json({msg: "Vec postoji PRIHVACEN cas koji se poklapa sa Vasim terminom. Izaberite drugi termin!"});
+                                Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
+                                    .then(data4 => {
+                                        if (data4) return res.json({msg: "Vec postoji cas U OBRADI koji se poklapa sa Vasim terminom. Izaberite drugi termin!"});
+                                        Util.nastavnikNedostupan(nastavnik, datumVremeStart, datumVremeKraj)
+                                            .then(data5 => {
+                                                if (data5) return res.json({msg: "Nastavnik je nedostupan u ovom terminu. Izaberite drugi termin!"});
+                                                const nCas = new Cas({
+                                                    ucenik: ucenik,
+                                                    nastavnik: nastavnik,
+                                                    predmet: predmet,
+                                                    datum_vreme_start: datumVremeStart.toISOString().slice(0, 16) + "Z",
+                                                    datum_vreme_kraj: datumVremeKraj.toISOString().slice(0, 16) + "Z",
+                                                    kratak_opis: kratak_opis,
+                                                    dupli_cas: dupli_cas,
+                                                    trajanje: trajanje,
+                                                    status: "U obradi",
+                                                    tekst: null,
+                                                    ocena_ucenik: null,
+                                                    komentar_ucenik: null,
+                                                    ocena_nastavnik: null,
+                                                    komentar_nastavnik: null
+                                                });
+                                            
+                                                nCas
+                                                    .save()
+                                                    .then(data6 => res.json({msg: "OK"}))
+                                                    .catch(err6 => console.log(err6));
+                                            })
+                                            .catch(err5 => console.log(err5));
+                                    })
+                                    .catch(err4 => console.log(err4));
+                            })
+                            .catch(err3 => console.log(err3));
+                    })
+                    .catch(err2 => console.log(err2));
+            })
+            .catch(err1 => console.log(err1));
+    };
 }
