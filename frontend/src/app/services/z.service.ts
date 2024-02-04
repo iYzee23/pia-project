@@ -259,6 +259,13 @@ export class ZService {
     return this.http.post<Cas[]>(this.uri + "/dohvCasoveNastavnika", data);
   }
 
+  dohvCasoveUcenika(ucenik: string) {
+    const data = {
+      ucenik: ucenik
+    };
+    return this.http.post<Cas[]>(this.uri + "/dohvCasoveUcenika", data);
+  }
+
   zakaziCas(ucenik: string, nastavnik: string, predmet: string, datum_vreme_start: string, kratak_opis: string, dupli_cas: boolean, trajanje: number) {
     const data = {
       ucenik: ucenik,
@@ -282,6 +289,60 @@ export class ZService {
       kratak_opis: kratak_opis
     };
     return this.http.post<Poruka>(this.uri + "/zakaziCasExt", data);
+  }
+
+  potvrdiCas(_id: string) {
+    const data = {
+      _id: _id
+    };
+    return this.http.post<Poruka>(this.uri + "/potvrdiCas", data);
+  }
+
+  odbijCas(_id: string) {
+    const data = {
+      _id: _id
+    };
+    return this.http.post<Poruka>(this.uri + "/odbijCas", data);
+  }
+
+  unesiKomentarIOcenuUcenik(_id: string, komentar_ucenik: string, ocena_ucenik: number) {
+    const data = {
+      _id: _id,
+      komentar_ucenik: komentar_ucenik,
+      ocena_ucenik: ocena_ucenik
+    };
+    return this.http.post<Poruka>(this.uri + "/unesiKomentarIOcenuUcenik", data);
+  }
+
+  unesiKomentarIOcenuNastavnik(_id: string, komentar_nastavnik: string, ocena_nastavnik: number) {
+    const data = {
+      _id: _id,
+      komentar_nastavnik: komentar_nastavnik,
+      ocena_nastavnik: ocena_nastavnik
+    };
+    return this.http.post<Poruka>(this.uri + "/unesiKomentarIOcenuNastavnik", data);
+  }
+
+  dohvObavestenjeZaCas(cas: string) {
+    const data = {
+      cas: cas
+    };
+    return this.http.post<Obavestenje>(this.uri + "/dohvObavestenjeZaCas", data);
+  }
+
+  kreirajObavestenje(cas: string, tekst: string) {
+    const data = {
+      cas: cas,
+      tekst: tekst
+    };
+    return this.http.post<Poruka>(this.uri + "/kreirajObavestenje", data);
+  }
+
+  procitajObavestenje(_id: string) {
+    const data = {
+      _id: _id
+    };
+    return this.http.post<Poruka>(this.uri + "/procitajObavestenje", data);
   }
 
 }

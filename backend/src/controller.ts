@@ -532,6 +532,15 @@ export class ZController {
             .catch(err => console.log(err));
     };
 
+    dohvCasoveUcenika = (req: express.Request, res: express.Response) => {
+        const ucenik = req.body.ucenik;
+
+        Cas
+            .find({ucenik: ucenik})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
     /*
         1)	zakazivanje casa vikendom
         2)	pocetak casa pre 10:00 ili kraj casa posle 18:00
@@ -673,5 +682,105 @@ export class ZController {
                     .catch(err2 => console.log(err2));
             })
             .catch(err1 => console.log(err1));
+    };
+
+    potvrdiCas = (req: express.Request, res: express.Response) => {
+        const _id = req.body._id;
+
+        Cas
+            .findByIdAndUpdate(_id, {status: "Prihvacen"})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    odbijCas = (req: express.Request, res: express.Response) => {
+        const _id = req.body._id;
+
+        Cas
+            .findByIdAndUpdate(_id, {status: "Odbijen"})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    unesiKomentarIOcenuUcenik = (req: express.Request, res: express.Response) => {
+        const _id = req.body._id;
+        const komentar_ucenik = req.body.komentar_ucenik;
+        const ocena_ucenik = req.body.ocena_ucenik;
+
+        Cas
+            .findByIdAndUpdate(_id, {komentar_ucenik: komentar_ucenik, ocena_ucenik: ocena_ucenik})
+            .then(data => {
+                Nastavnik
+                    .findOne({kor_ime: data!.nastavnik})
+                    .then(tData => {
+                        const ocena = tData!.ocena!;
+                        const br_ocena = tData!.br_ocena!;
+                        const nOcena = (ocena * br_ocena + ocena_ucenik) / (br_ocena + 1);
+                        Nastavnik
+                            .findOneAndUpdate({kor_ime: data!.nastavnik}, {ocena: nOcena, br_ocena: br_ocena + 1})
+                            .then(fData => res.json({msg: "OK"}))
+                            .catch(fErr => console.log(fErr));
+                    })
+                    .catch(tErr => console.log(tErr));
+            })
+            .catch(err => console.log(err));
+    };
+
+    unesiKomentarIOcenuNastavnik = (req: express.Request, res: express.Response) => {
+        const _id = req.body._id;
+        const komentar_nastavnik = req.body.komentar_nastavnik;
+        const ocena_nastavnik = req.body.ocena_nastavnik;
+
+        Cas
+            .findByIdAndUpdate(_id, {komentar_nastavnik: komentar_nastavnik, ocena_nastavnik: ocena_nastavnik})
+            .then(data => {
+                Ucenik
+                    .findOne({kor_ime: data!.ucenik})
+                    .then(tData => {
+                        const ocena = tData!.ocena!;
+                        const br_ocena = tData!.br_ocena!;
+                        const nOcena = (ocena * br_ocena + ocena_nastavnik) / (br_ocena + 1);
+                        Ucenik
+                            .findOneAndUpdate({kor_ime: data!.ucenik}, {ocena: nOcena, br_ocena: br_ocena + 1})
+                            .then(fData => res.json({msg: "OK"}))
+                            .catch(fErr => console.log(fErr));
+                    })
+                    .catch(tErr => console.log(tErr));
+            })
+            .catch(err => console.log(err));
+    };
+
+    dohvObavestenjeZaCas = (req: express.Request, res: express.Response) => {
+        const cas = req.body.cas;
+
+        Obavestenje
+            .findOne({cas: cas})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    kreirajObavestenje = (req: express.Request, res: express.Response) => {
+        const cas = req.body.cas;
+        const tekst = req.body.tekst;
+
+        const nObavestenje = new Obavestenje({
+            cas: cas,
+            tekst: tekst,
+            neprocitano: true
+        });
+
+        nObavestenje
+            .save()
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    procitajObavestenje = (req: express.Request, res: express.Response) => {
+        const _id = req.body._id;
+
+        Obavestenje
+            .findByIdAndUpdate(_id, {neprocitano: false})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
     };
 }

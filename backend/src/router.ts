@@ -128,11 +128,43 @@ ZRouter
     .post((req, res) => new ZController().dohvCasoveNastavnika(req, res));
 
 ZRouter
+    .route("/dohvCasoveUcenika")
+    .post((req, res) => new ZController().dohvCasoveUcenika(req, res));
+
+ZRouter
     .route("/zakaziCas")
     .post((req, res) => new ZController().zakaziCas(req, res));
 
 ZRouter
     .route("/zakaziCasExt")
     .post((req, res) => new ZController().zakaziCasExt(req, res));
+
+ZRouter
+    .route("/potvrdiCas")
+    .post((req, res) => new ZController().potvrdiCas(req, res));
+
+ZRouter
+    .route("/odbijCas")
+    .post((req, res) => new ZController().odbijCas(req, res));
+    
+ZRouter
+    .route("/unesiKomentarIOcenuUcenik")
+    .post((req, res) => new ZController().unesiKomentarIOcenuUcenik(req, res));
+
+ZRouter
+    .route("/unesiKomentarIOcenuNastavnik")
+    .post((req, res) => new ZController().unesiKomentarIOcenuNastavnik(req, res));
+
+ZRouter
+    .route("/dohvObavestenjeZaCas")
+    .post((req, res) => new ZController().dohvObavestenjeZaCas(req, res));
+
+ZRouter
+    .route("/kreirajObavestenje")
+    .post((req, res) => new ZController().kreirajObavestenje(req, res));
+
+ZRouter
+    .route("/procitajObavestenje")
+    .post((req, res) => new ZController().procitajObavestenje(req, res));
 
 export default ZRouter;
