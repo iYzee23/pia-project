@@ -14,4 +14,7 @@ export class Cas {
   komentar_ucenik: string = "";
   ocena_nastavnik: number = 0;
   komentar_nastavnik: string = "";
+  nIme: string = "";
+  nPrezime: string = "";
+  ucionicaDisabled: boolean = true;
 }

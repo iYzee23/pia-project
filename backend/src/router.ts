@@ -156,8 +156,8 @@ ZRouter
     .post((req, res) => new ZController().unesiKomentarIOcenuNastavnik(req, res));
 
 ZRouter
-    .route("/dohvObavestenjeZaCas")
-    .post((req, res) => new ZController().dohvObavestenjeZaCas(req, res));
+    .route("/dohvObavestenjaZaCas")
+    .post((req, res) => new ZController().dohvObavestenjaZaCas(req, res));
 
 ZRouter
     .route("/kreirajObavestenje")

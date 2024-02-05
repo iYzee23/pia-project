@@ -323,11 +323,11 @@ export class ZService {
     return this.http.post<Poruka>(this.uri + "/unesiKomentarIOcenuNastavnik", data);
   }
 
-  dohvObavestenjeZaCas(cas: string) {
+  dohvObavestenjaZaCas(cas: string) {
     const data = {
       cas: cas
     };
-    return this.http.post<Obavestenje>(this.uri + "/dohvObavestenjeZaCas", data);
+    return this.http.post<Obavestenje[]>(this.uri + "/dohvObavestenjaZaCas", data);
   }
 
   kreirajObavestenje(cas: string, tekst: string) {

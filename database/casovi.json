@@ -3,8 +3,8 @@
         "ucenik": "mirko123",
         "nastavnik": "slavka123",
         "predmet": "Biologija",
-        "datum_vreme_start": "2024-02-06T14:00Z",
-        "datum_vreme_kraj": "2024-02-06T15:00Z",
+        "datum_vreme_start": "2024-02-04T14:00Z",
+        "datum_vreme_kraj": "2024-02-04T15:00Z",
         "kratak_opis": "Spremanje prvog kontrolnog.",
         "dupli_cas": false,
         "trajanje": 60,
@@ -60,6 +60,22 @@
         "tekst": null,
         "ocena_ucenik": 4,
         "komentar_ucenik": "Rale je kao bullet train i dopunska u prvoj godini kod Danijele Lazic...",
+        "ocena_nastavnik": null,
+        "komentar_nastavnik": null
+    },
+    {
+        "ucenik": "mirko123",
+        "nastavnik": "ranko123",
+        "predmet": "Geografija",
+        "datum_vreme_start": "2024-02-03T14:00Z",
+        "datum_vreme_kraj": "2024-02-03T15:00Z",
+        "kratak_opis": "Spremanje prvog kontrolnog.",
+        "dupli_cas": false,
+        "trajanje": 60,
+        "status": "Prihvacen",
+        "tekst": null,
+        "ocena_ucenik": null,
+        "komentar_ucenik": null,
         "ocena_nastavnik": null,
         "komentar_nastavnik": null
     }

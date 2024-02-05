@@ -33,6 +33,7 @@ const ucenik_1 = __importDefault(require("./models/ucenik"));
 const nastavnik_1 = __importDefault(require("./models/nastavnik"));
 const cas_1 = __importDefault(require("./models/cas"));
 const predmet_1 = __importDefault(require("./models/predmet"));
+const obavestenje_1 = __importDefault(require("./models/obavestenje"));
 class ZController {
     constructor() {
         this.login = (req, res) => {
@@ -500,6 +501,13 @@ class ZController {
                 .then(data => res.json(data))
                 .catch(err => console.log(err));
         };
+        this.dohvCasoveUcenika = (req, res) => {
+            const ucenik = req.body.ucenik;
+            cas_1.default
+                .find({ ucenik: ucenik })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
         /*
             1)	zakazivanje casa vikendom
             2)	pocetak casa pre 10:00 ili kraj casa posle 18:00
@@ -641,6 +649,91 @@ class ZController {
                     .catch(err2 => console.log(err2));
             })
                 .catch(err1 => console.log(err1));
+        };
+        this.potvrdiCas = (req, res) => {
+            const _id = req.body._id;
+            cas_1.default
+                .findByIdAndUpdate(_id, { status: "Prihvacen" })
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
+        this.odbijCas = (req, res) => {
+            const _id = req.body._id;
+            cas_1.default
+                .findByIdAndUpdate(_id, { status: "Odbijen" })
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
+        this.unesiKomentarIOcenuUcenik = (req, res) => {
+            const _id = req.body._id;
+            const komentar_ucenik = req.body.komentar_ucenik;
+            const ocena_ucenik = req.body.ocena_ucenik;
+            cas_1.default
+                .findByIdAndUpdate(_id, { komentar_ucenik: komentar_ucenik, ocena_ucenik: ocena_ucenik })
+                .then(data => {
+                nastavnik_1.default
+                    .findOne({ kor_ime: data.nastavnik })
+                    .then(tData => {
+                    const ocena = tData.ocena;
+                    const br_ocena = tData.br_ocena;
+                    const nOcena = (ocena * br_ocena + ocena_ucenik) / (br_ocena + 1);
+                    nastavnik_1.default
+                        .findOneAndUpdate({ kor_ime: data.nastavnik }, { ocena: nOcena, br_ocena: br_ocena + 1 })
+                        .then(fData => res.json({ msg: "OK" }))
+                        .catch(fErr => console.log(fErr));
+                })
+                    .catch(tErr => console.log(tErr));
+            })
+                .catch(err => console.log(err));
+        };
+        this.unesiKomentarIOcenuNastavnik = (req, res) => {
+            const _id = req.body._id;
+            const komentar_nastavnik = req.body.komentar_nastavnik;
+            const ocena_nastavnik = req.body.ocena_nastavnik;
+            cas_1.default
+                .findByIdAndUpdate(_id, { komentar_nastavnik: komentar_nastavnik, ocena_nastavnik: ocena_nastavnik })
+                .then(data => {
+                ucenik_1.default
+                    .findOne({ kor_ime: data.ucenik })
+                    .then(tData => {
+                    const ocena = tData.ocena;
+                    const br_ocena = tData.br_ocena;
+                    const nOcena = (ocena * br_ocena + ocena_nastavnik) / (br_ocena + 1);
+                    ucenik_1.default
+                        .findOneAndUpdate({ kor_ime: data.ucenik }, { ocena: nOcena, br_ocena: br_ocena + 1 })
+                        .then(fData => res.json({ msg: "OK" }))
+                        .catch(fErr => console.log(fErr));
+                })
+                    .catch(tErr => console.log(tErr));
+            })
+                .catch(err => console.log(err));
+        };
+        this.dohvObavestenjaZaCas = (req, res) => {
+            const cas = req.body.cas;
+            obavestenje_1.default
+                .find({ cas: cas })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.kreirajObavestenje = (req, res) => {
+            const cas = req.body.cas;
+            const tekst = req.body.tekst;
+            const nObavestenje = new obavestenje_1.default({
+                cas: cas,
+                tekst: tekst,
+                neprocitano: true
+            });
+            nObavestenje
+                .save()
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
+        this.procitajObavestenje = (req, res) => {
+            const _id = req.body._id;
+            obavestenje_1.default
+                .findByIdAndUpdate(_id, { neprocitano: false })
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
         };
     }
 }

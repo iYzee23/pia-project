@@ -750,11 +750,11 @@ export class ZController {
             .catch(err => console.log(err));
     };
 
-    dohvObavestenjeZaCas = (req: express.Request, res: express.Response) => {
+    dohvObavestenjaZaCas = (req: express.Request, res: express.Response) => {
         const cas = req.body.cas;
 
         Obavestenje
-            .findOne({cas: cas})
+            .find({cas: cas})
             .then(data => res.json(data))
             .catch(err => console.log(err));
     };

@@ -7,6 +7,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const Schema = mongoose_1.default.Schema;
 const Obavestenje = new Schema({
     cas: { type: String },
+    tekst: { type: String },
     neprocitano: { type: Boolean }
 });
 exports.default = mongoose_1.default.model("Obavestenje", Obavestenje, "obavestenja");

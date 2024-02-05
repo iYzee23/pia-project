@@ -27,7 +27,8 @@ import { UcenikCasoviComponent } from './components/ucenik-casovi/ucenik-casovi.
 import { UcenikKomentarComponent } from './components/ucenik-komentar/ucenik-komentar.component';
 import { UcenikObavestenjaComponent } from './components/ucenik-obavestenja/ucenik-obavestenja.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { UcenikKomentarDodatnoComponent } from './components/ucenik-komentar-dodatno/ucenik-komentar-dodatno.component';
+import { JitsiMeetComponent } from './components/jitsi-meet/jitsi-meet.component';
+import { ZvezdiceComponent } from './components/zvezdice/zvezdice.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { UcenikKomentarDodatnoComponent } from './components/ucenik-komentar-dod
     UcenikCasoviComponent,
     UcenikKomentarComponent,
     UcenikObavestenjaComponent,
-    UcenikKomentarDodatnoComponent
+    JitsiMeetComponent,
+    ZvezdiceComponent
   ],
   imports: [
     BrowserModule,

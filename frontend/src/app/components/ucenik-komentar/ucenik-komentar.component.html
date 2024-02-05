@@ -1,1 +1,28 @@
-<p>ucenik-komentar works!</p>
+<h1>Dodavanje komentara i ocene ucenika na cas</h1>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Unesite ocenu:</td>
+      <td>
+        <app-zvezdice (ratingSelected)="handleRatingSelected($event)"></app-zvezdice>
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite komentar:</td>
+      <td>
+        <input type="text" [(ngModel)]="komentar_ucenik">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="button" value="Unesite komentar" (click)="dodajKomentar()">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<input type="button" value="Nazad" (click)="back()">
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>

@@ -100,9 +100,33 @@ ZRouter
     .route("/dohvCasoveNastavnika")
     .post((req, res) => new controller_1.ZController().dohvCasoveNastavnika(req, res));
 ZRouter
+    .route("/dohvCasoveUcenika")
+    .post((req, res) => new controller_1.ZController().dohvCasoveUcenika(req, res));
+ZRouter
     .route("/zakaziCas")
     .post((req, res) => new controller_1.ZController().zakaziCas(req, res));
 ZRouter
     .route("/zakaziCasExt")
     .post((req, res) => new controller_1.ZController().zakaziCasExt(req, res));
+ZRouter
+    .route("/potvrdiCas")
+    .post((req, res) => new controller_1.ZController().potvrdiCas(req, res));
+ZRouter
+    .route("/odbijCas")
+    .post((req, res) => new controller_1.ZController().odbijCas(req, res));
+ZRouter
+    .route("/unesiKomentarIOcenuUcenik")
+    .post((req, res) => new controller_1.ZController().unesiKomentarIOcenuUcenik(req, res));
+ZRouter
+    .route("/unesiKomentarIOcenuNastavnik")
+    .post((req, res) => new controller_1.ZController().unesiKomentarIOcenuNastavnik(req, res));
+ZRouter
+    .route("/dohvObavestenjaZaCas")
+    .post((req, res) => new controller_1.ZController().dohvObavestenjaZaCas(req, res));
+ZRouter
+    .route("/kreirajObavestenje")
+    .post((req, res) => new controller_1.ZController().kreirajObavestenje(req, res));
+ZRouter
+    .route("/procitajObavestenje")
+    .post((req, res) => new controller_1.ZController().procitajObavestenje(req, res));
 exports.default = ZRouter;

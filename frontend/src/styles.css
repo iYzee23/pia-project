@@ -45,3 +45,12 @@ th, td {
   max-width: 1100px;
   margin: 0 auto;
 }
+
+#jitsi {
+  width: 100vw;
+}
+
+.novo-obavestenje {
+  background-color: aquamarine;
+  font-weight: bold;
+}

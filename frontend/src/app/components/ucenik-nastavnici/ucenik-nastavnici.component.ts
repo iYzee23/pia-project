@@ -28,6 +28,10 @@ export class UcenikNastavniciComponent implements OnInit {
     return zvezdice;
   }
 
+  truncateToTwoDecimals(num: number): number {
+    return Math.round(num * 100) / 100;
+  }
+
   ngOnInit(): void {
     this.kor_ime = localStorage.getItem("ulogovani")!;
     this.service.dohvUcenika(this.kor_ime).subscribe(
@@ -55,7 +59,7 @@ export class UcenikNastavniciComponent implements OnInit {
                                 nIme: data4.ime,
                                 nPrezime: data4.prezime,
                                 nKorIme: data5.kor_ime,
-                                prosek: data5.ocena,
+                                prosek: this.truncateToTwoDecimals(data5.ocena),
                                 zvezdice: this.generisiZvezdice(data5.ocena)
                               });
                               if (cnt == 0) {

@@ -1,1 +1,25 @@
-<p>ucenik-obavestenja works!</p>
+<h1>Obavestenja za ucenika</h1>
+<hr>
+<table>
+  <tr>
+    <th>Nastavnik za cas</th>
+    <th>Predmet za cas</th>
+    <th>Datum i vreme pocetka casa</th>
+    <th>Datum i vreme kraja casa</th>
+    <th>Kratak opis casa</th>
+    <th>Tekst obavestenja</th>
+  </tr>
+  <tr *ngFor="let ob of obavestenja" [class]="ob.neprocitano ? 'novo-obavestenje' : ''">
+    <td>{{ob.nIme}} {{ob.nPrezime}}</td>
+    <td>{{ob.predmet}}</td>
+    <td>{{formatirajDatumVreme(ob.datum_vreme_start)}}</td>
+    <td>{{formatirajDatumVreme(ob.datum_vreme_kraj)}}</td>
+    <td>{{ob.kratak_opis}}</td>
+    <td>{{ob.tekst}}</td>
+    <td *ngIf="ob.neprocitano">
+      <input type="button" value="Procitaj obavestenje" (click)="procitajObavestenje(ob._id)">
+    </td>
+  </tr>
+</table>
+<hr>
+<input type="button" value="Nazad" (click)="back()">

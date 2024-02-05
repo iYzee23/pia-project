@@ -1,1 +1,59 @@
-<p>ucenik-casovi works!</p>
+<h1>Casovi ucenika</h1>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Arhiva odrzanih casova</b></caption>
+    <tr>
+      <th>Datum i vreme pocetka casa</th>
+      <th>Datum i vreme kraja casa</th>
+      <th>Nastavnik</th>
+      <th>Predmet</th>
+      <th>Ocena i komentar nastavnika</th>
+      <th>Ocena i komentar ucenika</th>
+    </tr>
+    <tr *ngFor="let cas of odrzani_casovi">
+      <td>{{formatirajDatumVreme(cas.datum_vreme_start)}}</td>
+      <td>{{formatirajDatumVreme(cas.datum_vreme_kraj)}}</td>
+      <td>{{cas.nIme}} {{cas.nPrezime}}</td>
+      <td>{{cas.predmet}}</td>
+      <td *ngIf="cas.komentar_nastavnik">
+        <b>[{{cas.ocena_nastavnik}}]</b> {{cas.komentar_nastavnik}}<br>
+      </td>
+      <td *ngIf="!cas.komentar_nastavnik">
+        Jos uvek nema ocene, niti komentara.
+      </td>
+      <td *ngIf="cas.komentar_ucenik">
+        <b>[{{cas.ocena_ucenik}}]</b> {{cas.komentar_ucenik}}<br>
+      </td>
+      <td *ngIf="!cas.komentar_ucenik">
+        <input type="button" value="Dodajte komentar na cas" (click)="dodajKomentar(cas._id)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Arhiva buducih casova</b></caption>
+    <tr>
+      <th>Datum i vreme pocetka casa</th>
+      <th>Datum i vreme kraja casa</th>
+      <th>Nastavnik</th>
+      <th>Predmet</th>
+      <th>Kratak opis casa</th>
+      <th>Interaktivna ucionica</th>
+    </tr>
+    <tr *ngFor="let cas of buduci_casovi">
+      <td>{{formatirajDatumVreme(cas.datum_vreme_start)}}</td>
+      <td>{{formatirajDatumVreme(cas.datum_vreme_kraj)}}</td>
+      <td>{{cas.nIme}} {{cas.nPrezime}}</td>
+      <td>{{cas.predmet}}</td>
+      <td>{{cas.kratak_opis}}</td>
+      <td>
+        <input type="button" value="Prikljuci se casu" [disabled]="cas.ucionicaDisabled || showJitsiMeet" (click)="pokreniUcionicu(cas)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<app-jitsi-meet *ngIf="showJitsiMeet" [roomName]="roomName" [displayName]="displayName" [email]="email"></app-jitsi-meet>

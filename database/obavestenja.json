@@ -1,0 +1,22 @@
+[
+    {
+        "cas": "65c0fe6edf60ff6fcedcc220",
+        "tekst": "Ovo Raletovo obavestenje je procitano",
+        "neprocitano": false
+    },
+    {
+        "cas": "65c0fe6edf60ff6fcedcc220",
+        "tekst": "Ovo Raletovo obavestenje je neprocitano",
+        "neprocitano": true
+    },
+    {
+        "cas": "65c0fe6edf60ff6fcedcc21d",
+        "tekst": "Ovo Slavkino obavestenje je neprocitano",
+        "neprocitano": true
+    },
+    {
+        "cas": "65c0fe6edf60ff6fcedcc21d",
+        "tekst": "Ovo Slavkino obavestenje je procitano",
+        "neprocitano": false
+    }
+]
