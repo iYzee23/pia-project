@@ -314,9 +314,10 @@ export class ZService {
     return this.http.post<Poruka>(this.uri + "/potvrdiCas", data);
   }
 
-  odbijCas(_id: string) {
+  odbijCas(_id: string, tekst: string) {
     const data = {
-      _id: _id
+      _id: _id,
+      tekst: tekst
     };
     return this.http.post<Poruka>(this.uri + "/odbijCas", data);
   }

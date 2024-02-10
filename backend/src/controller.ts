@@ -574,11 +574,13 @@ export class ZController {
     };
 
     /*
-        1)	zakazivanje casa vikendom
-        2)	pocetak casa pre 10:00 ili kraj casa posle 18:00
-        3)	u toj nedelji, nije dostupan (ponedeljak 10:00 do petka 18:00)
-        4)	taj dan, nije dostupan (taj dan 10:00 do taj dan 18:00)
-        5)	preklapanje
+        1)  zakazivanje casa u proslosti
+        2)	zakazivanje casa vikendom
+        3)	pocetak casa pre 10:00 ili kraj casa posle 18:00
+        4)	u toj nedelji, nije dostupan (ponedeljak 10:00 do petka 18:00)
+        5)	taj dan, nije dostupan (taj dan 10:00 do taj dan 18:00)
+        6)	preklapanje (u obradi, prihvacen)
+        7)  nastavnik nedostupan u datom terminu
     */
 
     zakaziCas = (req: express.Request, res: express.Response) => {
@@ -727,9 +729,10 @@ export class ZController {
 
     odbijCas = (req: express.Request, res: express.Response) => {
         const _id = req.body._id;
+        const tekst = req.body.tekst;
 
         Cas
-            .findByIdAndUpdate(_id, {status: "Odbijen"})
+            .findByIdAndUpdate(_id, {status: "Odbijen", tekst: tekst})
             .then(data => res.json({msg: "OK"}))
             .catch(err => console.log(err));
     };
@@ -816,5 +819,24 @@ export class ZController {
             .catch(err => console.log(err));
     };
 
+    dohvSveCasoveVremenskiPeriod = (req: express.Request, res: express.Response) => {
+        const nastavnik = req.body.nastavnik;
+        const brojDana = req.body.brojDana;
 
+        const datumSad = new Date();
+        datumSad.setTime(datumSad.getTime() + 3600000);
+        const datumTri = new Date(datumSad.getTime() + brojDana * 24 * 60 * 60 * 1000);
+        const sad = datumSad.toISOString().slice(0, 16) + "Z";
+        const tri = datumTri.toISOString().slice(0, 16) + "Z";
+
+        Cas
+            .find({nastavnik: nastavnik, datum_vreme_start: {$gte: sad, $lte: tri}})
+            .sort({datum_vreme_start: 1})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    dodajNedostupnost = (req: express.Request, res: express.Response) => {
+
+    };
 }

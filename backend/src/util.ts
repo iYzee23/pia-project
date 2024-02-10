@@ -130,3 +130,74 @@ export async function postojiPreklapanje(nastavnik: string, datumVremeStart: Dat
 
     return !!preklapajuciCas;
 }
+
+export function popraviDatumStart(datumVremeStart: Date) {
+    const noviDatumVreme = new Date(datumVremeStart);
+    noviDatumVreme.setTime(noviDatumVreme.getTime() - 3600000);
+    const danUNedelji = noviDatumVreme.getDay();
+
+    if (danUNedelji === 0) {
+        datumVremeStart.setDate(datumVremeStart.getDate() + 1);
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+    else if (danUNedelji === 6) {
+        datumVremeStart.setDate(datumVremeStart.getDate() + 2);
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+    else if (noviDatumVreme.getHours() < 10) {
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+}
+
+export function popraviDatumKraj(datumVremeKraj: Date) {
+    const noviDatumVreme = new Date(datumVremeKraj);
+    noviDatumVreme.setTime(noviDatumVreme.getTime() - 3600000);
+    const danUNedelji = noviDatumVreme.getDay();
+
+    if (danUNedelji === 0) {
+        datumVremeKraj.setDate(datumVremeKraj.getDate() - 2);
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+    else if (danUNedelji === 6) {
+        datumVremeKraj.setDate(datumVremeKraj.getDate() - 1);
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+    else if (noviDatumVreme.getHours() > 18 || (noviDatumVreme.getHours() === 18 && noviDatumVreme.getMinutes() > 0)) {
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+}
+
+export function proveriIstiDan(datumVremeStart: Date, datumVremeKraj: Date): boolean {
+    const noviDatumVremeStart = new Date(datumVremeStart);
+    const noviDatumVremeKraj = new Date(datumVremeKraj);
+
+    noviDatumVremeStart.setTime(noviDatumVremeStart.getTime() - 3600000);
+    noviDatumVremeKraj.setTime(noviDatumVremeKraj.getTime() - 3600000);
+
+    return noviDatumVremeStart.getDay() === noviDatumVremeKraj.getDay();
+}
+
+export function popraviIstiDan(datumVremeStart: Date, datumVremeKraj: Date) {
+    if (datumVremeStart.getHours() > 19 || (datumVremeStart.getHours() === 19 && datumVremeStart.getMinutes() > 0)) {
+        datumVremeStart.setHours(19, 0, 0, 0);
+    }
+
+    if (datumVremeKraj.getHours() < 11) {
+        datumVremeKraj.setHours(11, 0, 0, 0);
+    }
+}
+
+export function popraviRazlDan(datumVremeStart: Date, datumVremeKraj: Date) {
+    if (datumVremeStart.getHours() > 19 || (datumVremeStart.getHours() === 19 && datumVremeStart.getMinutes() > 0)) {
+        datumVremeStart.setDate(datumVremeStart.getDate() + 1);
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+
+    if (datumVremeKraj.getHours() < 11) {
+        datumVremeKraj.setDate(datumVremeKraj.getDate() - 1);
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+
+    popraviDatumStart(datumVremeStart);
+    popraviDatumKraj(datumVremeKraj);
+}
