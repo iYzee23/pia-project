@@ -837,6 +837,99 @@ export class ZController {
     };
 
     dodajNedostupnost = (req: express.Request, res: express.Response) => {
+        const nastavnik = req.body.nastavnik;
+        const datum_vreme_start = req.body.datum_vreme_start + "Z";
+        const datum_vreme_kraj = req.body.datum_vreme_kraj + "Z";
 
+        const datumVremeStart = new Date(datum_vreme_start);
+        const datumVremeKraj = new Date(datum_vreme_kraj);
+
+        Util.popraviDatumStart(datumVremeStart);
+        Util.popraviDatumKraj(datumVremeKraj);
+        if (Util.proveriIstiDan(datumVremeStart, datumVremeKraj))
+            Util.popraviIstiDan(datumVremeStart, datumVremeKraj);
+        else
+            Util.popraviRazlDan(datumVremeStart, datumVremeKraj);
+
+        if (!Util.proveraBuducnost(datumVremeStart))
+            return res.json({msg: "Vasa nova nedostupnost mora biti u buducnosti."});
+        if (!Util.proveraPrePosle(datumVremeStart, datumVremeKraj))
+            return res.json({msg: "Neispravno vreme nedostupnosti. Pokusajte ponovo!"});
+
+        Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "Prihvacen")
+            .then(data3 => {
+                if (data3) return res.json({msg: "Vec postoji PRIHVACEN cas koji se preklapa sa Vasim terminom nedostupnosti. Izaberite drugi termin!"});
+                Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
+                    .then(data4 => {
+                        if (data4) return res.json({msg: "Vec postoji cas U OBRADI koji se preklapa sa Vasim terminom. Izaberite drugi termin!"});
+                        Util.nastavnikNedostupan(nastavnik, datumVremeStart, datumVremeKraj)
+                            .then(data5 => {
+                                if (data5) return res.json({msg: "Vec ste nedostupni u ovom terminu. Izaberite drugi termin!"});
+                                const nedostp = datum_vreme_start + "###" + datum_vreme_kraj;
+
+                                Nastavnik
+                                    .findOneAndUpdate({kor_ime: nastavnik}, {$push: {nedostupnost: nedostp}})
+                                    .then(tData => res.json({msg: "OK"}))
+                                    .catch(tErr => console.log(tErr));
+                            })
+                            .catch(err5 => console.log(err5));
+                    })
+                    .catch(err4 => console.log(err4));
+            })
+            .catch(err3 => console.log(err3));
+    };
+
+    dodajNedostupnostExt = (req: express.Request, res: express.Response) => {
+        const nastavnik = req.body.nastavnik;
+        const datum_vreme_start = req.body.datum_vreme_start;
+        const datum_vreme_kraj = req.body.datum_vreme_kraj;
+
+        const datumVremeStart = new Date(datum_vreme_start);
+        const datumVremeKraj = new Date(datum_vreme_kraj);
+
+        Util.popraviDatumStart(datumVremeStart);
+        Util.popraviDatumKraj(datumVremeKraj);
+        if (Util.proveriIstiDan(datumVremeStart, datumVremeKraj))
+            Util.popraviIstiDan(datumVremeStart, datumVremeKraj);
+        else
+            Util.popraviRazlDan(datumVremeStart, datumVremeKraj);
+
+        if (!Util.proveraBuducnost(datumVremeStart))
+            return res.json({msg: "Vasa nova nedostupnost mora biti u buducnosti."});
+        if (!Util.proveraPrePosle(datumVremeStart, datumVremeKraj))
+            return res.json({msg: "Neispravno vreme nedostupnosti. Pokusajte ponovo!"});
+
+        Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "Prihvacen")
+            .then(data3 => {
+                if (data3) return res.json({msg: "Vec postoji PRIHVACEN cas koji se preklapa sa Vasim terminom nedostupnosti. Izaberite drugi termin!"});
+                Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
+                    .then(data4 => {
+                        if (data4) return res.json({msg: "Vec postoji cas U OBRADI koji se preklapa sa Vasim terminom. Izaberite drugi termin!"});
+                        Util.nastavnikNedostupan(nastavnik, datumVremeStart, datumVremeKraj)
+                            .then(data5 => {
+                                if (data5) return res.json({msg: "Vec ste nedostupni u ovom terminu. Izaberite drugi termin!"});
+                                const nedostp = datum_vreme_start + "###" + datum_vreme_kraj;
+
+                                Nastavnik
+                                    .findOneAndUpdate({kor_ime: nastavnik}, {$push: {nedostupnost: nedostp}})
+                                    .then(tData => res.json({msg: "OK"}))
+                                    .catch(tErr => console.log(tErr));
+                            })
+                            .catch(err5 => console.log(err5));
+                    })
+                    .catch(err4 => console.log(err4));
+            })
+            .catch(err3 => console.log(err3));
+    };
+
+    dohvCasoveUcenikNastavnik = (req: express.Request, res: express.Response) => {
+        const ucenik = req.body.ucenik;
+        const nastavnik = req.body.nastavnik;
+
+        Cas
+            .find({ucenik: ucenik, nastavnik: nastavnik})
+            .sort({predmet: 1, datum_vreme_start: 1})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
     };
 }

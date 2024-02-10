@@ -175,4 +175,20 @@ ZRouter
     .route("/procitajObavestenje")
     .post((req, res) => new ZController().procitajObavestenje(req, res));
 
+ZRouter
+    .route("/dohvSveCasoveVremenskiPeriod")
+    .post((req, res) => new ZController().dohvSveCasoveVremenskiPeriod(req, res));
+
+ZRouter
+    .route("/dodajNedostupnost")
+    .post((req, res) => new ZController().dodajNedostupnost(req, res));
+
+ZRouter
+    .route("/dodajNedostupnostExt")
+    .post((req, res) => new ZController().dodajNedostupnostExt(req, res));
+
+ZRouter
+    .route("/procitajObavestenje")
+    .post((req, res) => new ZController().dohvCasoveUcenikNastavnik(req, res));
+
 export default ZRouter;

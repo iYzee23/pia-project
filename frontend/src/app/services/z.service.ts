@@ -362,4 +362,38 @@ export class ZService {
     return this.http.post<Poruka>(this.uri + "/procitajObavestenje", data);
   }
 
+  dohvSveCasoveVremenskiPeriod(nastavnik: string, brojDana: number) {
+    const data = {
+      nastavnik: nastavnik,
+      brojDana: brojDana
+    };
+    return this.http.post<Cas[]>(this.uri + "/dohvSveCasoveVremenskiPeriod", data);
+  }
+
+  dodajNedostupnost(nastavnik: string, datum_vreme_start: string, datum_vreme_kraj: string) {
+    const data = {
+      nastavnik: nastavnik,
+      datum_vreme_start: datum_vreme_start,
+      datum_vreme_kraj: datum_vreme_kraj
+    };
+    return this.http.post<Poruka>(this.uri + "/dodajNedostupnost", data);
+  }
+
+  dodajNedostupnostExt(nastavnik: string, datum_vreme_start: string, datum_vreme_kraj: string) {
+    const data = {
+      nastavnik: nastavnik,
+      datum_vreme_start: datum_vreme_start,
+      datum_vreme_kraj: datum_vreme_kraj
+    };
+    return this.http.post<Poruka>(this.uri + "/dodajNedostupnostExt", data);
+  }
+
+  dohvCasoveUcenikNastavnik(ucenik: string, nastavnik: string) {
+    const data = {
+      ucenik: ucenik,
+      nastavnik: nastavnik
+    };
+    return this.http.post<Cas[]>(this.uri + "/dohvCasoveUcenikNastavnik", data);
+  }
+
 }

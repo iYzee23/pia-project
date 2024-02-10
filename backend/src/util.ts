@@ -201,3 +201,7 @@ export function popraviRazlDan(datumVremeStart: Date, datumVremeKraj: Date) {
     popraviDatumStart(datumVremeStart);
     popraviDatumKraj(datumVremeKraj);
 }
+
+export function proveraPrePosle(datumVremeStart: Date, datumVremeKraj: Date): boolean {
+    return datumVremeKraj.getTime() > datumVremeStart.getTime();
+}
