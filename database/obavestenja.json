@@ -1,22 +1,26 @@
 [
     {
-        "cas": "65c0fe6edf60ff6fcedcc220",
+        "cas": "65c79182ac35cba179121ac1",
         "tekst": "Ovo Raletovo obavestenje je procitano",
-        "neprocitano": false
+        "neprocitano": false,
+        "datum_vreme": "2024-02-15T15:00Z"
     },
     {
-        "cas": "65c0fe6edf60ff6fcedcc220",
+        "cas": "65c79182ac35cba179121ac1",
         "tekst": "Ovo Raletovo obavestenje je neprocitano",
-        "neprocitano": true
+        "neprocitano": true,
+        "datum_vreme": "2024-02-15T16:00Z"
     },
     {
-        "cas": "65c0fe6edf60ff6fcedcc21d",
+        "cas": "65c79182ac35cba179121abe",
         "tekst": "Ovo Slavkino obavestenje je neprocitano",
-        "neprocitano": true
+        "neprocitano": true,
+        "datum_vreme": "2024-02-15T17:00Z"
     },
     {
-        "cas": "65c0fe6edf60ff6fcedcc21d",
+        "cas": "65c79182ac35cba179121abe",
         "tekst": "Ovo Slavkino obavestenje je procitano",
-        "neprocitano": false
+        "neprocitano": false,
+        "datum_vreme": "2024-02-15T18:00Z"
     }
 ]

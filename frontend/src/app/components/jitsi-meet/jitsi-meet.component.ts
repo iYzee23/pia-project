@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { em } from '@fullcalendar/core/internal-common';
 
 declare var JitsiMeetExternalAPI: any;
@@ -11,6 +11,7 @@ declare var JitsiMeetExternalAPI: any;
 export class JitsiMeetComponent implements OnInit, OnDestroy {
 
   @ViewChild('jitsiContainer', { static: true }) jitsiContainer!: ElementRef;
+  // @Output() callEnded = new EventEmitter<void>();
   @Input("roomName") roomName!: string;
   @Input("displayName") displayName!: string;
   @Input("email") email!: string;
@@ -24,6 +25,12 @@ export class JitsiMeetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeJitsiMeet();
   }
+
+  /*
+  onCallEnd(): void {
+    this.callEnded.emit();
+  }
+  */
 
   /*
     roomName = cas._id + ucenik + nastavnik
@@ -57,6 +64,7 @@ export class JitsiMeetComponent implements OnInit, OnDestroy {
     };
 
     this.api = new JitsiMeetExternalAPI(this.domain, this.options);
+    // this.api.addListener('readyToClose', () => this.onCallEnd());
   }
 
   ngOnDestroy(): void {

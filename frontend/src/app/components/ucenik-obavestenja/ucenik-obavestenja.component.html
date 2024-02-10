@@ -2,6 +2,7 @@
 <hr>
 <table>
   <tr>
+    <th>Datum i vreme obavestenja</th>
     <th>Nastavnik za cas</th>
     <th>Predmet za cas</th>
     <th>Datum i vreme pocetka casa</th>
@@ -10,6 +11,7 @@
     <th>Tekst obavestenja</th>
   </tr>
   <tr *ngFor="let ob of obavestenja" [class]="ob.neprocitano ? 'novo-obavestenje' : ''">
+    <td>{{formatirajDatumVreme(ob.datum_vreme)}}</td>
     <td>{{ob.nIme}} {{ob.nPrezime}}</td>
     <td>{{ob.predmet}}</td>
     <td>{{formatirajDatumVreme(ob.datum_vreme_start)}}</td>

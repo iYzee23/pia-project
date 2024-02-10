@@ -35,9 +35,10 @@ export class UcenikCasoviComponent implements OnInit {
               cas.nIme = tData.ime;
               cas.nPrezime = tData.prezime;
               if (cas.status === "Prihvacen" && cas.datum_vreme_kraj < sad) this.odrzani_casovi.push(cas);
-              else if (cas.status !== "Odbijen" && cas.datum_vreme_kraj > sad) {
+              else if (cas.status === "Prihvacen" && cas.datum_vreme_kraj > sad) {
                 const msDiff = (new Date(cas.datum_vreme_start).getTime()) - sadDatum.getTime();
-                cas.ucionicaDisabled = (msDiff > 900000);
+                cas.ucionicaDisabled = (msDiff > 15 * 60 * 1000);
+                // cas.ucionicaDisabled = (msDiff > 7 * 24 * 60 * 60 * 1000);
                 this.buduci_casovi.push(cas);
               }
               if (--cnt == 0) this.sortirajCasoveAsc();
@@ -67,7 +68,6 @@ export class UcenikCasoviComponent implements OnInit {
         this.showJitsiMeet = !this.showJitsiMeet;
       }
     );
-
   }
 
   sortirajCasoveAsc() {

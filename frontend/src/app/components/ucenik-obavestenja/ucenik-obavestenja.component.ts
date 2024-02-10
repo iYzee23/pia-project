@@ -38,10 +38,10 @@ export class UcenikObavestenjaComponent implements OnInit {
                       ob.datum_vreme_kraj = cas.datum_vreme_kraj;
                       ob.kratak_opis = cas.kratak_opis;
                       this.obavestenja.push(ob);
-                      if (--cnt == 0) this.sortirajObavestenjaDesc();
+                      if (--cnt === 0) this.sortirajObavestenjaDesc();
                     }
                   }
-                  else if (--cnt == 0) this.sortirajObavestenjaDesc();
+                  else if (cnt === 0) this.sortirajObavestenjaDesc();
                 }
               );
             }
@@ -58,8 +58,8 @@ export class UcenikObavestenjaComponent implements OnInit {
 
   sortirajObavestenjaDesc() {
     this.obavestenja.sort((a, b) => {
-      if (a.datum_vreme_start < b.datum_vreme_start) return 1;
-      if (a.datum_vreme_start > b.datum_vreme_start) return -1;
+      if (a.datum_vreme < b.datum_vreme) return 1;
+      if (a.datum_vreme > b.datum_vreme) return -1;
       return 0;
     })
   }

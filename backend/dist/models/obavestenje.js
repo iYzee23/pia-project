@@ -8,6 +8,7 @@ const Schema = mongoose_1.default.Schema;
 const Obavestenje = new Schema({
     cas: { type: String },
     tekst: { type: String },
-    neprocitano: { type: Boolean }
+    neprocitano: { type: Boolean },
+    datum_vreme: { type: String }
 });
 exports.default = mongoose_1.default.model("Obavestenje", Obavestenje, "obavestenja");

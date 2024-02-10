@@ -72,6 +72,7 @@ export class UcenikDrugaComponent implements OnInit {
         this.service.dohvCasoveNastavnika(this.nastavnik).subscribe(
           data2 => {
             for (let cas of data2) {
+              if (cas.status === "Odbijen") continue;
               const tStart = cas.datum_vreme_start.slice(0, -1);
               const tEnd = cas.datum_vreme_kraj.slice(0, -1);
               const color = cas.status === "Prihvacen" ? 'green' : 'orange';

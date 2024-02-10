@@ -33,8 +33,6 @@ if (tipp) {
   else if (tipp === "Nastavnik") tipp = NastavnikProfilComponent;
   else tipp = AdminProfilComponent;
 }
-console.log(ulogg);
-console.log(tipp);
 
 const routes: Routes = [
   {path: 'neregistrovani', component: NeregistrovaniComponent, canActivate: [noLoginGuard]},

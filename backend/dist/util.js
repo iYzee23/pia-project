@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postojiPreklapanje = exports.nastavnikNedostupan = exports.nastavnikNedostupanDan = exports.nastavnikNedostupanNedelja = exports.proveraVreme = exports.proveraVikend = exports.proveraBuducnost = exports.loadPdf = exports.savePdf = exports.loadPicture = exports.savePicture = exports.deleteFile = exports.verifyPassword = exports.hashPassword = exports.default_slika = void 0;
+exports.proveraPrePosle = exports.popraviRazlDan = exports.popraviIstiDan = exports.proveriIstiDan = exports.popraviDatumKraj = exports.popraviDatumStart = exports.postojiPreklapanje = exports.nastavnikNedostupan = exports.nastavnikNedostupanDan = exports.nastavnikNedostupanNedelja = exports.proveraVreme = exports.proveraVikend = exports.proveraBuducnost = exports.loadPdf = exports.savePdf = exports.loadPicture = exports.savePicture = exports.deleteFile = exports.verifyPassword = exports.hashPassword = exports.default_slika = void 0;
 const bcrypt = __importStar(require("bcrypt"));
 const fs_1 = __importDefault(require("fs"));
 const nastavnik_1 = __importDefault(require("./models/nastavnik"));
@@ -172,3 +172,71 @@ function postojiPreklapanje(nastavnik, datumVremeStart, datumVremeEnd, status) {
     });
 }
 exports.postojiPreklapanje = postojiPreklapanje;
+function popraviDatumStart(datumVremeStart) {
+    const noviDatumVreme = new Date(datumVremeStart);
+    noviDatumVreme.setTime(noviDatumVreme.getTime() - 3600000);
+    const danUNedelji = noviDatumVreme.getDay();
+    if (danUNedelji === 0) {
+        datumVremeStart.setDate(datumVremeStart.getDate() + 1);
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+    else if (danUNedelji === 6) {
+        datumVremeStart.setDate(datumVremeStart.getDate() + 2);
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+    else if (noviDatumVreme.getHours() < 10) {
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+}
+exports.popraviDatumStart = popraviDatumStart;
+function popraviDatumKraj(datumVremeKraj) {
+    const noviDatumVreme = new Date(datumVremeKraj);
+    noviDatumVreme.setTime(noviDatumVreme.getTime() - 3600000);
+    const danUNedelji = noviDatumVreme.getDay();
+    if (danUNedelji === 0) {
+        datumVremeKraj.setDate(datumVremeKraj.getDate() - 2);
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+    else if (danUNedelji === 6) {
+        datumVremeKraj.setDate(datumVremeKraj.getDate() - 1);
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+    else if (noviDatumVreme.getHours() > 18 || (noviDatumVreme.getHours() === 18 && noviDatumVreme.getMinutes() > 0)) {
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+}
+exports.popraviDatumKraj = popraviDatumKraj;
+function proveriIstiDan(datumVremeStart, datumVremeKraj) {
+    const noviDatumVremeStart = new Date(datumVremeStart);
+    const noviDatumVremeKraj = new Date(datumVremeKraj);
+    noviDatumVremeStart.setTime(noviDatumVremeStart.getTime() - 3600000);
+    noviDatumVremeKraj.setTime(noviDatumVremeKraj.getTime() - 3600000);
+    return noviDatumVremeStart.getDay() === noviDatumVremeKraj.getDay();
+}
+exports.proveriIstiDan = proveriIstiDan;
+function popraviIstiDan(datumVremeStart, datumVremeKraj) {
+    if (datumVremeStart.getHours() > 19 || (datumVremeStart.getHours() === 19 && datumVremeStart.getMinutes() > 0)) {
+        datumVremeStart.setHours(19, 0, 0, 0);
+    }
+    if (datumVremeKraj.getHours() < 11) {
+        datumVremeKraj.setHours(11, 0, 0, 0);
+    }
+}
+exports.popraviIstiDan = popraviIstiDan;
+function popraviRazlDan(datumVremeStart, datumVremeKraj) {
+    if (datumVremeStart.getHours() > 19 || (datumVremeStart.getHours() === 19 && datumVremeStart.getMinutes() > 0)) {
+        datumVremeStart.setDate(datumVremeStart.getDate() + 1);
+        datumVremeStart.setHours(11, 0, 0, 0);
+    }
+    if (datumVremeKraj.getHours() < 11) {
+        datumVremeKraj.setDate(datumVremeKraj.getDate() - 1);
+        datumVremeKraj.setHours(19, 0, 0, 0);
+    }
+    popraviDatumStart(datumVremeStart);
+    popraviDatumKraj(datumVremeKraj);
+}
+exports.popraviRazlDan = popraviRazlDan;
+function proveraPrePosle(datumVremeStart, datumVremeKraj) {
+    return datumVremeKraj.getTime() > datumVremeStart.getTime();
+}
+exports.proveraPrePosle = proveraPrePosle;

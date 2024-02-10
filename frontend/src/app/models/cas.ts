@@ -16,5 +16,10 @@ export class Cas {
   komentar_nastavnik: string = "";
   nIme: string = "";
   nPrezime: string = "";
+  uIme: string = "";
+  uPrezime: string = "";
+  uBrOcena: number = 0;
+  uProsecnaOcena: number = 0;
   ucionicaDisabled: boolean = true;
+  otkazivanjeDisabled: boolean = true;
 }

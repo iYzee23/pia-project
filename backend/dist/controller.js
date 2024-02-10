@@ -163,6 +163,13 @@ class ZController {
             })
                 .catch(err1 => console.log(err1));
         };
+        /*
+            predmeti nastavnika ce morati da se filtriraju po adminovom neodobravanju
+            --> takodje, posto inicijalno prikazujemo i neprihvacene predmete nastavnika
+            --> neki ucenik kod njega moze da zakaze cas iz ovakvog predmeta
+            --> zato, ukoliko admin odbije predmet, mi cemo da otkazemo taj cas i posaljemo obavestenje
+            slobodna forma: clanovi niza su razdvojeni zarezom
+        */
         this.registracijaNastavnik = (req, res) => {
             const kor_ime = req.body.kor_ime;
             korisnik_1.default
@@ -202,8 +209,6 @@ class ZController {
                             const nNastavnik = new nastavnik_1.default({
                                 kor_ime: kor_ime,
                                 cv_pdf: cv_path,
-                                // ovo ce morati da se filtrira po adminovom neodobravanju
-                                // slobodna forma: clanovi niza su razdvojeni zarezom
                                 predmeti: req.body.predmeti,
                                 uzrast: req.body.uzrast,
                                 culi_sajt: req.body.culi_sajt,
@@ -494,6 +499,11 @@ class ZController {
             })
                 .catch(err => console.log(err));
         };
+        /*
+            zbog ova dva azuriranja, moci ce da nastanu neke nekonzistentne situacije
+            npr, treba za 5 dana da drzim cas iz matematike, a promenio sam ovaj predmet i vise ne predajem
+            ovakvi casovi ce ipak moci da se odrze
+        */
         this.azurirajPredmete = (req, res) => {
             const kor_ime = req.body.kor_ime;
             const predmeti = req.body.predmeti;
@@ -525,11 +535,13 @@ class ZController {
                 .catch(err => console.log(err));
         };
         /*
-            1)	zakazivanje casa vikendom
-            2)	pocetak casa pre 10:00 ili kraj casa posle 18:00
-            3)	u toj nedelji, nije dostupan (ponedeljak 10:00 do petka 18:00)
-            4)	taj dan, nije dostupan (taj dan 10:00 do taj dan 18:00)
-            5)	preklapanje
+            1)  zakazivanje casa u proslosti
+            2)	zakazivanje casa vikendom
+            3)	pocetak casa pre 10:00 ili kraj casa posle 18:00
+            4)	u toj nedelji, nije dostupan (ponedeljak 10:00 do petka 18:00)
+            5)	taj dan, nije dostupan (taj dan 10:00 do taj dan 18:00)
+            6)	preklapanje (u obradi, prihvacen)
+            7)  nastavnik nedostupan u datom terminu
         */
         this.zakaziCas = (req, res) => {
             const ucenik = req.body.ucenik;
@@ -675,8 +687,9 @@ class ZController {
         };
         this.odbijCas = (req, res) => {
             const _id = req.body._id;
+            const tekst = req.body.tekst;
             cas_1.default
-                .findByIdAndUpdate(_id, { status: "Odbijen" })
+                .findByIdAndUpdate(_id, { status: "Odbijen", tekst: tekst })
                 .then(data => res.json({ msg: "OK" }))
                 .catch(err => console.log(err));
         };
@@ -734,10 +747,14 @@ class ZController {
         this.kreirajObavestenje = (req, res) => {
             const cas = req.body.cas;
             const tekst = req.body.tekst;
+            const datumSad = new Date();
+            datumSad.setTime(datumSad.getTime() + 60 * 60 * 1000);
+            const sad = datumSad.toISOString().slice(0, 16) + "Z";
             const nObavestenje = new obavestenje_1.default({
                 cas: cas,
                 tekst: tekst,
-                neprocitano: true
+                neprocitano: true,
+                datum_vreme: sad
             });
             nObavestenje
                 .save()
@@ -749,6 +766,116 @@ class ZController {
             obavestenje_1.default
                 .findByIdAndUpdate(_id, { neprocitano: false })
                 .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
+        this.dohvSveCasoveVremenskiPeriod = (req, res) => {
+            const nastavnik = req.body.nastavnik;
+            const brojDana = req.body.brojDana;
+            const datumSad = new Date();
+            datumSad.setTime(datumSad.getTime() + 3600000);
+            const datumTri = new Date(datumSad.getTime() + brojDana * 24 * 60 * 60 * 1000);
+            const sad = datumSad.toISOString().slice(0, 16) + "Z";
+            const tri = datumTri.toISOString().slice(0, 16) + "Z";
+            cas_1.default
+                .find({ nastavnik: nastavnik, status: "Prihvacen", datum_vreme_start: { $gte: sad, $lte: tri } })
+                .sort({ datum_vreme_start: 1 })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dodajNedostupnost = (req, res) => {
+            const nastavnik = req.body.nastavnik;
+            let datum_vreme_start = req.body.datum_vreme_start + "Z";
+            let datum_vreme_kraj = req.body.datum_vreme_kraj + "Z";
+            const datumVremeStart = new Date(datum_vreme_start);
+            const datumVremeKraj = new Date(datum_vreme_kraj);
+            Util.popraviDatumStart(datumVremeStart);
+            Util.popraviDatumKraj(datumVremeKraj);
+            if (Util.proveriIstiDan(datumVremeStart, datumVremeKraj))
+                Util.popraviIstiDan(datumVremeStart, datumVremeKraj);
+            else
+                Util.popraviRazlDan(datumVremeStart, datumVremeKraj);
+            datum_vreme_start = datumVremeStart.toISOString().slice(0, 16) + "Z";
+            datum_vreme_kraj = datumVremeKraj.toISOString().slice(0, 16) + "Z";
+            if (!Util.proveraBuducnost(datumVremeStart))
+                return res.json({ msg: "Vasa nova nedostupnost mora biti u buducnosti." });
+            if (!Util.proveraPrePosle(datumVremeStart, datumVremeKraj))
+                return res.json({ msg: "Neispravno vreme nedostupnosti. Pokusajte ponovo!" });
+            Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "Prihvacen")
+                .then(data3 => {
+                if (data3)
+                    return res.json({ msg: "Vec postoji PRIHVACEN cas koji se preklapa sa Vasim terminom nedostupnosti. Izaberite drugi termin!" });
+                Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
+                    .then(data4 => {
+                    if (data4)
+                        return res.json({ msg: "Vec postoji cas U OBRADI koji se preklapa sa Vasim terminom. Izaberite drugi termin!" });
+                    Util.nastavnikNedostupan(nastavnik, datumVremeStart, datumVremeKraj)
+                        .then(data5 => {
+                        if (data5)
+                            return res.json({ msg: "Vec ste nedostupni u ovom terminu. Izaberite drugi termin!" });
+                        const nedostp = datum_vreme_start + "###" + datum_vreme_kraj;
+                        nastavnik_1.default
+                            .findOneAndUpdate({ kor_ime: nastavnik }, { $push: { nedostupnost: nedostp } })
+                            .then(tData => res.json({ msg: "OK" }))
+                            .catch(tErr => console.log(tErr));
+                    })
+                        .catch(err5 => console.log(err5));
+                })
+                    .catch(err4 => console.log(err4));
+            })
+                .catch(err3 => console.log(err3));
+        };
+        this.dodajNedostupnostExt = (req, res) => {
+            const nastavnik = req.body.nastavnik;
+            let datum_vreme_start = req.body.datum_vreme_start;
+            let datum_vreme_kraj = req.body.datum_vreme_kraj;
+            const datumVremeStart = new Date(datum_vreme_start);
+            const datumVremeKraj = new Date(datum_vreme_kraj);
+            Util.popraviDatumStart(datumVremeStart);
+            Util.popraviDatumKraj(datumVremeKraj);
+            if (Util.proveriIstiDan(datumVremeStart, datumVremeKraj))
+                Util.popraviIstiDan(datumVremeStart, datumVremeKraj);
+            else
+                Util.popraviRazlDan(datumVremeStart, datumVremeKraj);
+            datum_vreme_start = datumVremeStart.toISOString().slice(0, 16) + "Z";
+            datum_vreme_kraj = datumVremeKraj.toISOString().slice(0, 16) + "Z";
+            if (!Util.proveraBuducnost(datumVremeStart))
+                return res.json({ msg: "Vasa nova nedostupnost mora biti u buducnosti." });
+            if (!Util.proveraPrePosle(datumVremeStart, datumVremeKraj))
+                return res.json({ msg: "Neispravno vreme nedostupnosti. Pokusajte ponovo!" });
+            Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "Prihvacen")
+                .then(data3 => {
+                if (data3)
+                    return res.json({ msg: "Vec postoji PRIHVACEN cas koji se preklapa sa Vasim terminom nedostupnosti. Izaberite drugi termin!" });
+                Util.postojiPreklapanje(nastavnik, datumVremeStart, datumVremeKraj, "U obradi")
+                    .then(data4 => {
+                    if (data4)
+                        return res.json({ msg: "Vec postoji cas U OBRADI koji se preklapa sa Vasim terminom. Izaberite drugi termin!" });
+                    Util.nastavnikNedostupan(nastavnik, datumVremeStart, datumVremeKraj)
+                        .then(data5 => {
+                        if (data5)
+                            return res.json({ msg: "Vec ste nedostupni u ovom terminu. Izaberite drugi termin!" });
+                        const nedostp = datum_vreme_start + "###" + datum_vreme_kraj;
+                        nastavnik_1.default
+                            .findOneAndUpdate({ kor_ime: nastavnik }, { $push: { nedostupnost: nedostp } })
+                            .then(tData => res.json({ msg: "OK" }))
+                            .catch(tErr => console.log(tErr));
+                    })
+                        .catch(err5 => console.log(err5));
+                })
+                    .catch(err4 => console.log(err4));
+            })
+                .catch(err3 => console.log(err3));
+        };
+        this.dohvCasoveUcenikNastavnik = (req, res) => {
+            const ucenik = req.body.ucenik;
+            const nastavnik = req.body.nastavnik;
+            const datumSad = new Date();
+            datumSad.setTime(datumSad.getTime() + 3600000);
+            const sad = datumSad.toISOString().slice(0, 16) + "Z";
+            cas_1.default
+                .find({ ucenik: ucenik, nastavnik: nastavnik, status: "Prihvacen", datum_vreme_kraj: { $lt: sad } })
+                .sort({ predmet: 1, datum_vreme_start: 1 })
+                .then(data => res.json(data))
                 .catch(err => console.log(err));
         };
     }

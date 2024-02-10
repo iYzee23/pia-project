@@ -3,6 +3,7 @@ export class Obavestenje {
   cas: string = "";
   tekst: string = "";
   neprocitano: boolean = false;
+  datum_vreme: string = "";
   nIme: string = "";
   nPrezime: string = "";
   predmet: string = "";

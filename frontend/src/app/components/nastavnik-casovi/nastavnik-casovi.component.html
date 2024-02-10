@@ -1,1 +1,99 @@
-<p>nastavnik-casovi works!</p>
+<h1>Casovi nastavnika</h1>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Potvrdjeni casovi</b></caption>
+    <tr>
+      <th>Predmet</th>
+      <th>Ime ucenika</th>
+      <th>Prezime ucenika</th>
+      <th>Pokreni ucionicu</th>
+      <th>Otkazi cas</th>
+    </tr>
+    <tr *ngFor="let cas of potvr_casovi">
+      <td>{{cas.predmet}}</td>
+      <td>{{cas.uIme}}</td>
+      <td>{{cas.uPrezime}}</td>
+      <td>
+        <input type="button" value="Pokreni" (click)="pokreniUcionicu(cas)" [disabled]="cas.ucionicaDisabled">
+      </td>
+      <td>
+        Unesite razlog otkazivanja:
+        <input type="text" [(ngModel)]="cas.tekst" [disabled]="cas.otkazivanjeDisabled">
+        <input type="button" value="Otkazi" (click)="otkaziCas(cas)" [disabled]="cas.otkazivanjeDisabled || proveriCasTekst(cas.tekst)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Nepotvrdjeni casovi</b></caption>
+    <tr>
+      <th>Ime ucenika</th>
+      <th>Prezime ucenika</th>
+      <th>Predmet</th>
+      <th>Opis casa</th>
+      <th>Prosecna ocena ucenika</th>
+      <th>Potvrdi cas</th>
+      <th>Odbij cas</th>
+    </tr>
+    <tr *ngFor="let cas of u_obradi_casovi">
+      <td>{{cas.uIme}}</td>
+      <td>{{cas.uPrezime}}</td>
+      <td>{{cas.predmet}}</td>
+      <td>{{cas.kratak_opis}}</td>
+      <td>{{cas.uBrOcena < 3 ? 'Ucenik jos uvek nema 3 ocene.' : cas.uProsecnaOcena}}</td>
+      <td>
+        <input type="button" value="Potvrdi" (click)="potvrdiCas(cas)">
+      </td>
+      <td>
+        Unesite razlog otkazivanja:
+        <input type="text" [(ngModel)]="cas.tekst">
+        <input type="button" value="Otkazi" (click)="otkaziCas(cas)" [disabled]="proveriCasTekst(cas.tekst)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Unesite datum i vreme pocetka Vaseg odsustva:</td>
+      <td>
+        <input type="datetime-local" [(ngModel)]="datum_vreme_start_forma">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite datum i vreme kraja Vaseg odsustva:</td>
+      <td>
+        <input type="datetime-local" [(ngModel)]="datum_vreme_kraj_forma">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite odsustvo:</td>
+      <td>
+        <input type="button" value="Unesi" (click)="dodajNedostupnost()" [disabled]="proveriNedostupnost()">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class='demo-app'>
+  <div class='demo-app-main'>
+    <full-calendar #calendar [options]='calendarOptions'>
+      <ng-template #eventContent let-arg>
+        <b>{{ arg.timeText }}</b>
+        <i>{{ arg.event.title }}</i>
+      </ng-template>
+    </full-calendar>
+  </div>
+</div>
+<input type="button" value="Unesite odsustvo" (click)="dodajNedostupnostExt()" [disabled]="proveriNedostupnostExt()">
+<hr>
+<p *ngIf="poruka !== ''" [class]="poruka.includes('Uspesno') ? 'green' : 'red'">
+  {{poruka}}
+</p>
+<input type="button" value="Odjava" (click)="logout()">
+<hr>
+<app-jitsi-meet *ngIf="showJitsiMeet" [roomName]="roomName" [displayName]="displayName" [email]="email" (callEnded)="showJitsiMeet = false"></app-jitsi-meet>

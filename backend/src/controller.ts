@@ -798,10 +798,15 @@ export class ZController {
         const cas = req.body.cas;
         const tekst = req.body.tekst;
 
+        const datumSad = new Date();
+        datumSad.setTime(datumSad.getTime() + 60 * 60 * 1000);
+        const sad = datumSad.toISOString().slice(0, 16) + "Z";
+
         const nObavestenje = new Obavestenje({
             cas: cas,
             tekst: tekst,
-            neprocitano: true
+            neprocitano: true,
+            datum_vreme: sad
         });
 
         nObavestenje
@@ -830,7 +835,7 @@ export class ZController {
         const tri = datumTri.toISOString().slice(0, 16) + "Z";
 
         Cas
-            .find({nastavnik: nastavnik, datum_vreme_start: {$gte: sad, $lte: tri}})
+            .find({nastavnik: nastavnik, status: "Prihvacen", datum_vreme_start: {$gte: sad, $lte: tri}})
             .sort({datum_vreme_start: 1})
             .then(data => res.json(data))
             .catch(err => console.log(err));
@@ -838,18 +843,22 @@ export class ZController {
 
     dodajNedostupnost = (req: express.Request, res: express.Response) => {
         const nastavnik = req.body.nastavnik;
-        const datum_vreme_start = req.body.datum_vreme_start + "Z";
-        const datum_vreme_kraj = req.body.datum_vreme_kraj + "Z";
+        let datum_vreme_start = req.body.datum_vreme_start + "Z";
+        let datum_vreme_kraj = req.body.datum_vreme_kraj + "Z";
 
         const datumVremeStart = new Date(datum_vreme_start);
         const datumVremeKraj = new Date(datum_vreme_kraj);
 
         Util.popraviDatumStart(datumVremeStart);
         Util.popraviDatumKraj(datumVremeKraj);
+
         if (Util.proveriIstiDan(datumVremeStart, datumVremeKraj))
             Util.popraviIstiDan(datumVremeStart, datumVremeKraj);
         else
             Util.popraviRazlDan(datumVremeStart, datumVremeKraj);
+
+        datum_vreme_start = datumVremeStart.toISOString().slice(0, 16) + "Z";
+        datum_vreme_kraj = datumVremeKraj.toISOString().slice(0, 16) + "Z";
 
         if (!Util.proveraBuducnost(datumVremeStart))
             return res.json({msg: "Vasa nova nedostupnost mora biti u buducnosti."});
@@ -881,18 +890,22 @@ export class ZController {
 
     dodajNedostupnostExt = (req: express.Request, res: express.Response) => {
         const nastavnik = req.body.nastavnik;
-        const datum_vreme_start = req.body.datum_vreme_start;
-        const datum_vreme_kraj = req.body.datum_vreme_kraj;
+        let datum_vreme_start = req.body.datum_vreme_start;
+        let datum_vreme_kraj = req.body.datum_vreme_kraj;
 
         const datumVremeStart = new Date(datum_vreme_start);
         const datumVremeKraj = new Date(datum_vreme_kraj);
 
         Util.popraviDatumStart(datumVremeStart);
         Util.popraviDatumKraj(datumVremeKraj);
+
         if (Util.proveriIstiDan(datumVremeStart, datumVremeKraj))
             Util.popraviIstiDan(datumVremeStart, datumVremeKraj);
-        else
+        else 
             Util.popraviRazlDan(datumVremeStart, datumVremeKraj);
+
+        datum_vreme_start = datumVremeStart.toISOString().slice(0, 16) + "Z";
+        datum_vreme_kraj = datumVremeKraj.toISOString().slice(0, 16) + "Z";
 
         if (!Util.proveraBuducnost(datumVremeStart))
             return res.json({msg: "Vasa nova nedostupnost mora biti u buducnosti."});
@@ -926,8 +939,12 @@ export class ZController {
         const ucenik = req.body.ucenik;
         const nastavnik = req.body.nastavnik;
 
+        const datumSad = new Date();
+        datumSad.setTime(datumSad.getTime() + 3600000);
+        const sad = datumSad.toISOString().slice(0, 16) + "Z";
+
         Cas
-            .find({ucenik: ucenik, nastavnik: nastavnik})
+            .find({ucenik: ucenik, nastavnik: nastavnik, status: "Prihvacen", datum_vreme_kraj: {$lt: sad}})
             .sort({predmet: 1, datum_vreme_start: 1})
             .then(data => res.json(data))
             .catch(err => console.log(err));
