@@ -124,6 +124,14 @@ ZRouter
     .post((req, res) => new ZController().azurirajProfSliku(req, res));
 
 ZRouter
+    .route("/azurirajPredmete")
+    .post((req, res) => new ZController().azurirajPredmete(req, res));
+
+ZRouter
+    .route("/azurirajUzraste")
+    .post((req, res) => new ZController().azurirajUzraste(req, res));
+
+ZRouter
     .route("/dohvCasoveNastavnika")
     .post((req, res) => new ZController().dohvCasoveNastavnika(req, res));
 

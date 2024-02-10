@@ -145,6 +145,14 @@ export class ZController {
             .catch(err1 => console.log(err1));
     };
 
+    /*
+        predmeti nastavnika ce morati da se filtriraju po adminovom neodobravanju
+        --> takodje, posto inicijalno prikazujemo i neprihvacene predmete nastavnika
+        --> neki ucenik kod njega moze da zakaze cas iz ovakvog predmeta
+        --> zato, ukoliko admin odbije predmet, mi cemo da otkazemo taj cas i posaljemo obavestenje
+        slobodna forma: clanovi niza su razdvojeni zarezom
+    */
+
     registracijaNastavnik = (req: express.Request, res: express.Response) => {
         const kor_ime = req.body.kor_ime;
 
@@ -188,8 +196,6 @@ export class ZController {
                                         const nNastavnik = new Nastavnik({
                                             kor_ime: kor_ime,
                                             cv_pdf: cv_path,
-                                            // ovo ce morati da se filtrira po adminovom neodobravanju
-                                            // slobodna forma: clanovi niza su razdvojeni zarezom
                                             predmeti: req.body.predmeti,
                                             uzrast: req.body.uzrast,
                                             culi_sajt: req.body.culi_sajt,
@@ -523,6 +529,32 @@ export class ZController {
             .catch(err => console.log(err));
     };
 
+    /*
+        zbog ova dva azuriranja, moci ce da nastanu neke nekonzistentne situacije
+        npr, treba za 5 dana da drzim cas iz matematike, a promenio sam ovaj predmet i vise ne predajem
+        ovakvi casovi ce ipak moci da se odrze
+    */
+
+    azurirajPredmete = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const predmeti = req.body.predmeti;
+
+        Nastavnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {predmeti: predmeti})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    azurirajUzraste = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const uzrasti = req.body.uzrasti;
+
+        Nastavnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {uzrast: uzrasti})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
     dohvCasoveNastavnika = (req: express.Request, res: express.Response) => {
         const nastavnik = req.body.nastavnik;
 
@@ -783,4 +815,6 @@ export class ZController {
             .then(data => res.json({msg: "OK"}))
             .catch(err => console.log(err));
     };
+
+
 }

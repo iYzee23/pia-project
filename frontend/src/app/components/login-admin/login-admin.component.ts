@@ -25,8 +25,8 @@ export class LoginAdminComponent {
           else {
             this.poruka = "";
             localStorage.setItem("ulogovani", this.kor_ime);
-            localStorage.setItem("tip", "admin");
-            this.router.navigate(["admin"]);
+            localStorage.setItem("tip", "Admin");
+            this.router.navigate(["adminProfil"]);
           }
         }
       );

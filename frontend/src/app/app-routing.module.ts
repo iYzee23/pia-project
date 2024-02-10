@@ -9,8 +9,6 @@ import { LoginAdminComponent } from './components/login-admin/login-admin.compon
 import { RegistracijaUceniciComponent } from './components/registracija-ucenici/registracija-ucenici.component';
 import { PromenaLozinkeNeZnam1Component } from './components/promena-lozinke-ne-znam1/promena-lozinke-ne-znam1.component';
 import { PromenaLozinkeNeZnam2Component } from './components/promena-lozinke-ne-znam2/promena-lozinke-ne-znam2.component';
-import { NastavnikComponent } from './components/nastavnik/nastavnik.component';
-import { AdminComponent } from './components/admin/admin.component';
 import { RegistracijaNastavniciComponent } from './components/registracija-nastavnici/registracija-nastavnici.component';
 import { PromenaLozinkeZnamComponent } from './components/promena-lozinke-znam/promena-lozinke-znam.component';
 import { PromenaLozinkeNeZnam3Component } from './components/promena-lozinke-ne-znam3/promena-lozinke-ne-znam3.component';
@@ -22,9 +20,24 @@ import { UcenikDrugaComponent } from './components/ucenik-druga/ucenik-druga.com
 import { UcenikCasoviComponent } from './components/ucenik-casovi/ucenik-casovi.component';
 import { UcenikKomentarComponent } from './components/ucenik-komentar/ucenik-komentar.component';
 import { UcenikObavestenjaComponent } from './components/ucenik-obavestenja/ucenik-obavestenja.component';
+import { NastavnikProfilComponent } from './components/nastavnik-profil/nastavnik-profil.component';
+import { NastavnikCasoviComponent } from './components/nastavnik-casovi/nastavnik-casovi.component';
+import { NastavnikUceniciComponent } from './components/nastavnik-ucenici/nastavnik-ucenici.component';
+import { NastavnikDosijeComponent } from './components/nastavnik-dosije/nastavnik-dosije.component';
+import { AdminProfilComponent } from './components/admin-profil/admin-profil.component';
+
+const ulogg = localStorage.getItem("ulogovani") !== null;
+let tipp: any = localStorage.getItem("tip");
+if (tipp) {
+  if (tipp === "Ucenik") tipp = UcenikProfilComponent;
+  else if (tipp === "Nastavnik") tipp = NastavnikProfilComponent;
+  else tipp = AdminProfilComponent;
+}
+console.log(ulogg);
+console.log(tipp);
 
 const routes: Routes = [
-  {path: '', component: NeregistrovaniComponent, canActivate: [noLoginGuard]},
+  {path: 'neregistrovani', component: NeregistrovaniComponent, canActivate: [noLoginGuard]},
   {path: 'login', component: LoginComponent, canActivate: [noLoginGuard]},
   {path: 'loginAdmin', component: LoginAdminComponent, canActivate: [noLoginGuard]},
   {path: 'registracijaUcenici', component: RegistracijaUceniciComponent, canActivate: [noLoginGuard]},
@@ -41,8 +54,12 @@ const routes: Routes = [
   {path: 'ucenikCasovi', component: UcenikCasoviComponent, canActivate: [loginGuard]},
   {path: 'ucenikKomentar', component: UcenikKomentarComponent, canActivate: [loginGuard]},
   {path: 'ucenikObavestenja', component: UcenikObavestenjaComponent, canActivate: [loginGuard]},
-  {path: 'nastavnik', component: NastavnikComponent, canActivate: [loginGuard]},
-  {path: 'admin', component: AdminComponent, canActivate: [loginGuard]},
+  {path: 'nastavnikProfil', component: NastavnikProfilComponent, canActivate: [loginGuard]},
+  {path: 'nastavnikCasovi', component: NastavnikCasoviComponent, canActivate: [loginGuard]},
+  {path: 'nastavnikUcenici', component: NastavnikUceniciComponent, canActivate: [loginGuard]},
+  {path: 'nastavnikDosije', component: NastavnikDosijeComponent, canActivate: [loginGuard]},
+  {path: 'adminProfil', component: AdminProfilComponent, canActivate: [loginGuard]},
+  {path: '**', component: ulogg ? tipp : NeregistrovaniComponent},
 ];
 
 @NgModule({

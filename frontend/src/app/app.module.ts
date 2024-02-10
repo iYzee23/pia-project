@@ -13,8 +13,6 @@ import { PromenaLozinkeNeZnam1Component } from './components/promena-lozinke-ne-
 import { PromenaLozinkeNeZnam2Component } from './components/promena-lozinke-ne-znam2/promena-lozinke-ne-znam2.component';
 import { PromenaLozinkeNeZnam3Component } from './components/promena-lozinke-ne-znam3/promena-lozinke-ne-znam3.component';
 import { NeregistrovaniComponent } from './components/neregistrovani/neregistrovani.component';
-import { NastavnikComponent } from './components/nastavnik/nastavnik.component';
-import { AdminComponent } from './components/admin/admin.component';
 import { RegistracijaNastavniciComponent } from './components/registracija-nastavnici/registracija-nastavnici.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PdfUploadComponent } from './components/pdf-upload/pdf-upload.component';
@@ -29,6 +27,11 @@ import { UcenikObavestenjaComponent } from './components/ucenik-obavestenja/ucen
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { JitsiMeetComponent } from './components/jitsi-meet/jitsi-meet.component';
 import { ZvezdiceComponent } from './components/zvezdice/zvezdice.component';
+import { NastavnikProfilComponent } from './components/nastavnik-profil/nastavnik-profil.component';
+import { NastavnikCasoviComponent } from './components/nastavnik-casovi/nastavnik-casovi.component';
+import { NastavnikUceniciComponent } from './components/nastavnik-ucenici/nastavnik-ucenici.component';
+import { NastavnikDosijeComponent } from './components/nastavnik-dosije/nastavnik-dosije.component';
+import { AdminProfilComponent } from './components/admin-profil/admin-profil.component';
 
 @NgModule({
   declarations: [
@@ -42,8 +45,6 @@ import { ZvezdiceComponent } from './components/zvezdice/zvezdice.component';
     PromenaLozinkeNeZnam2Component,
     PromenaLozinkeNeZnam3Component,
     NeregistrovaniComponent,
-    NastavnikComponent,
-    AdminComponent,
     ImageUploadComponent,
     PdfUploadComponent,
     UcenikProfilComponent,
@@ -55,7 +56,12 @@ import { ZvezdiceComponent } from './components/zvezdice/zvezdice.component';
     UcenikKomentarComponent,
     UcenikObavestenjaComponent,
     JitsiMeetComponent,
-    ZvezdiceComponent
+    ZvezdiceComponent,
+    NastavnikProfilComponent,
+    NastavnikCasoviComponent,
+    NastavnikUceniciComponent,
+    NastavnikDosijeComponent,
+    AdminProfilComponent
   ],
   imports: [
     BrowserModule,

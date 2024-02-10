@@ -161,7 +161,7 @@ export class UcenikNastavniciComponent implements OnInit {
 
   logout() {
     localStorage.clear();
-    this.router.navigate([""]);
+    this.router.navigate(["neregistrovani"]);
   }
 
 }

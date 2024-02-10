@@ -252,6 +252,22 @@ export class ZService {
     return this.http.post<Poruka>(this.uri + "/azurirajProfSliku", data);
   }
 
+  azurirajPredmete(kor_ime: string, predmeti: string[]) {
+    const data = {
+      kor_ime: kor_ime,
+      predmeti: predmeti
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajPredmete", data);
+  }
+
+  azurirajUzraste(kor_ime: string, uzrasti: string[]) {
+    const data = {
+      kor_ime: kor_ime,
+      uzrasti: uzrasti
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajUzraste", data);
+  }
+
   dohvCasoveNastavnika(nastavnik: string) {
     const data = {
       nastavnik: nastavnik

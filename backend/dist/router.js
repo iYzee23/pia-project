@@ -97,6 +97,12 @@ ZRouter
     .route("/azurirajProfSliku")
     .post((req, res) => new controller_1.ZController().azurirajProfSliku(req, res));
 ZRouter
+    .route("/azurirajPredmete")
+    .post((req, res) => new controller_1.ZController().azurirajPredmete(req, res));
+ZRouter
+    .route("/azurirajUzraste")
+    .post((req, res) => new controller_1.ZController().azurirajUzraste(req, res));
+ZRouter
     .route("/dohvCasoveNastavnika")
     .post((req, res) => new controller_1.ZController().dohvCasoveNastavnika(req, res));
 ZRouter

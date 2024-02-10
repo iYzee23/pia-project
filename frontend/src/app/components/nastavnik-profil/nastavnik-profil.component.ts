@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { ZService } from 'src/app/services/z.service';
 
 @Component({
-  selector: 'app-ucenik-profil',
-  templateUrl: './ucenik-profil.component.html',
-  styleUrls: ['./ucenik-profil.component.css']
+  selector: 'app-nastavnik-profil',
+  templateUrl: './nastavnik-profil.component.html',
+  styleUrls: ['./nastavnik-profil.component.css']
 })
-export class UcenikProfilComponent implements OnInit {
+export class NastavnikProfilComponent implements OnInit {
 
   kor_ime: string = "";
   ime: string = "";
@@ -16,8 +16,19 @@ export class UcenikProfilComponent implements OnInit {
   email: string = "";
   telefon: string = "";
   prof_slika: string = "";
-  tip_skole: string = "";
-  tr_razred: number = 0;
+  predmeti: string[] = [];
+  uzrasti: string[] = [];
+
+  slob_predmeti: string = "";
+  def_predmeti: {
+    naziv: string;
+    izabr: boolean;
+  }[] = [];
+  def_uzrasti = [
+    {naziv: "Osnovna skola [1-4]", izabr: false},
+    {naziv: "Osnovna skola [5-8]", izabr: false},
+    {naziv: "Srednja skola", izabr: false},
+  ];
 
   azur_ime: string = "";
   azur_prezime: string = "";
@@ -25,11 +36,11 @@ export class UcenikProfilComponent implements OnInit {
   azur_email: string = "";
   azur_telefon: string = "";
   azur_prof_slika: string = "";
-  azur_tip_skole: string = "";
 
   constructor(private service: ZService, private router: Router) {}
 
   ngOnInit(): void {
+    this.def_predmeti = [];
     this.kor_ime = localStorage.getItem("ulogovani")!;
     this.service.dohvKorisnika(this.kor_ime).subscribe(
       data => {
@@ -39,11 +50,25 @@ export class UcenikProfilComponent implements OnInit {
         this.email = data.email;
         this.telefon = data.telefon;
         this.prof_slika = data.prof_slika;
-        this.service.dohvUcenika(this.kor_ime).subscribe(
+        this.service.dohvNastavnika(this.kor_ime).subscribe(
           data1 => {
-            this.tip_skole = data1.tip_skole;
-            this.tr_razred = data1.tr_razred;
-            this.clearAzur();
+            this.predmeti = data1.predmeti;
+            this.uzrasti = data1.uzrast;
+            this.service.dohvPredmete().subscribe(
+              data2 => {
+                for (let pr of data2) {
+                  const naziv = pr.naziv;
+                  const izabr = this.predmeti.includes(naziv);
+                  this.def_predmeti.push({
+                    naziv: naziv,
+                    izabr: izabr
+                  });
+                }
+                for (let uzr of this.def_uzrasti)
+                  uzr.izabr = this.uzrasti.includes(uzr.naziv);
+                  this.clearAzur();
+              }
+            );
           }
         );
       }
@@ -60,7 +85,7 @@ export class UcenikProfilComponent implements OnInit {
     this.azur_adresa = "";
     this.azur_email = "";
     this.azur_telefon = "";
-    this.azur_tip_skole = "";
+    this.slob_predmeti = "";
   }
 
   azurirajProfilnuSliku() {
@@ -111,18 +136,33 @@ export class UcenikProfilComponent implements OnInit {
     );
   }
 
-  azurirajTrRazred() {
-    this.service.azurirajTrRazred(this.kor_ime, this.azur_tip_skole).subscribe(
+  azurirajPredmete() {
+    let izabrPredmeti = this.def_predmeti.filter(item => item.izabr).map(item => item.naziv);
+    const slobPredmeti = this.slob_predmeti.length === 0 ? [] : this.slob_predmeti.split(", ");
+    if (slobPredmeti.length > 0) izabrPredmeti.push(...slobPredmeti);
+    this.service.azurirajPredmete(this.kor_ime, izabrPredmeti).subscribe(
       data => {
-        this.ngOnInit();
+        if (slobPredmeti.length > 0) {
+          this.service.predloziPredmete(slobPredmeti).subscribe(
+            tData => {
+              this.ngOnInit();
+            }
+          );
+        }
+        else {
+          this.ngOnInit();
+        }
       }
     );
   }
 
-  proveriAzurTrRazred() {
-    const expr1 = this.tip_skole.includes("Srednja") && this.tr_razred === 4;
-    const expr2 = this.tip_skole.includes("Osnovna") && this.tr_razred === 8 && this.azur_tip_skole === "";
-    return expr1 || expr2;
+  azurirajUzraste() {
+    const izabrUzrasti = this.def_uzrasti.filter(item => item.izabr).map(item => item.naziv);
+    this.service.azurirajUzraste(this.kor_ime, izabrUzrasti).subscribe(
+      data => {
+        this.ngOnInit();
+      }
+    );
   }
 
   proveriEmail() {
@@ -137,6 +177,14 @@ export class UcenikProfilComponent implements OnInit {
     const expr1 = this.azur_telefon === "";
     const expr2 = !regexTelefon.test(this.azur_telefon);
     return expr1 || expr2;
+  }
+
+  proveriPredmete() {
+    return this.def_predmeti.filter(item => item.izabr).length === 0 && this.slob_predmeti === "";
+  }
+
+  proveriUzraste() {
+    return this.def_uzrasti.filter(item => item.izabr).length === 0;
   }
 
   logout() {

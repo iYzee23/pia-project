@@ -494,6 +494,22 @@ class ZController {
             })
                 .catch(err => console.log(err));
         };
+        this.azurirajPredmete = (req, res) => {
+            const kor_ime = req.body.kor_ime;
+            const predmeti = req.body.predmeti;
+            nastavnik_1.default
+                .findOneAndUpdate({ kor_ime: kor_ime }, { predmeti: predmeti })
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
+        this.azurirajUzraste = (req, res) => {
+            const kor_ime = req.body.kor_ime;
+            const uzrasti = req.body.uzrasti;
+            nastavnik_1.default
+                .findOneAndUpdate({ kor_ime: kor_ime }, { uzrast: uzrasti })
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
         this.dohvCasoveNastavnika = (req, res) => {
             const nastavnik = req.body.nastavnik;
             cas_1.default
