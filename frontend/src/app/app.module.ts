@@ -32,6 +32,7 @@ import { NastavnikCasoviComponent } from './components/nastavnik-casovi/nastavni
 import { NastavnikUceniciComponent } from './components/nastavnik-ucenici/nastavnik-ucenici.component';
 import { NastavnikDosijeComponent } from './components/nastavnik-dosije/nastavnik-dosije.component';
 import { AdminProfilComponent } from './components/admin-profil/admin-profil.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { AdminProfilComponent } from './components/admin-profil/admin-profil.com
     FullCalendarModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -878,6 +878,143 @@ class ZController {
                 .then(data => res.json(data))
                 .catch(err => console.log(err));
         };
+        this.dohvBrAngazovanihNastavnikaPredmet = (req, res) => {
+            const predmet = req.body.predmet;
+            nastavnik_1.default
+                .countDocuments({ predmeti: { $in: [predmet] } })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvBrAngazovanihNastavnikaUzrast = (req, res) => {
+            const uzrast = req.body.uzrast;
+            nastavnik_1.default
+                .countDocuments({ uzrast: { $in: [uzrast] } })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvBrLjudiPol = (req, res) => {
+            const pol = req.body.pol;
+            const tip = req.body.tip;
+            korisnik_1.default
+                .countDocuments({ tip: tip, pol: pol })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvSveNastavnike = (req, res) => {
+            korisnik_1.default
+                .find({ tip: "Nastavnik" })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvBrojCasovaNastavnikMesec2023 = (req, res) => {
+            const nastavnik = req.body.nastavnik;
+            /*
+            Cas
+                .countDocuments({
+                    nastavnik: nastavnik, status: "Prihvacen",
+                    datum_vreme_start: {$gte: "2023-01-01T00:00Z", $lt: "2024-01-01T00:00Z"}
+                })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+            */
+            cas_1.default
+                .aggregate([
+                {
+                    $match: {
+                        nastavnik: nastavnik, status: "Prihvacen",
+                        datum_vreme_start: { $gte: "2023-01-01T00:00Z", $lt: "2024-01-01T00:00Z" }
+                    }
+                },
+                {
+                    $project: {
+                        month: {
+                            $month: {
+                                $dateFromString: {
+                                    dateString: "$datum_vreme_start"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$month",
+                        count: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: { _id: 1 }
+                }
+            ])
+                .then(data => {
+                const countsByMonth = Array(12).fill(0);
+                data.forEach(item => {
+                    if (item._id >= 1 && item._id <= 12) {
+                        countsByMonth[item._id - 1] = item.count;
+                    }
+                });
+                res.json(countsByMonth);
+            })
+                .catch(err => console.log(err));
+        };
+        this.dohvBrojCasovaNastavnikDan2023 = (req, res) => {
+            const nastavnik = req.body.nastavnik;
+            cas_1.default
+                .aggregate([
+                {
+                    $match: {
+                        nastavnik: nastavnik, status: "Prihvacen",
+                        datum_vreme_start: { $gte: "2023-01-01T00:00Z", $lt: "2024-01-01T00:00Z" }
+                    }
+                },
+                {
+                    $project: {
+                        dayOfWeek: {
+                            $dayOfWeek: {
+                                $dateFromString: {
+                                    dateString: "$datum_vreme_start"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$dayOfWeek",
+                        count: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: { _id: 1 }
+                }
+            ])
+                .then(data => {
+                const countsByDayOfWeek = Array(7).fill(0);
+                data.forEach(item => {
+                    countsByDayOfWeek[item._id - 1] = item.count;
+                });
+                res.json(countsByDayOfWeek);
+            })
+                .catch(err => console.log(err));
+        };
+        this.dohvSveCasove = (req, res) => {
+            cas_1.default
+                .find()
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvUkupanBrKorisnika = (req, res) => {
+            korisnik_1.default
+                .countDocuments()
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvBrBezProfilne = (req, res) => {
+            korisnik_1.default
+                .countDocuments({ prof_slika: "../images/default-profile-picture.jpg" })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
     }
 }
 exports.ZController = ZController;

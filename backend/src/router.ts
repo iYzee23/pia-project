@@ -191,4 +191,40 @@ ZRouter
     .route("/dohvCasoveUcenikNastavnik")
     .post((req, res) => new ZController().dohvCasoveUcenikNastavnik(req, res));
 
+ZRouter
+    .route("/dohvBrAngazovanihNastavnikaPredmet")
+    .post((req, res) => new ZController().dohvBrAngazovanihNastavnikaPredmet(req, res));
+
+ZRouter
+    .route("/dohvBrAngazovanihNastavnikaUzrast")
+    .post((req, res) => new ZController().dohvBrAngazovanihNastavnikaUzrast(req, res));
+
+ZRouter
+    .route("/dohvBrLjudiPol")
+    .post((req, res) => new ZController().dohvBrLjudiPol(req, res));
+
+ZRouter
+    .route("/dohvSveNastavnike")
+    .get((req, res) => new ZController().dohvSveNastavnike(req, res));
+
+ZRouter
+    .route("/dohvBrojCasovaNastavnikMesec2023")
+    .post((req, res) => new ZController().dohvBrojCasovaNastavnikMesec2023(req, res));
+
+ZRouter
+    .route("/dohvBrojCasovaNastavnikDan2023")
+    .post((req, res) => new ZController().dohvBrojCasovaNastavnikDan2023(req, res));
+
+ZRouter
+    .route("/dohvSveCasove")
+    .get((req, res) => new ZController().dohvSveCasove(req, res));
+ 
+ZRouter
+    .route("/dohvUkupanBrKorisnika")
+    .get((req, res) => new ZController().dohvUkupanBrKorisnika(req, res));
+
+ZRouter
+    .route("/dohvBrBezProfilne")
+    .get((req, res) => new ZController().dohvBrBezProfilne(req, res));
+
 export default ZRouter;
