@@ -1,5 +1,22 @@
 <h1>Admin [profil]</h1>
 <hr>
+<div class="container">
+  <table>
+    <tr>
+      <th>Korisnicko ime</th>
+      <th>Ime i prezime</th>
+      <th>Email</th>
+      <th>Telefon</th>
+    </tr>
+    <tr>
+      <td>{{kor_ime}}</td>
+      <td>{{ime}} {{prezime}}</td>
+      <td>{{email}}</td>
+      <td>{{telefon}}</td>
+    </tr>
+  </table>
+</div>
+<hr>
 <div id="chart1">
   <apx-chart
     [series]="chartOptions1.series!"
@@ -24,6 +41,21 @@
   ></apx-chart>
 </div>
 <hr>
+<div id="chart3">
+  <apx-chart
+    [series]="chartOptions3.series!"
+    [chart]="chartOptions3.chart!"
+    [dataLabels]="chartOptions3.dataLabels!"
+    [plotOptions]="chartOptions3.plotOptions!"
+    [yaxis]="chartOptions3.yaxis!"
+    [legend]="chartOptions3.legend!"
+    [fill]="chartOptions3.fill!"
+    [stroke]="chartOptions3.stroke!"
+    [tooltip]="chartOptions3.tooltip!"
+    [xaxis]="chartOptions3.xaxis!"
+  ></apx-chart>
+</div>
+<hr>
 <div id="chart4">
   <apx-chart
     [series]="chartOptions4.series!"
@@ -36,3 +68,26 @@
   ></apx-chart>
 </div>
 <hr>
+<div id="chart5">
+  <apx-chart
+    [series]="chartOptions5.series!"
+    [chart]="chartOptions5.chart!"
+    [dataLabels]="chartOptions5.dataLabels!"
+    [plotOptions]="chartOptions5.plotOptions!"
+    [xaxis]="chartOptions5.xaxis!"
+    [colors]="chartOptions5.colors!"
+    [title]="chartOptions5.title!"
+    [legend]="chartOptions5.legend!"
+  ></apx-chart>
+</div>
+<hr>
+<div id="chart6">
+  <apx-chart
+    [series]="chartOptions6.series!"
+    [chart]="chartOptions6.chart!"
+    [plotOptions]="chartOptions6.plotOptions!"
+    [labels]="chartOptions6.labels!"
+  ></apx-chart>
+</div>
+<hr>
+<input type="button" value="Odjava" (click)="logout()">
