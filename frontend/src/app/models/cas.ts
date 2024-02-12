@@ -22,4 +22,6 @@ export class Cas {
   uProsecnaOcena: number = 0;
   ucionicaDisabled: boolean = true;
   otkazivanjeDisabled: boolean = true;
+  uOcenaNastavnik: number = 0;
+  uKomentarNastavnik: string = "";
 }

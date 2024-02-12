@@ -1,1 +1,22 @@
-<p>nastavnik-ucenici works!</p>
+<h1>Ucenici nastavnika</h1>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <th>Korisnicko ime ucenika</th>
+      <th>Ime ucenika</th>
+      <th>Prezime ucenika</th>
+    </tr>
+    <tr *ngFor="let ucenik of ucenici">
+      <td>
+        <a [routerLink]="['/nastavnikDosije']" [queryParams]="{ucenik: ucenik.kor_ime}">
+          {{ucenik.kor_ime}}
+        </a>
+      </td>
+      <td>{{ucenik.ime}}</td>
+      <td>{{ucenik.prezime}}</td>
+    </tr>
+  </table>
+</div>
+<hr>
+<input type="button" value="Odjava" (click)="logout()">

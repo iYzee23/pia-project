@@ -1,1 +1,31 @@
-<p>nastavnik-dosije works!</p>
+<h1>Dosije ucenika</h1>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <th>ID casa</th>
+      <th>Predmet</th>
+      <th>Datum i vreme pocetka casa</th>
+      <th>Datum i vreme kraja casa</th>
+      <th>Kratak opis casa</th>
+      <th>Ocena i komentar nastavnika</th>
+    </tr>
+    <tr *ngFor="let cas of casovi">
+      <td>{{cas._id}}</td>
+      <td>{{cas.predmet}}</td>
+      <td>{{formatirajDatumVreme(cas.datum_vreme_start)}}</td>
+      <td>{{formatirajDatumVreme(cas.datum_vreme_kraj)}}</td>
+      <td>{{cas.kratak_opis}}</td>
+      <td *ngIf="cas.komentar_nastavnik !== null">
+        <b>[{{cas.ocena_nastavnik}}]</b> {{cas.komentar_nastavnik}}
+      </td>
+      <td *ngIf="cas.komentar_nastavnik === null">
+        Unesite ocenu: <app-zvezdice (ratingSelected)="handleRatingSelected($event, cas)"></app-zvezdice><br>
+        Unesite komentar:<br> <input type="text" [(ngModel)]="cas.uKomentarNastavnik"><br><br>
+        <input type="button" value="Unesi" (click)="unesi(cas)" [disabled]="proveri(cas)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<input type="button" value="Nazad" (click)="back()">

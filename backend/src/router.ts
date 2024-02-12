@@ -188,7 +188,7 @@ ZRouter
     .post((req, res) => new ZController().dodajNedostupnostExt(req, res));
 
 ZRouter
-    .route("/procitajObavestenje")
+    .route("/dohvCasoveUcenikNastavnik")
     .post((req, res) => new ZController().dohvCasoveUcenikNastavnik(req, res));
 
 export default ZRouter;
