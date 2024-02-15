@@ -1,0 +1,64 @@
+<h1>Admin [pregled predmeta]</h1>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Prihvaceni predmeti</b></caption>
+    <tr>
+      <th>Naziv predmeta</th>
+    </tr>
+    <tr *ngFor="let predm of prihvaceni_predm">
+      <td>{{predm.naziv}}</td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Odbijeni predmeti</b></caption>
+    <tr>
+      <th>Naziv predmeta</th>
+    </tr>
+    <tr *ngFor="let predm of odbijeni_predm">
+      <td>{{predm.naziv}}</td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Predmeti u obradi</b></caption>
+    <tr>
+      <th>Naziv predmeta</th>
+      <th>Akcija</th>
+    </tr>
+    <tr *ngFor="let predm of u_obradi_predm">
+      <td>{{predm.naziv}}</td>
+      <td>
+        <input type="button" value="Prihvati" (click)="prihvatiPredmet(predm)"><br>
+        <input type="button" value="Odbij" (click)="odbijPredmet(predm)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Unesite naziv predmeta:</td>
+      <td>
+        <input type="text" [(ngModel)]="novi_predm">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="button" value="Dodaj predmet" (click)="dodajPredmet()">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<p *ngIf="poruka !== ''" [class]="poruka.includes('Uspesno') ? 'green' : 'red'">
+  {{poruka}}
+</p>
+<input type="button" value="Odjava" (click)="logout()">&nbsp;
+<input type="button" value="Nazad" (click)="back()">

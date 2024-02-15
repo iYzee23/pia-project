@@ -142,6 +142,12 @@ export class AdminProfilComponent implements OnInit {
   constructor(private service: ZService, private router: Router) {}
 
   ngOnInit(): void {
+    this.g1();
+    this.g2();
+    this.g3();
+    this.g4();
+    this.g5();
+    this.g6();
     this.kor_ime = localStorage.getItem("ulogovani")!;
     this.service.dohvKorisnika(this.kor_ime).subscribe(
       data => {
@@ -149,12 +155,6 @@ export class AdminProfilComponent implements OnInit {
         this.prezime = data.prezime;
         this.email = data.email;
         this.telefon = data.telefon;
-        this.g1();
-        this.g2();
-        this.g3();
-        this.g4();
-        this.g5();
-        this.g6();
       }
     );
   }
@@ -607,6 +607,14 @@ export class AdminProfilComponent implements OnInit {
   logout() {
     localStorage.clear();
     this.router.navigate(["neregistrovani"]);
+  }
+
+  idiNaKorisnike() {
+    this.router.navigate(["adminKorisnici"]);
+  }
+
+  idiNaPredmete() {
+    this.router.navigate(["adminPredmeti"]);
   }
 
 }

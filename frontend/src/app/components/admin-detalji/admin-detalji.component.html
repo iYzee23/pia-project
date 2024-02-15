@@ -1,0 +1,133 @@
+<h1>Admin [detalji o nastavniku]</h1>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Profilna slika</td>
+      <td>
+        <img [src]="nastavnik.prof_slika" alt="Profilna slika">
+      </td>
+    </tr>
+    <tr>
+      <td>Korisnicko ime</td>
+      <td>{{nastavnik.kor_ime}}</td>
+    </tr>
+    <tr>
+      <td>Ime</td>
+      <td>{{nastavnik.ime}}</td>
+    </tr>
+    <tr>
+      <td>Prezime</td>
+      <td>{{nastavnik.prezime}}</td>
+    </tr>
+    <tr>
+      <td>Adresa</td>
+      <td>{{nastavnik.adresa}}</td>
+    </tr>
+    <tr>
+      <td>Mejl adresa</td>
+      <td>{{nastavnik.email}}</td>
+    </tr>
+    <tr>
+      <td>Kontakt telefon</td>
+      <td>{{nastavnik.telefon}}</td>
+    </tr>
+    <tr>
+      <td>Izabrani predmeti</td>
+      <td>
+        <ul>
+          <li *ngFor="let pr of nastavnik.predmeti">
+            {{pr}}
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Izabrani uzrasti</td>
+      <td>
+        <ul>
+          <li *ngFor="let uzr of nastavnik.uzrast">
+            {{uzr}}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <tr>
+      <td>Azuriraj profilnu sliku:</td>
+      <td>
+        <app-image-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handleSlika($event)"></app-image-upload>
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajProfilnuSliku()" [disabled]="proveriSliku()">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj ime:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_ime">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajIme()" [disabled]="azur_ime === ''">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj prezime:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_prezime">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajPrezime()" [disabled]="azur_prezime === ''">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj adresu:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_adresa">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajAdresu()" [disabled]="azur_adresa === ''">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj mejl adresu:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_email">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajEmail()" [disabled]="proveriEmail()">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj kontakt telefon:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_telefon">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajTelefon()" [disabled]="proveriTelefon()">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj bezbednosno pitanje i odgovor:</td>
+      <td>
+        Bezbednosno pitanje: <input type="text" [(ngModel)]="azur_bezb_pitanje"><br><br>
+        Bezbednosni odgovor: <input type="text" [(ngModel)]="azur_bezb_odgovor">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajBezbPitanjeOdgovor()" [disabled]="proveriBezbPitanjeOdgovor()">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>
+<p *ngIf="mejlPoruka !== ''" class="red">
+  {{mejlPoruka}}
+</p>
+<input type="button" value="Nazad" (click)="back()">

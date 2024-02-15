@@ -160,6 +160,9 @@ ZRouter
     .route("/dohvSveNastavnike")
     .get((req, res) => new controller_1.ZController().dohvSveNastavnike(req, res));
 ZRouter
+    .route("/dohvSveUcenike")
+    .get((req, res) => new controller_1.ZController().dohvSveUcenike(req, res));
+ZRouter
     .route("/dohvBrojCasovaNastavnikMesec2023")
     .post((req, res) => new controller_1.ZController().dohvBrojCasovaNastavnikMesec2023(req, res));
 ZRouter
@@ -174,4 +177,16 @@ ZRouter
 ZRouter
     .route("/dohvBrBezProfilne")
     .get((req, res) => new controller_1.ZController().dohvBrBezProfilne(req, res));
+ZRouter
+    .route("/dohvSvePredmete")
+    .get((req, res) => new controller_1.ZController().dohvSvePredmete(req, res));
+ZRouter
+    .route("/odbijPredmet")
+    .post((req, res) => new controller_1.ZController().odbijPredmet(req, res));
+ZRouter
+    .route("/azurirajBezbPitanjeOdgovor")
+    .post((req, res) => new controller_1.ZController().azurirajBezbPitanjeOdgovor(req, res));
+ZRouter
+    .route("/proveriJedinstvenMejl")
+    .post((req, res) => new controller_1.ZController().proveriJedinstvenMejl(req, res));
 exports.default = ZRouter;

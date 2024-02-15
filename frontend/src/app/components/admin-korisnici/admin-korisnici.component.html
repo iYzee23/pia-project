@@ -1,0 +1,94 @@
+<h1>Admin [pregled ucenika i nastavnika]</h1>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Ucenici</b></caption>
+    <tr>
+      <th>Korisnicko ime</th>
+      <th>Ime i prezime</th>
+      <th>Pol</th>
+      <th>Adresa</th>
+      <th>Kontakt telefon</th>
+      <th>Mejl adresa</th>
+      <th>Tip skole</th>
+      <th>Trenutni razred</th>
+    </tr>
+    <tr *ngFor="let ucenik of ucenici">
+      <td>{{ucenik.kor_ime}}</td>
+      <td>{{ucenik.ime}} {{ucenik.prezime}}</td>
+      <td>{{ucenik.pol}}</td>
+      <td>{{ucenik.adresa}}</td>
+      <td>{{ucenik.telefon}}</td>
+      <td>{{ucenik.email}}</td>
+      <td>{{ucenik.tip_skole}}</td>
+      <td>{{ucenik.tr_razred}}</td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Nastavnici u obradi</b></caption>
+    <tr>
+      <th>Korisnicko ime</th>
+      <th>Ime i prezime</th>
+      <th>Pol</th>
+      <th>Adresa</th>
+      <th>Kontakt telefon</th>
+      <th>Mejl adresa</th>
+      <th>Radna biografija (CV)</th>
+      <th>Akcija</th>
+    </tr>
+    <tr *ngFor="let nast of obrada_nastavnici">
+      <td>{{nast.kor_ime}}</td>
+      <td>{{nast.ime}} {{nast.prezime}}</td>
+      <td>{{nast.pol}}</td>
+      <td>{{nast.adresa}}</td>
+      <td>{{nast.telefon}}</td>
+      <td>{{nast.email}}</td>
+      <td>
+        <a [href]="nast.cv_pdf" [download]="'CV_' + nast.kor_ime + '.pdf'">Preuzmite radnu biografiju</a>
+      </td>
+      <td>
+        <input type="button" value="Prihvati" (click)="prihvati(nast)"><br><br>
+        <input type="button" value="Odbij" (click)="odbij(nast)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div class="container">
+  <table>
+    <caption><b>Nastavnici u sistemu</b></caption>
+    <tr>
+      <th>Korisnicko ime</th>
+      <th>Ime i prezime</th>
+      <th>Pol</th>
+      <th>Adresa</th>
+      <th>Kontakt telefon</th>
+      <th>Mejl adresa</th>
+      <th>Akcija</th>
+    </tr>
+    <tr *ngFor="let nast of sistem_nastavnici">
+      <td>
+        <a [routerLink]="['/adminDetalji']" [queryParams]="{nastavnik: nast.kor_ime}">
+          {{nast.kor_ime}}
+        </a>
+      </td>
+      <td>{{nast.ime}} {{nast.prezime}}</td>
+      <td>{{nast.pol}}</td>
+      <td>{{nast.adresa}}</td>
+      <td>{{nast.telefon}}</td>
+      <td>{{nast.email}}</td>
+      <td *ngIf="nast.zahtev_status === 'Prihvacen'">
+        <input type="button" value="Deaktiviraj" (click)="odbij(nast)">
+      </td>
+      <td *ngIf="nast.zahtev_status === 'Odbijen'">
+        <input type="button" value="Aktiviraj" (click)="prihvati(nast)">
+      </td>
+    </tr>
+  </table>
+</div>
+<hr>
+<input type="button" value="Odjava" (click)="logout()">&nbsp;
+<input type="button" value="Nazad" (click)="back()">

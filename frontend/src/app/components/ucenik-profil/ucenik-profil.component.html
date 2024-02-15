@@ -47,10 +47,10 @@
   <tr>
     <td>Azuriraj profilnu sliku:</td>
     <td>
-      <app-image-upload (fileEvent)="handleSlika($event)"></app-image-upload>
+      <app-image-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handleSlika($event)"></app-image-upload>
     </td>
     <td>
-      <input type="button" value="Azuriraj" (click)="azurirajProfilnuSliku()">
+      <input type="button" value="Azuriraj" (click)="azurirajProfilnuSliku()" [disabled]="proveriSliku()">
     </td>
   </tr>
   <tr>
@@ -114,4 +114,10 @@
   </tr>
 </table>
 <hr>
+<p *ngIf="poruka !== ''" class="red">
+  {{poruka}}
+</p>
+<p *ngIf="mejlPoruka !== ''" class="red">
+  {{mejlPoruka}}
+</p>
 <input type="button" value="Odjavi se" (click)="logout()">

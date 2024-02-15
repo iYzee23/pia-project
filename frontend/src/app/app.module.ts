@@ -33,6 +33,9 @@ import { NastavnikUceniciComponent } from './components/nastavnik-ucenici/nastav
 import { NastavnikDosijeComponent } from './components/nastavnik-dosije/nastavnik-dosije.component';
 import { AdminProfilComponent } from './components/admin-profil/admin-profil.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { AdminKorisniciComponent } from './components/admin-korisnici/admin-korisnici.component';
+import { AdminPredmetiComponent } from './components/admin-predmeti/admin-predmeti.component';
+import { AdminDetaljiComponent } from './components/admin-detalji/admin-detalji.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,10 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     NastavnikCasoviComponent,
     NastavnikUceniciComponent,
     NastavnikDosijeComponent,
-    AdminProfilComponent
+    AdminProfilComponent,
+    AdminKorisniciComponent,
+    AdminPredmetiComponent,
+    AdminDetaljiComponent
   ],
   imports: [
     BrowserModule,

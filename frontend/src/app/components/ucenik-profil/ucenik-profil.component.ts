@@ -18,6 +18,8 @@ export class UcenikProfilComponent implements OnInit {
   prof_slika: string = "";
   tip_skole: string = "";
   tr_razred: number = 0;
+  poruka: string = "";
+  mejlPoruka: string = "";
 
   azur_ime: string = "";
   azur_prezime: string = "";
@@ -52,6 +54,10 @@ export class UcenikProfilComponent implements OnInit {
 
   handleSlika(azur_prof_slika: string) {
     this.azur_prof_slika = azur_prof_slika;
+  }
+
+  handleGreska(greska: string) {
+    this.poruka = greska;
   }
 
   clearAzur() {
@@ -96,9 +102,17 @@ export class UcenikProfilComponent implements OnInit {
   }
 
   azurirajEmail() {
-    this.service.azurirajEmail(this.kor_ime, this.azur_email).subscribe(
-      data => {
-        this.ngOnInit();
+    this.service.proveriJedinstvenMejl(this.azur_email).subscribe(
+      tData => {
+        if (tData) this.mejlPoruka = "Niste uneli jedinstveni mejl.";
+        else {
+          this.mejlPoruka = "";
+          this.service.azurirajEmail(this.kor_ime, this.azur_email).subscribe(
+            data => {
+              this.ngOnInit();
+            }
+          );
+        }
       }
     );
   }
@@ -137,6 +151,10 @@ export class UcenikProfilComponent implements OnInit {
     const expr1 = this.azur_telefon === "";
     const expr2 = !regexTelefon.test(this.azur_telefon);
     return expr1 || expr2;
+  }
+
+  proveriSliku() {
+    return this.poruka !== "";
   }
 
   logout() {

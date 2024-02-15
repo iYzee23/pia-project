@@ -281,13 +281,27 @@ class ZController {
                 .catch(err => console.log(err));
         };
         this.dodajPredmet = (req, res) => {
-            const nPredmet = new predmet_1.default({
-                naziv: req.body.naziv,
-                status: "Prihvacen"
-            });
-            nPredmet
-                .save()
-                .then(data => res.json({ msg: "OK" }))
+            const naziv = req.body.naziv;
+            predmet_1.default
+                .findOne({ naziv: naziv })
+                .then(data => {
+                if (!data) {
+                    const nPredmet = new predmet_1.default({
+                        naziv: naziv,
+                        status: "Prihvacen"
+                    });
+                    nPredmet
+                        .save()
+                        .then(tData => res.json({ msg: "OK" }))
+                        .catch(tErr => console.log(tErr));
+                }
+                else {
+                    predmet_1.default
+                        .findOneAndUpdate({ naziv: naziv }, { status: "Prihvacen" })
+                        .then(dData => res.json({ msg: "OK" }))
+                        .catch(dErr => console.log(dErr));
+                }
+            })
                 .catch(err => console.log(err));
         };
         this.promeniLozinkuZnamStaru = (req, res) => {
@@ -906,6 +920,12 @@ class ZController {
                 .then(data => res.json(data))
                 .catch(err => console.log(err));
         };
+        this.dohvSveUcenike = (req, res) => {
+            korisnik_1.default
+                .find({ tip: "Ucenik" })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
         this.dohvBrojCasovaNastavnikMesec2023 = (req, res) => {
             const nastavnik = req.body.nastavnik;
             /*
@@ -1012,6 +1032,35 @@ class ZController {
         this.dohvBrBezProfilne = (req, res) => {
             korisnik_1.default
                 .countDocuments({ prof_slika: "../images/default-profile-picture.jpg" })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvSvePredmete = (req, res) => {
+            predmet_1.default
+                .find()
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.odbijPredmet = (req, res) => {
+            const predmet = req.body.predmet;
+            predmet_1.default
+                .findOneAndUpdate({ naziv: predmet }, { status: "Odbijen" })
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
+        this.azurirajBezbPitanjeOdgovor = (req, res) => {
+            const kor_ime = req.body.kor_ime;
+            const bezb_pitanje = req.body.bezb_pitanje;
+            const bezb_odgovor = req.body.bezb_odgovor;
+            korisnik_1.default
+                .findOneAndUpdate({ kor_ime: kor_ime }, { bezb_pitanje: bezb_pitanje, bezb_odgovor: bezb_odgovor })
+                .then(data => res.json({ msg: "OK" }))
+                .catch(err => console.log(err));
+        };
+        this.proveriJedinstvenMejl = (req, res) => {
+            const email = req.body.email;
+            korisnik_1.default
+                .findOne({ email: email })
                 .then(data => res.json(data))
                 .catch(err => console.log(err));
         };

@@ -277,14 +277,29 @@ export class ZController {
     };
 
     dodajPredmet = (req: express.Request, res: express.Response) => {
-        const nPredmet = new Predmet({
-            naziv: req.body.naziv,
-            status: "Prihvacen"
-        });
+        const naziv = req.body.naziv;
 
-        nPredmet
-            .save()
-            .then(data => res.json({msg: "OK"}))
+        Predmet
+            .findOne({naziv: naziv})
+            .then(data => {
+                if (!data) {
+                    const nPredmet = new Predmet({
+                        naziv: naziv,
+                        status: "Prihvacen"
+                    });
+            
+                    nPredmet
+                        .save()
+                        .then(tData => res.json({msg: "OK"}))
+                        .catch(tErr => console.log(tErr));
+                }
+                else {
+                    Predmet
+                        .findOneAndUpdate({naziv: naziv}, {status: "Prihvacen"})
+                        .then(dData => res.json({msg: "OK"}))
+                        .catch(dErr => console.log(dErr));
+                }
+            })
             .catch(err => console.log(err));
     };
 
@@ -985,6 +1000,13 @@ export class ZController {
             .catch(err => console.log(err));
     };
 
+    dohvSveUcenike = (req: express.Request, res: express.Response) => {
+        Korisnik
+            .find({tip: "Ucenik"})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
     dohvBrojCasovaNastavnikMesec2023 = (req: express.Request, res: express.Response) => {
         const nastavnik = req.body.nastavnik;
 
@@ -1098,6 +1120,42 @@ export class ZController {
     dohvBrBezProfilne = (req: express.Request, res: express.Response) => {
         Korisnik
             .countDocuments({prof_slika: "../images/default-profile-picture.jpg"})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    dohvSvePredmete = (req: express.Request, res: express.Response) => {
+        Predmet
+            .find()
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    odbijPredmet = (req: express.Request, res: express.Response) => {
+        const predmet = req.body.predmet;
+
+        Predmet
+            .findOneAndUpdate({naziv: predmet}, {status: "Odbijen"})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    azurirajBezbPitanjeOdgovor = (req: express.Request, res: express.Response) => {
+        const kor_ime = req.body.kor_ime;
+        const bezb_pitanje = req.body.bezb_pitanje;
+        const bezb_odgovor = req.body.bezb_odgovor;
+
+        Korisnik
+            .findOneAndUpdate({kor_ime: kor_ime}, {bezb_pitanje: bezb_pitanje, bezb_odgovor: bezb_odgovor})
+            .then(data => res.json({msg: "OK"}))
+            .catch(err => console.log(err));
+    };
+
+    proveriJedinstvenMejl = (req: express.Request, res: express.Response) => {
+        const email = req.body.email;
+
+        Korisnik
+            .findOne({email: email})
             .then(data => res.json(data))
             .catch(err => console.log(err));
     };

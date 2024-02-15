@@ -422,6 +422,10 @@ export class ZService {
     return this.http.get<Korisnik[]>(this.uri + "/dohvSveNastavnike");
   }
 
+  dohvSveUcenike() {
+    return this.http.get<Korisnik[]>(this.uri + "/dohvSveUcenike");
+  }
+
   dohvBrojCasovaNastavnikMesec2023(nastavnik: string) {
     const data = {
       nastavnik: nastavnik
@@ -446,6 +450,33 @@ export class ZService {
 
   dohvBrBezProfilne() {
     return this.http.get<number>(this.uri + "/dohvBrBezProfilne");
+  }
+
+  dohvSvePredmete() {
+    return this.http.get<Predmet[]>(this.uri + "/dohvSvePredmete");
+  }
+
+  odbijPredmet(predmet: string) {
+    const data = {
+      predmet: predmet
+    };
+    return this.http.post<Poruka>(this.uri + "/odbijPredmet", data);
+  }
+
+  azurirajBezbPitanjeOdgovor(kor_ime: string, bezb_pitanje: string, bezb_odgovor: string) {
+    const data = {
+      kor_ime: kor_ime,
+      bezb_pitanje: bezb_pitanje,
+      bezb_odgovor: bezb_odgovor
+    };
+    return this.http.post<Poruka>(this.uri + "/azurirajBezbPitanjeOdgovor", data);
+  }
+
+  proveriJedinstvenMejl(email: string) {
+    const data = {
+      email: email
+    };
+    return this.http.post<Korisnik>(this.uri + "/proveriJedinstvenMejl", data);
   }
 
 }

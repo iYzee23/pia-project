@@ -25,6 +25,9 @@ import { NastavnikCasoviComponent } from './components/nastavnik-casovi/nastavni
 import { NastavnikUceniciComponent } from './components/nastavnik-ucenici/nastavnik-ucenici.component';
 import { NastavnikDosijeComponent } from './components/nastavnik-dosije/nastavnik-dosije.component';
 import { AdminProfilComponent } from './components/admin-profil/admin-profil.component';
+import { AdminKorisniciComponent } from './components/admin-korisnici/admin-korisnici.component';
+import { AdminPredmetiComponent } from './components/admin-predmeti/admin-predmeti.component';
+import { AdminDetaljiComponent } from './components/admin-detalji/admin-detalji.component';
 
 const ulogg = localStorage.getItem("ulogovani") !== null;
 let tipp: any = localStorage.getItem("tip");
@@ -57,6 +60,9 @@ const routes: Routes = [
   {path: 'nastavnikUcenici', component: NastavnikUceniciComponent, canActivate: [loginGuard]},
   {path: 'nastavnikDosije', component: NastavnikDosijeComponent, canActivate: [loginGuard]},
   {path: 'adminProfil', component: AdminProfilComponent, canActivate: [loginGuard]},
+  {path: 'adminKorisnici', component: AdminKorisniciComponent, canActivate: [loginGuard]},
+  {path: 'adminPredmeti', component: AdminPredmetiComponent, canActivate: [loginGuard]},
+  {path: 'adminDetalji', component: AdminDetaljiComponent, canActivate: [loginGuard]},
   {path: '**', component: ulogg ? tipp : NeregistrovaniComponent},
 ];
 
