@@ -91,12 +91,14 @@ export class RegistracijaNastavniciComponent {
                 this.service.predloziPredmete(slobPredmeti).subscribe(
                   tData => {
                     this.poruka = "";
+                    localStorage.clear();
                     this.router.navigate(["login"]);
                   }
                 );
               }
               else {
                 this.poruka = "";
+                localStorage.clear();
                 this.router.navigate(["login"]);
               }
             }
@@ -116,5 +118,10 @@ export class RegistracijaNastavniciComponent {
 
   handlePdf(url: string) {
     this.cv_pdf = url;
+  }
+
+  pocetna() {
+    localStorage.clear();
+    this.router.navigate(["neregistrovani"]);
   }
 }

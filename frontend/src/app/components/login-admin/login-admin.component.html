@@ -1,24 +1,27 @@
+<app-header-basic></app-header-basic>
 <h1>Login stranica [Admin]</h1>
 <hr>
-<table>
-  <tr>
-    <td>Unesite korisnicko ime:</td>
-    <td>
-      <input type="text" [(ngModel)]="kor_ime">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite lozinku:</td>
-    <td>
-      <input type="password" [(ngModel)]="lozinka">
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <input type="button" value="Prijava" (click)="login()">
-    </td>
-  </tr>
-</table>
+<div class="container">
+  <table>
+    <tr>
+      <td>Unesite korisnicko ime:</td>
+      <td>
+        <input type="text" [(ngModel)]="kor_ime">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite lozinku:</td>
+      <td>
+        <input type="password" [(ngModel)]="lozinka">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="button" value="Prijava" (click)="login()">
+      </td>
+    </tr>
+  </table>
+</div>
 <hr>
 <p *ngIf="poruka !== ''" class="red">
   {{poruka}}

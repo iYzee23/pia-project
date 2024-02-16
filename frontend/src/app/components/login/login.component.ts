@@ -35,4 +35,9 @@ export class LoginComponent {
     }
   }
 
+  pocetna() {
+    localStorage.clear();
+    this.router.navigate(["neregistrovani"]);
+  }
+
 }

@@ -1,3 +1,4 @@
+<app-header-ucenik></app-header-ucenik>
 <h1>Pocetna stranica [ucenik]</h1>
 <hr>
 <div class="container">
@@ -43,76 +44,78 @@
   </table>
 </div>
 <hr>
-<table>
-  <tr>
-    <td>Azuriraj profilnu sliku:</td>
-    <td>
-      <app-image-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handleSlika($event)"></app-image-upload>
-    </td>
-    <td>
-      <input type="button" value="Azuriraj" (click)="azurirajProfilnuSliku()" [disabled]="proveriSliku()">
-    </td>
-  </tr>
-  <tr>
-    <td>Azuriraj ime:</td>
-    <td>
-      <input type="text" [(ngModel)]="azur_ime">
-    </td>
-    <td>
-      <input type="button" value="Azuriraj" (click)="azurirajIme()" [disabled]="azur_ime === ''">
-    </td>
-  </tr>
-  <tr>
-    <td>Azuriraj prezime:</td>
-    <td>
-      <input type="text" [(ngModel)]="azur_prezime">
-    </td>
-    <td>
-      <input type="button" value="Azuriraj" (click)="azurirajPrezime()" [disabled]="azur_prezime === ''">
-    </td>
-  </tr>
-  <tr>
-    <td>Azuriraj adresu:</td>
-    <td>
-      <input type="text" [(ngModel)]="azur_adresa">
-    </td>
-    <td>
-      <input type="button" value="Azuriraj" (click)="azurirajAdresu()" [disabled]="azur_adresa === ''">
-    </td>
-  </tr>
-  <tr>
-    <td>Azuriraj email adresu:</td>
-    <td>
-      <input type="text" [(ngModel)]="azur_email">
-    </td>
-    <td>
-      <input type="button" value="Azuriraj" (click)="azurirajEmail()" [disabled]="proveriEmail()">
-    </td>
-  </tr>
-  <tr>
-    <td>Azuriraj kontakt telefon:</td>
-    <td>
-      <input type="text" [(ngModel)]="azur_telefon">
-    </td>
-    <td>
-      <input type="button" value="Azuriraj" (click)="azurirajTelefon()" [disabled]="proveriTelefon()">
-    </td>
-  </tr>
-  <tr>
-    <td>Azuriraj trenutni razred:</td>
-    <td>
-      <select [(ngModel)]="azur_tip_skole">
-        <option value="Osnovna">Osnovna skola</option>
-        <option value="Srednja [strucna]">Srednja skola [strucna]</option>
-        <option value="Srednja [gimnazija]">Srednja skola [gimnazija]</option>
-        <option value="Srednja [umetnicka]">Srednja skola [umetnicka]</option>
-      </select>
-    </td>
-    <td>
-      <input type="button" value="Azuriraj" (click)="azurirajTrRazred()" [disabled]="proveriAzurTrRazred()">
-    </td>
-  </tr>
-</table>
+<div class="container">
+  <table>
+    <tr>
+      <td>Azuriraj profilnu sliku:</td>
+      <td>
+        <app-image-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handleSlika($event)"></app-image-upload>
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajProfilnuSliku()" [disabled]="proveriSliku()">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj ime:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_ime">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajIme()" [disabled]="azur_ime === ''">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj prezime:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_prezime">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajPrezime()" [disabled]="azur_prezime === ''">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj adresu:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_adresa">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajAdresu()" [disabled]="azur_adresa === ''">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj email adresu:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_email">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajEmail()" [disabled]="proveriEmail()">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj kontakt telefon:</td>
+      <td>
+        <input type="text" [(ngModel)]="azur_telefon">
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajTelefon()" [disabled]="proveriTelefon()">
+      </td>
+    </tr>
+    <tr>
+      <td>Azuriraj trenutni razred:</td>
+      <td>
+        <select [(ngModel)]="azur_tip_skole">
+          <option value="Osnovna">Osnovna skola</option>
+          <option value="Srednja [strucna]">Srednja skola [strucna]</option>
+          <option value="Srednja [gimnazija]">Srednja skola [gimnazija]</option>
+          <option value="Srednja [umetnicka]">Srednja skola [umetnicka]</option>
+        </select>
+      </td>
+      <td>
+        <input type="button" value="Azuriraj" (click)="azurirajTrRazred()" [disabled]="proveriAzurTrRazred()">
+      </td>
+    </tr>
+  </table>
+</div>
 <hr>
 <p *ngIf="poruka !== ''" class="red">
   {{poruka}}
@@ -120,4 +123,3 @@
 <p *ngIf="mejlPoruka !== ''" class="red">
   {{mejlPoruka}}
 </p>
-<input type="button" value="Odjavi se" (click)="logout()">

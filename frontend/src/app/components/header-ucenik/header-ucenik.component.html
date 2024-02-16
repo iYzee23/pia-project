@@ -1,0 +1,16 @@
+<nav class="navbar">
+  <a class="navbar-brand" routerLink="/ucenikProfil">
+    <img src="assets/app.png" alt="Logo" style="height: 100px;">
+    &nbsp;&nbsp;&nbsp;MOJ OMILJENI NASTAVNIK
+  </a>
+  <div class="nav-center-links">
+    <a class="nav-link" routerLink="/ucenikProfil" routerLinkActive="active-link">Profil</a>
+    <a class="nav-link" routerLink="/ucenikNastavnici" routerLinkActive="active-link">Nastavnici</a>
+    <a class="nav-link" routerLink="/ucenikCasovi" routerLinkActive="active-link">Casovi</a>
+    <a class="nav-link" routerLink="/ucenikObavestenja" routerLinkActive="active-link">Obavestenja</a>
+  </div>
+  <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-dark my-2 my-sm-0" type="button" (click)="logout()">Odjava</button>&nbsp;
+      <button class="btn btn-outline-dark my-2 my-sm-0" type="button" (click)="promenaLozinke()">Promena lozinke</button>
+  </form>
+</nav>

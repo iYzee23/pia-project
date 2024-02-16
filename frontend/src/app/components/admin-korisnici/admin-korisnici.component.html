@@ -1,8 +1,9 @@
+<app-header-admin></app-header-admin>
 <h1>Admin [pregled ucenika i nastavnika]</h1>
 <hr>
 <div class="container">
   <table>
-    <caption><b>Ucenici</b></caption>
+    <thead><b>Ucenici</b></thead>
     <tr>
       <th>Korisnicko ime</th>
       <th>Ime i prezime</th>
@@ -28,7 +29,7 @@
 <hr>
 <div class="container">
   <table>
-    <caption><b>Nastavnici u obradi</b></caption>
+    <thead><b>Nastavnici u obradi</b></thead>
     <tr>
       <th>Korisnicko ime</th>
       <th>Ime i prezime</th>
@@ -59,7 +60,7 @@
 <hr>
 <div class="container">
   <table>
-    <caption><b>Nastavnici u sistemu</b></caption>
+    <thead><b>Nastavnici u sistemu</b></thead>
     <tr>
       <th>Korisnicko ime</th>
       <th>Ime i prezime</th>
@@ -90,5 +91,3 @@
   </table>
 </div>
 <hr>
-<input type="button" value="Odjava" (click)="logout()">&nbsp;
-<input type="button" value="Nazad" (click)="back()">

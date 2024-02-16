@@ -1,24 +1,27 @@
+<app-header-ucenik></app-header-ucenik>
 <h1>Stranica za ucenika [prikaz nastavnika]</h1>
 <hr>
-<table>
-  <tr>
-    <th>Naziv predmeta</th>
-    <th>Ime i prezime nastavnika</th>
-    <th>Prosek nastavnika</th>
-  </tr>
-  <tr *ngFor="let it of fNiz">
-    <td>{{it.predmet}}</td>
-    <td>
-      <a [routerLink]="['/ucenikDetalji']" [queryParams]="{nastavnik: it.nKorIme}">
-        {{it.nIme}} {{it.nPrezime}}
-      </a>
-    </td>
-    <td>
-      {{it.prosek}}
-      <span [innerHTML]="it.zvezdice"></span>
-    </td>
-  </tr>
-</table>
+<div class="container">
+  <table>
+    <tr>
+      <th>Naziv predmeta</th>
+      <th>Ime i prezime nastavnika</th>
+      <th>Prosek nastavnika</th>
+    </tr>
+    <tr *ngFor="let it of fNiz">
+      <td>{{it.predmet}}</td>
+      <td>
+        <a [routerLink]="['/ucenikDetalji']" [queryParams]="{nastavnik: it.nKorIme}">
+          {{it.nIme}} {{it.nPrezime}}
+        </a>
+      </td>
+      <td>
+        {{it.prosek}}
+        <span [innerHTML]="it.zvezdice"></span>
+      </td>
+    </tr>
+  </table>
+</div>
 <hr>
 <input type="button" value="Sortiraj prema nazivu predmeta rastuce" (click)="sortirajPredmetAsc()">
 <input type="button" value="Sortiraj prema nazivu predmeta opadajuce" (click)="sortirajPredmetDesc()">
@@ -60,4 +63,3 @@
   </table>
 </div>
 <hr>
-<input type="button" value="Odjavi se" (click)="logout()">

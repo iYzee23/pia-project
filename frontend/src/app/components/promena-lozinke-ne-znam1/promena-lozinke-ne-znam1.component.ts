@@ -29,4 +29,9 @@ export class PromenaLozinkeNeZnam1Component {
     }
   }
 
+  pocetna() {
+    localStorage.clear();
+    this.router.navigate(["neregistrovani"]);
+  }
+
 }

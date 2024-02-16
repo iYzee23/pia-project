@@ -1,113 +1,116 @@
+<app-header-basic></app-header-basic>
 <h1>Registracija nastavnika</h1>
 <hr>
-<table>
-  <tr>
-    <td>Unesite korisnicko ime:</td>
-    <td>
-      <input type="text" [(ngModel)]="kor_ime">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite lozinku:</td>
-    <td>
-      <input type="password" [(ngModel)]="lozinka">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite bezbednosno pitanje:</td>
-    <td>
-      <input type="text" [(ngModel)]="bezb_pitanje">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite bezbednosni odgovor:</td>
-    <td>
-      <input type="text" [(ngModel)]="bezb_odgovor">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite ime:</td>
-    <td>
-      <input type="text" [(ngModel)]="ime">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite prezime:</td>
-    <td>
-      <input type="text" [(ngModel)]="prezime">
-    </td>
-  </tr>
-  <tr>
-    <td>Izaberite pol:</td>
-    <td>
-      <input type="radio" name="nastavnikPol" id="nastavnikPolM" value="M" [(ngModel)]="pol">
-      <label for="nastavnikPolM">Muski</label>
-      <input type="radio" name="nastavnikPol" id="nastavnikPolZ" value="Z" [(ngModel)]="pol">
-      <label for="nastavnikPolZ">Zenski</label>
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite adresu stanovanja:</td>
-    <td>
-      <input type="text" [(ngModel)]="adresa">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite kontakt telefon:</td>
-    <td>
-      <input type="text" [(ngModel)]="telefon">
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite mejl adresu:</td>
-    <td>
-      <input type="text" [(ngModel)]="email">
-    </td>
-  </tr>
-  <tr>
-    <td>Izaberite profilnu sliku:</td>
-    <td>
-      <app-image-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handleSlika($event)"></app-image-upload>
-    </td>
-  </tr>
-  <tr>
-    <td>Izaberite radnu biografiju sliku:</td>
-    <td>
-      <app-pdf-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handlePdf($event)"></app-pdf-upload>
-    </td>
-  </tr>
-  <tr>
-    <td>Izaberite predmete koje zelite da poducavate:</td>
-    <td>
-      <div *ngFor="let p of predmeti">
-        <input type="checkbox" name="nastavnikPredmet" [id]="p.naziv" [value]="p.naziv" [(ngModel)]="p.izabr">
-        <label [for]="p.naziv">{{p.naziv}}</label>
-      </div>
-      Drugo:
-      <input type="text" [(ngModel)]="slob_predmeti" placeholder="Predmet 1, Predmet 2, ...">
-    </td>
-  </tr>
-  <tr>
-    <td>Izaberite uzraste kojima zelite da predajete:</td>
-    <td>
-      <div *ngFor="let u of uzrasti">
-        <input type="checkbox" name="nastavnikUzrast" [id]="u.naziv" [value]="u.naziv" [(ngModel)]="u.izabr">
-        <label [for]="u.naziv">{{u.naziv}}</label>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>Gde ste culi za nas sajt?</td>
-    <td>
-      <input type="text" [(ngModel)]="culi_sajt">
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <input type="button" value="Registruj se" (click)="registracija()">
-    </td>
-  </tr>
-</table>
+<div class="container">
+  <table>
+    <tr>
+      <td>Unesite korisnicko ime:</td>
+      <td>
+        <input type="text" [(ngModel)]="kor_ime">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite lozinku:</td>
+      <td>
+        <input type="password" [(ngModel)]="lozinka">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite bezbednosno pitanje:</td>
+      <td>
+        <input type="text" [(ngModel)]="bezb_pitanje">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite bezbednosni odgovor:</td>
+      <td>
+        <input type="text" [(ngModel)]="bezb_odgovor">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite ime:</td>
+      <td>
+        <input type="text" [(ngModel)]="ime">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite prezime:</td>
+      <td>
+        <input type="text" [(ngModel)]="prezime">
+      </td>
+    </tr>
+    <tr>
+      <td>Izaberite pol:</td>
+      <td>
+        <input type="radio" name="nastavnikPol" id="nastavnikPolM" value="M" [(ngModel)]="pol">
+        <label for="nastavnikPolM">Muski</label><br>
+        <input type="radio" name="nastavnikPol" id="nastavnikPolZ" value="Z" [(ngModel)]="pol">
+        <label for="nastavnikPolZ">Zenski</label>
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite adresu stanovanja:</td>
+      <td>
+        <input type="text" [(ngModel)]="adresa">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite kontakt telefon:</td>
+      <td>
+        <input type="text" [(ngModel)]="telefon">
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite mejl adresu:</td>
+      <td>
+        <input type="text" [(ngModel)]="email">
+      </td>
+    </tr>
+    <tr>
+      <td>Izaberite profilnu sliku:</td>
+      <td>
+        <app-image-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handleSlika($event)"></app-image-upload>
+      </td>
+    </tr>
+    <tr>
+      <td>Izaberite radnu biografiju sliku:</td>
+      <td>
+        <app-pdf-upload (porukaEvent)="handleGreska($event)" (fileEvent)="handlePdf($event)"></app-pdf-upload>
+      </td>
+    </tr>
+    <tr>
+      <td>Izaberite predmete koje zelite da poducavate:</td>
+      <td>
+        <div *ngFor="let p of predmeti">
+          <input type="checkbox" name="nastavnikPredmet" [id]="p.naziv" [value]="p.naziv" [(ngModel)]="p.izabr">
+          <label [for]="p.naziv">{{p.naziv}}</label>
+        </div>
+        Drugo:
+        <input type="text" [(ngModel)]="slob_predmeti" placeholder="Predmet 1, Predmet 2, ...">
+      </td>
+    </tr>
+    <tr>
+      <td>Izaberite uzraste kojima zelite da predajete:</td>
+      <td>
+        <div *ngFor="let u of uzrasti">
+          <input type="checkbox" name="nastavnikUzrast" [id]="u.naziv" [value]="u.naziv" [(ngModel)]="u.izabr">
+          <label [for]="u.naziv">{{u.naziv}}</label>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>Gde ste culi za nas sajt?</td>
+      <td>
+        <input type="text" [(ngModel)]="culi_sajt">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="button" value="Registruj se" (click)="registracija()">
+      </td>
+    </tr>
+  </table>
+</div>
 <hr>
 <p *ngIf="poruka !== ''" class="red">
   {{poruka}}

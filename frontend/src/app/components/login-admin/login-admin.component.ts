@@ -33,4 +33,9 @@ export class LoginAdminComponent {
     }
   }
 
+  pocetna() {
+    localStorage.clear();
+    this.router.navigate(["neregistrovani"]);
+  }
+
 }

@@ -36,6 +36,13 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { AdminKorisniciComponent } from './components/admin-korisnici/admin-korisnici.component';
 import { AdminPredmetiComponent } from './components/admin-predmeti/admin-predmeti.component';
 import { AdminDetaljiComponent } from './components/admin-detalji/admin-detalji.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderUcenikComponent } from './components/header-ucenik/header-ucenik.component';
+import { HeaderNastavnikComponent } from './components/header-nastavnik/header-nastavnik.component';
+import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
+import { HeaderNeregistrovaniComponent } from './components/header-neregistrovani/header-neregistrovani.component';
+import { HeaderBasicComponent } from './components/header-basic/header-basic.component';
+import { HeaderNoBasicComponent } from './components/header-no-basic/header-no-basic.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +75,14 @@ import { AdminDetaljiComponent } from './components/admin-detalji/admin-detalji.
     AdminProfilComponent,
     AdminKorisniciComponent,
     AdminPredmetiComponent,
-    AdminDetaljiComponent
+    AdminDetaljiComponent,
+    FooterComponent,
+    HeaderUcenikComponent,
+    HeaderNastavnikComponent,
+    HeaderAdminComponent,
+    HeaderNeregistrovaniComponent,
+    HeaderBasicComponent,
+    HeaderNoBasicComponent
   ],
   imports: [
     BrowserModule,

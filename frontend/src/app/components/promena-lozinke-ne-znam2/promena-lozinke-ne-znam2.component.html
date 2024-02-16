@@ -1,30 +1,33 @@
+<app-header-basic></app-header-basic>
 <h1>Promena lozinke [nepoznata lozinka, drugi korak]</h1>
 <hr>
-<table>
-  <tr>
-    <td>Korisnicko ime:</td>
-    <td>
-      <input type="text" [value]="kor_ime" readonly disabled>
-    </td>
-  </tr>
-  <tr>
-    <td>Bezbedonosno pitanje:</td>
-    <td>
-      <input type="text" [value]="bezb_pitanje" readonly disabled>
-    </td>
-  </tr>
-  <tr>
-    <td>Unesite bezbedonosni odgovor:</td>
-    <td>
-      <input type="text" [(ngModel)]="bezb_odgovor">
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <input type="button" value="Dalje" (click)="idiDalje()">
-    </td>
-  </tr>
-</table>
+<div class="container">
+  <table>
+    <tr>
+      <td>Korisnicko ime:</td>
+      <td>
+        <input type="text" [value]="kor_ime" readonly disabled>
+      </td>
+    </tr>
+    <tr>
+      <td>Bezbedonosno pitanje:</td>
+      <td>
+        <input type="text" [value]="bezb_pitanje" readonly disabled>
+      </td>
+    </tr>
+    <tr>
+      <td>Unesite bezbedonosni odgovor:</td>
+      <td>
+        <input type="text" [(ngModel)]="bezb_odgovor">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="button" value="Dalje" (click)="idiDalje()">
+      </td>
+    </tr>
+  </table>
+</div>
 <hr>
 <p *ngIf="poruka !== ''" class="red">
   {{poruka}}

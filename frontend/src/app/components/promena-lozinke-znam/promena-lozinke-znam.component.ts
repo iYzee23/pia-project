@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ZService } from 'src/app/services/z.service';
@@ -16,7 +17,7 @@ export class PromenaLozinkeZnamComponent implements OnInit {
   p_nova_lozinka: string = "";
   poruka: string = "";
 
-  constructor(private service: ZService, private router: Router) {}
+  constructor(private service: ZService, private router: Router, private location: Location) {}
 
   ngOnInit(): void {
     this.kor_ime = localStorage.getItem("ulogovani")!;
@@ -43,6 +44,10 @@ export class PromenaLozinkeZnamComponent implements OnInit {
         );
       }
     }
+  }
+
+  back() {
+    this.location.back();
   }
 
 }

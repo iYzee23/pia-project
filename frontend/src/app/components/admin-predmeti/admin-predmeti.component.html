@@ -1,8 +1,9 @@
+<app-header-admin></app-header-admin>
 <h1>Admin [pregled predmeta]</h1>
 <hr>
 <div class="container">
   <table>
-    <caption><b>Prihvaceni predmeti</b></caption>
+    <thead><b>Prihvaceni predmeti</b></thead>
     <tr>
       <th>Naziv predmeta</th>
     </tr>
@@ -14,7 +15,7 @@
 <hr>
 <div class="container">
   <table>
-    <caption><b>Odbijeni predmeti</b></caption>
+    <thead><b>Odbijeni predmeti</b></thead>
     <tr>
       <th>Naziv predmeta</th>
     </tr>
@@ -26,7 +27,7 @@
 <hr>
 <div class="container">
   <table>
-    <caption><b>Predmeti u obradi</b></caption>
+    <thead><b>Predmeti u obradi</b></thead>
     <tr>
       <th>Naziv predmeta</th>
       <th>Akcija</th>
@@ -60,5 +61,3 @@
 <p *ngIf="poruka !== ''" [class]="poruka.includes('Uspesno') ? 'green' : 'red'">
   {{poruka}}
 </p>
-<input type="button" value="Odjava" (click)="logout()">&nbsp;
-<input type="button" value="Nazad" (click)="back()">

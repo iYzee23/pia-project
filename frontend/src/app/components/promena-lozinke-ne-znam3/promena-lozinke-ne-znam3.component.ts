@@ -40,4 +40,9 @@ export class PromenaLozinkeNeZnam3Component implements OnInit {
     }
   }
 
+  pocetna() {
+    localStorage.clear();
+    this.router.navigate(["neregistrovani"]);
+  }
+
 }

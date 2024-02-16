@@ -1,19 +1,22 @@
+<app-header-neregistrovani></app-header-neregistrovani>
 <h1>Pocetna stranica [neregistrovani korisnik]</h1>
 <hr>
-<table>
-  <tr>
-    <th>Ukupan broj ucenika</th>
-    <th>Ukupan broj (aktivnih) nastavnika</th>
-    <th>Broj odrzanih casova u prethodnih nedelju dana</th>
-    <th>Broj odrzanih casova u prethodnih mesec dana</th>
-  </tr>
-  <tr>
-    <td>{{ukupanBrUcenika}}</td>
-    <td>{{ukupanBrPrihvacenihNastavnika}}</td>
-    <td>{{brCasovaPrethNedelja}}</td>
-    <td>{{brCasovaPrethMesec}}</td>
-  </tr>
-</table>
+<div class="container">
+  <table>
+    <tr>
+      <th>Ukupan broj ucenika</th>
+      <th>Ukupan broj (aktivnih) nastavnika</th>
+      <th>Broj odrzanih casova u prethodnih nedelju dana</th>
+      <th>Broj odrzanih casova u prethodnih mesec dana</th>
+    </tr>
+    <tr>
+      <td>{{ukupanBrUcenika}}</td>
+      <td>{{ukupanBrPrihvacenihNastavnika}}</td>
+      <td>{{brCasovaPrethNedelja}}</td>
+      <td>{{brCasovaPrethMesec}}</td>
+    </tr>
+  </table>
+</div>
 <hr>
 <div class="container">
   <table>
@@ -67,4 +70,3 @@
   </table>
 </div>
 <hr>
-<input type="button" value="Idi na stranicu za logovanje" (click)="login()">

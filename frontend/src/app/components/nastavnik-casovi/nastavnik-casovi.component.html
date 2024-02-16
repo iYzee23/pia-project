@@ -1,3 +1,4 @@
+<app-header-nastavnik></app-header-nastavnik>
 <h1>Casovi nastavnika</h1>
 <hr>
 <div class="container">
@@ -94,6 +95,5 @@
 <p *ngIf="poruka !== ''" [class]="poruka.includes('Uspesno') ? 'green' : 'red'">
   {{poruka}}
 </p>
-<input type="button" value="Odjava" (click)="logout()">
 <hr>
 <app-jitsi-meet *ngIf="showJitsiMeet" [roomName]="roomName" [displayName]="displayName" [email]="email" (callEnded)="showJitsiMeet = false"></app-jitsi-meet>

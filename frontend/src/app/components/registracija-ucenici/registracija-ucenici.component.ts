@@ -57,6 +57,7 @@ export class RegistracijaUceniciComponent {
             if (data.msg !== "OK") this.poruka = data.msg;
             else {
               this.poruka = "";
+              localStorage.clear();
               this.router.navigate(["login"]);
             }
           }
@@ -77,6 +78,11 @@ export class RegistracijaUceniciComponent {
     if (this.tip_skole === "Osnovna") this.razr_izabrani = this.razr_osnovna;
     else this.razr_izabrani = this.razr_srednja;
     this.tr_razred = 1;
+  }
+
+  pocetna() {
+    localStorage.clear();
+    this.router.navigate(["neregistrovani"]);
   }
 
 }
