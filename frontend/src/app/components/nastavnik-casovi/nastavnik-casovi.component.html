@@ -26,6 +26,10 @@
     </tr>
   </table>
 </div>
+<input type="button" value="Prvih 5 casova u narednih 3 dana" (click)="prikazi5Casova()">&nbsp;
+<input type="button" value="Prvih 10 casova u narednih 3 dana" (click)="prikazi10Casova()">&nbsp;
+<input type="button" value="Svi casovi u narednih 3 dana" (click)="prikaziSveCasove()">&nbsp;
+<input type="button" value="Svi buduci casovi" (click)="prikaziSveCasoveIkad()">
 <hr>
 <div class="container">
   <table>
@@ -96,4 +100,4 @@
   {{poruka}}
 </p>
 <hr>
-<app-jitsi-meet *ngIf="showJitsiMeet" [roomName]="roomName" [displayName]="displayName" [email]="email" (callEnded)="showJitsiMeet = false"></app-jitsi-meet>
+<app-jitsi-meet *ngIf="showJitsiMeet" [roomName]="roomName" [displayName]="displayName" [email]="email" [casID]="casID"></app-jitsi-meet>

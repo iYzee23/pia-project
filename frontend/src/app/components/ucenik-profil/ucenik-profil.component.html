@@ -103,8 +103,7 @@
     <tr>
       <td>Azuriraj trenutni razred:</td>
       <td>
-        <select [(ngModel)]="azur_tip_skole">
-          <option value="Osnovna">Osnovna skola</option>
+        <select [(ngModel)]="azur_tip_skole" [disabled]="proveriAzurTipSkole()">
           <option value="Srednja [strucna]">Srednja skola [strucna]</option>
           <option value="Srednja [gimnazija]">Srednja skola [gimnazija]</option>
           <option value="Srednja [umetnicka]">Srednja skola [umetnicka]</option>

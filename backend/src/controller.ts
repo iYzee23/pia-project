@@ -294,10 +294,15 @@ export class ZController {
                         .catch(tErr => console.log(tErr));
                 }
                 else {
-                    Predmet
+                    if (data.status === "Prihvacen") 
+                        return res.json({msg: "Predmet je vec prihvacen."});
+                    else {
+                        Predmet
                         .findOneAndUpdate({naziv: naziv}, {status: "Prihvacen"})
                         .then(dData => res.json({msg: "OK"}))
                         .catch(dErr => console.log(dErr));
+                    }
+                    
                 }
             })
             .catch(err => console.log(err));
@@ -381,7 +386,11 @@ export class ZController {
         lastWeek.setDate(today.getDate() - 7);
 
         Cas
-            .countDocuments({datum_vreme_start: {$gte: lastWeek.toISOString()}, status: "Prihvacen"})
+            .countDocuments({
+                datum_vreme_start: {$gte: lastWeek.toISOString()}, 
+                datum_vreme_kraj: {$lte: today.toISOString()},
+                status: "Prihvacen"
+            })
             .then(data => res.json(data))
             .catch(err => console.log(err));
     };
@@ -392,7 +401,11 @@ export class ZController {
         lastMonth.setDate(today.getDate() - 30);
 
         Cas
-            .countDocuments({datum_vreme_start: {$gte: lastMonth.toISOString()}, status: "Prihvacen"})
+            .countDocuments({
+                datum_vreme_start: {$gte: lastMonth.toISOString()}, 
+                datum_vreme_kraj: {$lte: today.toISOString()},
+                status: "Prihvacen"
+            })
             .then(data => res.json(data))
             .catch(err => console.log(err));
     };
@@ -419,6 +432,16 @@ export class ZController {
     */
 
     dohvPredmete = (req: express.Request, res: express.Response) => {
+        /*
+        Predmet
+            .find({$or: [
+                { status: "Prihvacen" },
+                { status: "U obradi" }
+            ]})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+        */
+
         Predmet
             .find({status: "Prihvacen"})
             .then(data => res.json(data))
@@ -844,13 +867,27 @@ export class ZController {
         const brojDana = req.body.brojDana;
 
         const datumSad = new Date();
-        datumSad.setTime(datumSad.getTime() + 3600000);
+        datumSad.setTime(datumSad.getTime() + 60 * 60 * 1000);
         const datumTri = new Date(datumSad.getTime() + brojDana * 24 * 60 * 60 * 1000);
         const sad = datumSad.toISOString().slice(0, 16) + "Z";
         const tri = datumTri.toISOString().slice(0, 16) + "Z";
 
         Cas
-            .find({nastavnik: nastavnik, status: "Prihvacen", datum_vreme_start: {$gte: sad, $lte: tri}})
+            .find({nastavnik: nastavnik, status: "Prihvacen", datum_vreme_kraj: {$gte: sad, $lte: tri}})
+            .sort({datum_vreme_start: 1})
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+    };
+
+    dohvSveBuduceCasoveNastavnika = (req: express.Request, res: express.Response) => {
+        const nastavnik = req.body.nastavnik;
+
+        const datumSad = new Date();
+        datumSad.setTime(datumSad.getTime() + 60 * 60 * 1000);
+        const sad = datumSad.toISOString().slice(0, 16) + "Z";
+
+        Cas
+            .find({nastavnik: nastavnik, status: "Prihvacen", datum_vreme_kraj: {$gte: sad}})
             .sort({datum_vreme_start: 1})
             .then(data => res.json(data))
             .catch(err => console.log(err));

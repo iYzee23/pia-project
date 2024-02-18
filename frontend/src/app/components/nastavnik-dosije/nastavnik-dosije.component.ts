@@ -57,10 +57,13 @@ export class NastavnikDosijeComponent implements OnInit {
   }
 
   proveri(cas: Cas) {
-    return cas.uOcenaNastavnik === null || cas.uKomentarNastavnik === null || cas.uKomentarNastavnik === "";
+    return cas.uOcenaNastavnik === null || cas.uOcenaNastavnik === undefined
+      || cas.uKomentarNastavnik === null || cas.uKomentarNastavnik === undefined || cas.uKomentarNastavnik === "";
   }
 
   unesi(cas: Cas) {
+    console.log(cas.uOcenaNastavnik);
+    console.log(cas.uKomentarNastavnik);
     this.service.unesiKomentarIOcenuNastavnik(cas._id, cas.uKomentarNastavnik, cas.uOcenaNastavnik).subscribe(
       data => {
         this.ngOnInit();

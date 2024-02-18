@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { em } from '@fullcalendar/core/internal-common';
+import { ZService } from 'src/app/services/z.service';
 
 declare var JitsiMeetExternalAPI: any;
 
@@ -12,15 +13,17 @@ export class JitsiMeetComponent implements OnInit, OnDestroy {
 
   @ViewChild('jitsiContainer', { static: true }) jitsiContainer!: ElementRef;
   // @Output() callEnded = new EventEmitter<void>();
+  @Input("casID") casID!: string;
   @Input("roomName") roomName!: string;
   @Input("displayName") displayName!: string;
   @Input("email") email!: string;
   private api: any;
 
+  joined: number = 0;
   domain: string = "meet.jit.si";
   options: any;
 
-  constructor() { }
+  constructor(private service: ZService) { }
 
   ngOnInit(): void {
     this.initializeJitsiMeet();
@@ -29,6 +32,12 @@ export class JitsiMeetComponent implements OnInit, OnDestroy {
   /*
   onCallEnd(): void {
     this.callEnded.emit();
+  }
+  */
+
+  /*
+  onCallEnd(): void {
+    this.service.odrziCas(this.casID).subscribe();
   }
   */
 
@@ -64,7 +73,16 @@ export class JitsiMeetComponent implements OnInit, OnDestroy {
     };
 
     this.api = new JitsiMeetExternalAPI(this.domain, this.options);
-    // this.api.addListener('readyToClose', () => this.onCallEnd());
+
+    /*
+    this.api.addEventListener('videoConferenceJoined', () => {
+      // ...
+    });
+
+    this.api.addEventListener('videoConferenceLeft', () => {
+      // this.onCallEnd();
+    });
+    */
   }
 
   ngOnDestroy(): void {

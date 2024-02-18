@@ -14,6 +14,7 @@ export class UcenikCasoviComponent implements OnInit {
   odrzani_casovi: Cas[] = [];
   buduci_casovi: Cas[] = [];
   showJitsiMeet: boolean = false;
+  casID: string = "";
   roomName: string = "";
   displayName: string = "";
   email: string = "";
@@ -62,6 +63,7 @@ export class UcenikCasoviComponent implements OnInit {
   pokreniUcionicu(cas: Cas): void {
     this.service.dohvKorisnika(cas.ucenik).subscribe(
       data => {
+        this.casID = cas._id;
         this.roomName = cas._id + this.kor_ime + cas.nastavnik;
         this.displayName = data.ime + " " + data.prezime;
         this.email = data.email;
@@ -77,8 +79,8 @@ export class UcenikCasoviComponent implements OnInit {
       return 0;
     });
     this.buduci_casovi.sort((a, b) => {
-      if (a.datum_vreme_start < b.datum_vreme_start) return 1;
-      if (a.datum_vreme_start > b.datum_vreme_start) return -1;
+      if (a.datum_vreme_start < b.datum_vreme_start) return -1;
+      if (a.datum_vreme_start > b.datum_vreme_start) return 1;
       return 0;
     });
   }

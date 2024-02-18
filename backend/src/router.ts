@@ -247,4 +247,8 @@ ZRouter
     .route("/proveriJedinstvenMejl")
     .post((req, res) => new ZController().proveriJedinstvenMejl(req, res));
 
+ZRouter
+    .route("/dohvSveBuduceCasoveNastavnika")
+    .post((req, res) => new ZController().dohvSveBuduceCasoveNastavnika(req, res));
+
 export default ZRouter;

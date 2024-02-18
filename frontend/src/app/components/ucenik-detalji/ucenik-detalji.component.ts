@@ -49,6 +49,12 @@ export class UcenikDetaljiComponent implements OnInit {
                         });
                       }
                     }
+                    this.service.dohvPredmete().subscribe(
+                      data4 => {
+                        const naziviPredm = data4.map(item => item.naziv);
+                        this.predmeti = this.predmeti.filter(item => naziviPredm.includes(item));
+                      }
+                    );
                   }
                 );
               }

@@ -479,4 +479,11 @@ export class ZService {
     return this.http.post<Korisnik>(this.uri + "/proveriJedinstvenMejl", data);
   }
 
+  dohvSveBuduceCasoveNastavnika(nastavnik: string) {
+    const data = {
+      nastavnik: nastavnik
+    };
+    return this.http.post<Cas[]>(this.uri + "/dohvSveBuduceCasoveNastavnika", data);
+  }
+
 }

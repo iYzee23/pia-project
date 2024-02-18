@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ZService } from 'src/app/services/z.service';
 
@@ -7,7 +7,7 @@ import { ZService } from 'src/app/services/z.service';
   templateUrl: './registracija-nastavnici.component.html',
   styleUrls: ['./registracija-nastavnici.component.css']
 })
-export class RegistracijaNastavniciComponent {
+export class RegistracijaNastavniciComponent implements OnInit {
 
   kor_ime: string = "";
   lozinka: string = "";
@@ -25,24 +25,9 @@ export class RegistracijaNastavniciComponent {
   culi_sajt: string = "";
   poruka: string = "";
 
-  predmeti = [
-    {naziv: "Matematika", izabr: false},
-    {naziv: "Fizika", izabr: false},
-    {naziv: "Hemija", izabr: false},
-    {naziv: "Informatika", izabr: false},
-    {naziv: "Programiranje", izabr: false},
-    {naziv: "Srpski jezik", izabr: false},
-    {naziv: "Engleski jezik", izabr: false},
-    {naziv: "Nemacki jezik", izabr: false},
-    {naziv: "Italijanski jezik", izabr: false},
-    {naziv: "Francuski jezik", izabr: false},
-    {naziv: "Spanski jezik", izabr: false},
-    {naziv: "Latinski jezik", izabr: false},
-    {naziv: "Biologija", izabr: false},
-    {naziv: "Istorija", izabr: false},
-    {naziv: "Geografija", izabr: false},
-    {naziv: "Svet oko nas", izabr: false},
-  ];
+  predmeti: {
+    naziv: string, izabr: boolean
+  }[] = [];
   uzrasti = [
     {naziv: "Osnovna skola [1-4]", izabr: false},
     {naziv: "Osnovna skola [5-8]", izabr: false},
@@ -50,6 +35,19 @@ export class RegistracijaNastavniciComponent {
   ];
 
   constructor(private service: ZService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.service.dohvPredmete().subscribe(
+      data => {
+        for (let pr of data) {
+          this.predmeti.push({
+            naziv: pr.naziv,
+            izabr: false
+          });
+        }
+      }
+    );
+  }
 
   registracija() {
     if (this.kor_ime === "") this.poruka = "Morate uneti korisnicko ime.";

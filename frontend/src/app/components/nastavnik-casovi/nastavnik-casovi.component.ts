@@ -46,7 +46,9 @@ export class NastavnikCasoviComponent implements OnInit {
   potvr_casovi_5: Cas[] = [];
   potvr_casovi_10: Cas[] = [];
   potvr_casovi_svi: Cas[] = [];
+  potvr_casovi_svi_ikad: Cas[] = [];
   showJitsiMeet: boolean = false;
+  casID: string = "";
   roomName: string = "";
   displayName: string = "";
   email: string = "";
@@ -88,6 +90,19 @@ export class NastavnikCasoviComponent implements OnInit {
       }
     ];
 
+    this.service.dohvSveBuduceCasoveNastavnika(this.kor_ime).subscribe(
+      data => {
+        for (let cas of data) {
+          const msDiff = (new Date(cas.datum_vreme_start).getTime()) - sadDatum.getTime();
+          cas.ucionicaDisabled = (msDiff > 15 * 60 * 1000);
+          // cas.ucionicaDisabled = (msDiff > 7 * 24 * 60 * 60 * 1000);
+          cas.otkazivanjeDisabled = (msDiff < 4 * 60 * 60 * 1000);
+        }
+        this.handleCasUcenik(data);
+        this.potvr_casovi_svi_ikad = data;
+      }
+    );
+
     this.service.dohvSveCasoveVremenskiPeriod(this.kor_ime, 3).subscribe(
       data => {
         for (let cas of data) {
@@ -96,11 +111,11 @@ export class NastavnikCasoviComponent implements OnInit {
           // cas.ucionicaDisabled = (msDiff > 7 * 24 * 60 * 60 * 1000);
           cas.otkazivanjeDisabled = (msDiff < 4 * 60 * 60 * 1000);
         }
+        this.handleCasUcenik(data);
         this.potvr_casovi_svi = data;
         this.potvr_casovi_5 = data.slice(0, 5);
         this.potvr_casovi_10 = data.slice(0, 10);
         this.prikazi5Casova();
-        this.handleCasUcenik(this.potvr_casovi);
         this.service.dohvNastavnika(this.kor_ime).subscribe(
           data1 => {
             for (let nedost of data1.nedostupnost) {
@@ -165,6 +180,7 @@ export class NastavnikCasoviComponent implements OnInit {
   pokreniUcionicu(cas: Cas): void {
     this.service.dohvKorisnika(cas.ucenik).subscribe(
       data => {
+        this.casID = cas._id;
         this.roomName = cas._id + cas.ucenik + this.kor_ime;
         this.displayName = data.ime + " " + data.prezime;
         this.email = data.email;
@@ -207,6 +223,10 @@ export class NastavnikCasoviComponent implements OnInit {
 
   prikaziSveCasove() {
     this.potvr_casovi = this.potvr_casovi_svi;
+  }
+
+  prikaziSveCasoveIkad() {
+    this.potvr_casovi = this.potvr_casovi_svi_ikad;
   }
 
   calendarOptions: CalendarOptions = {

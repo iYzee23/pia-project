@@ -152,11 +152,11 @@ export class UcenikNastavniciComponent implements OnInit {
   pretrazi() {
     this.fNiz = JSON.parse(JSON.stringify(this.niz));
     if (this.pretrPredmet !== "")
-      this.fNiz = this.fNiz.filter(elem => elem.predmet.toLowerCase().includes(this.pretrPredmet));
+      this.fNiz = this.fNiz.filter(elem => elem.predmet.toLowerCase().includes(this.pretrPredmet.toLowerCase()));
     if (this.pretrIme !== "")
-      this.fNiz = this.fNiz.filter(elem => elem.nIme.toLowerCase().includes(this.pretrIme));
+      this.fNiz = this.fNiz.filter(elem => elem.nIme.toLowerCase().includes(this.pretrIme.toLowerCase()));
     if (this.pretrPrezime !== "")
-      this.fNiz = this.fNiz.filter(elem => elem.nPrezime.toLowerCase().includes(this.pretrPrezime));
+      this.fNiz = this.fNiz.filter(elem => elem.nPrezime.toLowerCase().includes(this.pretrPrezime.toLowerCase()));
   }
 
   logout() {

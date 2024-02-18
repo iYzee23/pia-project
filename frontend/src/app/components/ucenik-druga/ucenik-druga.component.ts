@@ -58,35 +58,40 @@ export class UcenikDrugaComponent implements OnInit {
     this.service.dohvNastavnika(this.nastavnik).subscribe(
       data1 => {
         this.predmeti = data1.predmeti;
-        if (this.predmeti.length === 1)
-          this.izabr_predmet = this.predmeti[0];
-        for (let nedost of data1.nedostupnost) {
-          const [start, end] = nedost.split("###").map(elem => elem.slice(0, -1));
-          this.initialEvents.push({
-            start: start,
-            end: end,
-            rendering: 'background',
-            color: 'red'
-          });
-        }
-        this.service.dohvCasoveNastavnika(this.nastavnik).subscribe(
-          data2 => {
-            for (let cas of data2) {
-              if (cas.status === "Odbijen") continue;
-              const tStart = cas.datum_vreme_start.slice(0, -1);
-              const tEnd = cas.datum_vreme_kraj.slice(0, -1);
-              const color = cas.status === "Prihvacen" ? 'green' : 'orange';
+        this.service.dohvPredmete().subscribe(
+          tData => {
+            const naziviPredm = tData.map(item => item.naziv);
+            this.predmeti = this.predmeti.filter(item => naziviPredm.includes(item));
+            if (this.predmeti.length === 1)
+              this.izabr_predmet = this.predmeti[0];
+            for (let nedost of data1.nedostupnost) {
+              const [start, end] = nedost.split("###").map(elem => elem.slice(0, -1));
               this.initialEvents.push({
-                start: tStart,
-                end: tEnd,
-                rendering: "background",
-                color: color
+                start: start,
+                end: end,
+                rendering: 'background',
+                color: 'red'
               });
             }
-            this.fetchEvents();
+            this.service.dohvCasoveNastavnika(this.nastavnik).subscribe(
+              data2 => {
+                for (let cas of data2) {
+                  if (cas.status === "Odbijen") continue;
+                  const tStart = cas.datum_vreme_start.slice(0, -1);
+                  const tEnd = cas.datum_vreme_kraj.slice(0, -1);
+                  const color = cas.status === "Prihvacen" ? 'green' : 'orange';
+                  this.initialEvents.push({
+                    start: tStart,
+                    end: tEnd,
+                    rendering: "background",
+                    color: color
+                  });
+                }
+                this.fetchEvents();
+              }
+            );
           }
         );
-
       }
     );
   }

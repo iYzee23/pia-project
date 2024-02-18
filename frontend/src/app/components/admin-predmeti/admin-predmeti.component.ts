@@ -53,9 +53,10 @@ export class AdminPredmetiComponent implements OnInit {
   dodajPredmet() {
     if (this.novi_predm === "") this.poruka = "Morate uneti naziv predmeta koji dodajete.";
     else {
-      this.poruka = "Uspesno ste dodali novi predmet.";
       this.service.dodajPredmet(this.novi_predm).subscribe(
         data => {
+          if (data.msg !== "OK") this.poruka = data.msg;
+          else this.poruka = "Uspesno ste dodali novi ili azurirali postojeci predmet.";
           this.ngOnInit();
         }
       );

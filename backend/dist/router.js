@@ -189,4 +189,7 @@ ZRouter
 ZRouter
     .route("/proveriJedinstvenMejl")
     .post((req, res) => new controller_1.ZController().proveriJedinstvenMejl(req, res));
+ZRouter
+    .route("/dohvSveBuduceCasoveNastavnika")
+    .post((req, res) => new controller_1.ZController().dohvSveBuduceCasoveNastavnika(req, res));
 exports.default = ZRouter;

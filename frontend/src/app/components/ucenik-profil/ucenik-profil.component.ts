@@ -139,6 +139,12 @@ export class UcenikProfilComponent implements OnInit {
     return expr1 || expr2;
   }
 
+  proveriAzurTipSkole() {
+    const expr1 = this.tip_skole.includes("Srednja");
+    const expr2 = this.tip_skole.includes("Osnovna") && this.tr_razred !== 8;
+    return expr1 || expr2;
+  }
+
   proveriEmail() {
     const regexEmail = /^[a-zA-Z_][\w.-]*@[a-zA-Z\d-]+\.[a-zA-Z\d-.]+$/;
     const expr1 = this.azur_email === "";

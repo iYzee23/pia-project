@@ -68,6 +68,7 @@
       <th>Adresa</th>
       <th>Kontakt telefon</th>
       <th>Mejl adresa</th>
+      <th>Radna biografija (CV)</th>
       <th>Akcija</th>
     </tr>
     <tr *ngFor="let nast of sistem_nastavnici">
@@ -81,6 +82,9 @@
       <td>{{nast.adresa}}</td>
       <td>{{nast.telefon}}</td>
       <td>{{nast.email}}</td>
+      <td>
+        <a [href]="nast.cv_pdf" [download]="'CV_' + nast.kor_ime + '.pdf'">Preuzmite radnu biografiju</a>
+      </td>
       <td *ngIf="nast.zahtev_status === 'Prihvacen'">
         <input type="button" value="Deaktiviraj" (click)="odbij(nast)">
       </td>

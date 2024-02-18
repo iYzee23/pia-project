@@ -28,8 +28,14 @@ export class UcenikPrvaComponent implements OnInit {
     this.service.dohvNastavnika(this.nastavnik).subscribe(
       data => {
         this.predmeti = data.predmeti;
-        if (this.predmeti.length === 1)
-          this.izabr_predmet = this.predmeti[0];
+        this.service.dohvPredmete().subscribe(
+          tData => {
+            const naziviPredm = tData.map(item => item.naziv);
+            this.predmeti = this.predmeti.filter(item => naziviPredm.includes(item));
+            if (this.predmeti.length === 1)
+              this.izabr_predmet = this.predmeti[0];
+          }
+        );
       }
     );
   }

@@ -296,10 +296,14 @@ class ZController {
                         .catch(tErr => console.log(tErr));
                 }
                 else {
-                    predmet_1.default
-                        .findOneAndUpdate({ naziv: naziv }, { status: "Prihvacen" })
-                        .then(dData => res.json({ msg: "OK" }))
-                        .catch(dErr => console.log(dErr));
+                    if (data.status === "Prihvacen")
+                        return res.json({ msg: "Predmet je vec prihvacen." });
+                    else {
+                        predmet_1.default
+                            .findOneAndUpdate({ naziv: naziv }, { status: "Prihvacen" })
+                            .then(dData => res.json({ msg: "OK" }))
+                            .catch(dErr => console.log(dErr));
+                    }
                 }
             })
                 .catch(err => console.log(err));
@@ -372,7 +376,11 @@ class ZController {
             const lastWeek = new Date();
             lastWeek.setDate(today.getDate() - 7);
             cas_1.default
-                .countDocuments({ datum_vreme_start: { $gte: lastWeek.toISOString() }, status: "Prihvacen" })
+                .countDocuments({
+                datum_vreme_start: { $gte: lastWeek.toISOString() },
+                datum_vreme_kraj: { $lte: today.toISOString() },
+                status: "Prihvacen"
+            })
                 .then(data => res.json(data))
                 .catch(err => console.log(err));
         };
@@ -381,7 +389,11 @@ class ZController {
             const lastMonth = new Date();
             lastMonth.setDate(today.getDate() - 30);
             cas_1.default
-                .countDocuments({ datum_vreme_start: { $gte: lastMonth.toISOString() }, status: "Prihvacen" })
+                .countDocuments({
+                datum_vreme_start: { $gte: lastMonth.toISOString() },
+                datum_vreme_kraj: { $lte: today.toISOString() },
+                status: "Prihvacen"
+            })
                 .then(data => res.json(data))
                 .catch(err => console.log(err));
         };
@@ -406,6 +418,15 @@ class ZController {
             --> potencijalno ce biti potrebno prosiriti ovu strukturu tako da imamo i prosek
         */
         this.dohvPredmete = (req, res) => {
+            /*
+            Predmet
+                .find({$or: [
+                    { status: "Prihvacen" },
+                    { status: "U obradi" }
+                ]})
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+            */
             predmet_1.default
                 .find({ status: "Prihvacen" })
                 .then(data => res.json(data))
@@ -786,12 +807,23 @@ class ZController {
             const nastavnik = req.body.nastavnik;
             const brojDana = req.body.brojDana;
             const datumSad = new Date();
-            datumSad.setTime(datumSad.getTime() + 3600000);
+            datumSad.setTime(datumSad.getTime() + 60 * 60 * 1000);
             const datumTri = new Date(datumSad.getTime() + brojDana * 24 * 60 * 60 * 1000);
             const sad = datumSad.toISOString().slice(0, 16) + "Z";
             const tri = datumTri.toISOString().slice(0, 16) + "Z";
             cas_1.default
-                .find({ nastavnik: nastavnik, status: "Prihvacen", datum_vreme_start: { $gte: sad, $lte: tri } })
+                .find({ nastavnik: nastavnik, status: "Prihvacen", datum_vreme_kraj: { $gte: sad, $lte: tri } })
+                .sort({ datum_vreme_start: 1 })
+                .then(data => res.json(data))
+                .catch(err => console.log(err));
+        };
+        this.dohvSveBuduceCasoveNastavnika = (req, res) => {
+            const nastavnik = req.body.nastavnik;
+            const datumSad = new Date();
+            datumSad.setTime(datumSad.getTime() + 60 * 60 * 1000);
+            const sad = datumSad.toISOString().slice(0, 16) + "Z";
+            cas_1.default
+                .find({ nastavnik: nastavnik, status: "Prihvacen", datum_vreme_kraj: { $gte: sad } })
                 .sort({ datum_vreme_start: 1 })
                 .then(data => res.json(data))
                 .catch(err => console.log(err));

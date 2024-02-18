@@ -66,6 +66,7 @@ export class NastavnikProfilComponent implements OnInit {
                     izabr: izabr
                   });
                 }
+                this.predmeti = this.def_predmeti.filter(item => item.izabr).map(item => item.naziv);
                 for (let uzr of this.def_uzrasti)
                   uzr.izabr = this.uzrasti.includes(uzr.naziv);
                   this.clearAzur();
