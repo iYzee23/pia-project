@@ -17,7 +17,7 @@
     {
         "kor_ime": "milica123",
         "lozinka": "$2b$10$yDFKjxH05fqvNSKoXDYrgeeiqBVB7ahR/klBt.TgNzwzK4yPSXjbq",
-        "tip": "Admin",
+        "tip": "Nastavnik",
         "bezb_pitanje": "Omiljena domaca pevacica?",
         "bezb_odgovor": "Aleksandra Prijovic",
         "ime": "Milica",
@@ -32,7 +32,7 @@
     {
         "kor_ime": "dragan123",
         "lozinka": "$2b$10$0msMJn4WsaP2LGnXfOxDjuxJZgAIScZCtJ/SIjCRGTTn13iWGD7E2",
-        "tip": "Admin",
+        "tip": "Nastavnik",
         "bezb_pitanje": "Omiljeni teniser?",
         "bezb_odgovor": "Novak Djokovic",
         "ime": "Dragan",
@@ -131,6 +131,36 @@
         "adresa": "Konjarnik 154",
         "telefon": "0654413011",
         "email": "glisa123@gmail.com",
+        "prof_slika": "../images/default-profile-picture.jpg",
+        "zahtev_status": "Prihvacen"
+    },
+    {
+        "kor_ime": "luana123",
+        "lozinka": "$2b$10$Zxz5E4o.E/eSyk4.d4AfseDadbOFZu9zFr3j0UwOE2kIKPgb9nDl.",
+        "tip": "Ucenik",
+        "bezb_pitanje": "Omiljeni nargila bar?",
+        "bezb_odgovor": "Divan",
+        "ime": "Ana",
+        "prezime": "Lutovac",
+        "pol": "Z",
+        "adresa": "Crveni Krst BB",
+        "telefon": "0603092128",
+        "email": "luana123@gmail.com",
+        "prof_slika": "../images/luana.png",
+        "zahtev_status": "Prihvacen"
+    },
+    {
+        "kor_ime": "luka123",
+        "lozinka": "$2b$10$Y31wCObyGPwJ8CeEEhQJaOkp68.4QUnLj9.7STCYJ2QQIM5g/my5e",
+        "tip": "Ucenik",
+        "bezb_pitanje": "Omiljeno pivo?",
+        "bezb_odgovor": "Zajecarac",
+        "ime": "Luka",
+        "prezime": "Nevajda",
+        "pol": "M",
+        "adresa": "Banjica 75",
+        "telefon": "0691215501",
+        "email": "luka123@gmail.com",
         "prof_slika": "../images/default-profile-picture.jpg",
         "zahtev_status": "Prihvacen"
     }

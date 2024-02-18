@@ -1,9 +1,29 @@
 [
     {
+        "kor_ime": "milica123",
+        "cv_pdf": "../pdfs/milica.pdf",
+        "predmeti": ["Engleski", "Nemacki", "Italijanski", "Francuski", "Spanski", "Latinski"],
+        "uzrast": ["Osnovna skola [1-4]", "Osnovna skola [5-8]", "Srednja skola"],
+        "culi_sajt": "Pokazao mi je brat!",
+        "nedostupnost": [],
+        "ocena": 4.96,
+        "br_ocena": 5
+    },
+    {
+        "kor_ime": "dragan123",
+        "cv_pdf": "../pdfs/dragan.pdf",
+        "predmeti": ["Matematika", "Fizika", "Hemija", "ASP1", "ASP2"],
+        "uzrast": ["Srednja skola"],
+        "culi_sajt": "Uputio me je najjaci zet ikada!",
+        "nedostupnost": [],
+        "ocena": 3.92,
+        "br_ocena": 7
+    },
+    {
         "kor_ime": "slavka123",
         "cv_pdf": "../pdfs/slavka.pdf",
         "predmeti": ["Biologija", "Istorija", "Geografija", "Svet oko nas", "Srpski"],
-        "uzrast": ["Osnovna skola [5-8]", "Srednja skola"],
+        "uzrast": ["Osnovna skola [5-8]"],
         "culi_sajt": "Sin mi je pokazao.",
         "nedostupnost": ["2024-02-07T15:00Z###2024-02-07T16:45Z"],
         "ocena": 4.12,
@@ -12,12 +32,12 @@
     {
         "kor_ime": "ranko123",
         "cv_pdf": "../pdfs/ranko.pdf",
-        "predmeti": ["Matematika", "Fizika", "Hemija", "Informatika", "Programiranje"],
+        "predmeti": ["Matematika", "Fizika", "Hemija", "Informatika", "Programiranje", "OOP1", "OOP2"],
         "uzrast": ["Srednja skola"],
         "culi_sajt": "Cerka mi je pokazala.",
-        "nedostupnost": ["2024-02-07T10:00Z###2024-02-07T18:00Z", "2024-02-12T10:00Z###2024-02-16T18:00Z"],
+        "nedostupnost": ["2024-02-26T10:00Z###2024-02-26T18:00Z", "2024-02-19T10:00Z###2024-02-23T18:00Z"],
         "ocena": 3.62,
-        "br_ocena": 7
+        "br_ocena": 8
     },
     {
         "kor_ime": "zorka123",
@@ -27,6 +47,6 @@
         "culi_sajt": "Videla sam na bilbordu.",
         "nedostupnost": [],
         "ocena": 5.00,
-        "br_ocena": 5
+        "br_ocena": 3
     }
 ]

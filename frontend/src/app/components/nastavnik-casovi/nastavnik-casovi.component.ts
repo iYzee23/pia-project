@@ -65,7 +65,9 @@ export class NastavnikCasoviComponent implements OnInit {
   ngOnInit(): void {
     this.kor_ime = localStorage.getItem("ulogovani")!;
     const sadDatum = new Date();
-    sadDatum.setTime(sadDatum.getTime() + 3600000);
+    sadDatum.setTime(sadDatum.getTime() + 60 * 60 * 1000);
+    const sad = sadDatum.toISOString();
+
     this.initialEvents = [
       {
         daysOfWeek: [ 1, 2, 3, 4, 5 ],
@@ -144,7 +146,7 @@ export class NastavnikCasoviComponent implements OnInit {
                 this.service.dohvCasoveNastavnika(this.kor_ime).subscribe(
                   data3 => {
                     this.fetchEvents();
-                    this.u_obradi_casovi = data3.filter(item => item.status === "U obradi");
+                    this.u_obradi_casovi = data3.filter(item => item.status === "U obradi" && item.datum_vreme_kraj > sad);
                     this.handleCasUcenik(this.u_obradi_casovi);
                   }
                 );

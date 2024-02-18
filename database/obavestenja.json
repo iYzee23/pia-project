@@ -1,26 +1,32 @@
 [
     {
-        "cas": "65c79182ac35cba179121ac1",
-        "tekst": "Ovo Raletovo obavestenje je procitano",
+        "cas": "65d20d30193f8d54d5ae8bf0",
+        "tekst": "Cas je potvrdjen. Ovo obavestenje je procitano!",
         "neprocitano": false,
         "datum_vreme": "2024-02-15T15:00Z"
     },
     {
-        "cas": "65c79182ac35cba179121ac1",
-        "tekst": "Ovo Raletovo obavestenje je neprocitano",
+        "cas": "65d20d30193f8d54d5ae8bf1",
+        "tekst": "Cas je potvrdjen. Ovo obavestenje nije procitano!",
         "neprocitano": true,
-        "datum_vreme": "2024-02-15T16:00Z"
+        "datum_vreme": "2024-02-15T15:02Z"
     },
     {
-        "cas": "65c79182ac35cba179121abe",
-        "tekst": "Ovo Slavkino obavestenje je neprocitano",
+        "cas": "65d20d30193f8d54d5ae8bf2",
+        "tekst": "Cas je potvrdjen! Ovo obavestenje nije procitano!",
         "neprocitano": true,
         "datum_vreme": "2024-02-15T17:00Z"
     },
     {
-        "cas": "65c79182ac35cba179121abe",
-        "tekst": "Ovo Slavkino obavestenje je procitano",
+        "cas": "65d20d30193f8d54d5ae8bf3",
+        "tekst": "Cas je otkazan. Ovo obavestenje je procitano!",
         "neprocitano": false,
         "datum_vreme": "2024-02-15T18:00Z"
+    },
+    {
+        "cas": "65d20d30193f8d54d5ae8bf5",
+        "tekst": "Cas je potvrdjen!. Ovo obavestenje nije procitano!",
+        "neprocitano": true,
+        "datum_vreme": "2024-02-15T18:01Z"
     }
 ]

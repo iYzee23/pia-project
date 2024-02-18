@@ -3,21 +3,35 @@
         "kor_ime": "mirko123",
         "tip_skole": "Srednja [strucna]",
         "tr_razred": 4,
-        "ocena": 0.00,
-        "br_ocena": 0
+        "ocena": 4.12,
+        "br_ocena": 3
     },
     {
         "kor_ime": "milos123",
-        "tip_skole": "Srednja [strucna]",
+        "tip_skole": "Srednja [umetnicka]",
         "tr_razred": 4,
-        "ocena": 0.00,
-        "br_ocena": 0
+        "ocena": 4.50,
+        "br_ocena": 2
     },
     {
         "kor_ime": "glisa123",
         "tip_skole": "Srednja [gimnazija]",
         "tr_razred": 3,
-        "ocena": 0.00,
-        "br_ocena": 0
+        "ocena": 5.00,
+        "br_ocena": 1
+    },
+    {
+        "kor_ime": "luana123",
+        "tip_skole": "Osnovna",
+        "tr_razred": 2,
+        "ocena": 4.92,
+        "br_ocena": 4
+    },
+    {
+        "kor_ime": "luka123",
+        "tip_skole": "Osnovna",
+        "tr_razred": 3,
+        "ocena": 5.00,
+        "br_ocena": 2
     }
 ]

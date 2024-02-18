@@ -62,5 +62,21 @@
     {
         "naziv": "Svet oko nas",
         "status": "Prihvacen"
+    },
+    {
+        "naziv": "ASP1",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "ASP2",
+        "status": "Odbijen"
+    },
+    {
+        "naziv": "OOP1",
+        "status": "Prihvacen"
+    },
+    {
+        "naziv": "OOP2",
+        "status": "U obradi"
     }
 ]
